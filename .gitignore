@@ -1,1 +1,29 @@
+# macOS
 .DS_Store
+
+# ROS2 build artifacts
+ros_workspace/build/
+ros_workspace/install/
+ros_workspace/log/
+COLCON_IGNORE
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+ros_workspace/.venv/
+*.egg-info/
+dist/
+.pytest_cache/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Docker
+.dockerignore

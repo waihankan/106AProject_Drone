@@ -3,6 +3,7 @@ services:
     build: .
     image: ros2-dev
     container_name: ros2_container
+    network_mode: host
     volumes:
       - ./ros_workspace:/root/ros_workspace
     working_dir: /root/ros_workspace
@@ -12,5 +13,5 @@ services:
       - DISPLAY=host.docker.internal:0
       - LIBGL_ALWAYS_INDIRECT=0
       - LIBGL_ALWAYS_SOFTWARE=1
-    command: bash
+    command: bash -c "/root/.colcon_ignore_setup.sh && bash"
 

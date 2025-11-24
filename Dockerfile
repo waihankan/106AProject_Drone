@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y \
     git \
     vim \
     tmux \
+    python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
 # Set up automatic ROS sourcing and terminal improvements
@@ -196,3 +197,24 @@ EOF
 
 # Install tmux plugins (this will run TPM install)
 RUN ~/.tmux/plugins/tpm/scripts/install_plugins.sh
+
+# Copy and install Python dependencies for Tello
+COPY ros_workspace/requirements.txt /tmp/requirements.txt
+RUN pip3 install -r /tmp/requirements.txt && rm /tmp/requirements.txt
+
+# Setup workspace initialization script
+RUN echo '# Auto-source ROS2 workspace if it exists' >> /root/.bashrc && \
+    echo 'if [ -f /root/ros_workspace/install/setup.bash ]; then' >> /root/.bashrc && \
+    echo '    source /root/ros_workspace/install/setup.bash' >> /root/.bashrc && \
+    echo 'fi' >> /root/.bashrc
+
+# Create COLCON_IGNORE for SLAM packages that require OpenCV 3
+RUN mkdir -p /root/ros_workspace/src && \
+    echo '# This directory is ignored by colcon build' > /root/.colcon_ignore_setup.sh && \
+    echo 'if [ -d "/root/ros_workspace/src/tello-ros2/slam" ]; then' >> /root/.colcon_ignore_setup.sh && \
+    echo '    touch /root/ros_workspace/src/tello-ros2/slam/COLCON_IGNORE' >> /root/.colcon_ignore_setup.sh && \
+    echo 'fi' >> /root/.colcon_ignore_setup.sh && \
+    chmod +x /root/.colcon_ignore_setup.sh
+
+# Set working directory
+WORKDIR /root/ros_workspace

@@ -1,0 +1,13 @@
+# Python dependencies for Tello ROS2 package
+av
+djitellopy
+numpy<2  # ROS2 Humble's cv_bridge requires NumPy 1.x
+opencv-python
+pyyaml
+
+# Computer Vision for hand gesture control
+mediapipe>=0.10.0
+opencv-contrib-python
+
+# Safety monitoring
+pynput  # Keyboard input monitoring for emergency stop
