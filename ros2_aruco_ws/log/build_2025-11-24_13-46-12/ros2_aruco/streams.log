@@ -1,0 +1,25 @@
+[1.216s] Invoking command in '/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/src/ros2_aruco/ros2_aruco': PYTHONPATH=/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/install/ros2_aruco/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/ros2_aruco build --build-base /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco/build install --record /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco/install.log --single-version-externally-managed install_data
+[1.447s] running egg_info
+[1.447s] writing ../../../build/ros2_aruco/ros2_aruco.egg-info/PKG-INFO
+[1.451s] writing dependency_links to ../../../build/ros2_aruco/ros2_aruco.egg-info/dependency_links.txt
+[1.454s] writing entry points to ../../../build/ros2_aruco/ros2_aruco.egg-info/entry_points.txt
+[1.456s] writing requirements to ../../../build/ros2_aruco/ros2_aruco.egg-info/requires.txt
+[1.459s] writing top-level names to ../../../build/ros2_aruco/ros2_aruco.egg-info/top_level.txt
+[1.466s] reading manifest file '../../../build/ros2_aruco/ros2_aruco.egg-info/SOURCES.txt'
+[1.468s] writing manifest file '../../../build/ros2_aruco/ros2_aruco.egg-info/SOURCES.txt'
+[1.470s] running build
+[1.470s] running build_py
+[1.483s] copying ros2_aruco/aruco_tf.py -> /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco/build/lib/ros2_aruco
+[1.487s] running install
+[1.487s] running install_lib
+[1.504s] copying /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco/build/lib/ros2_aruco/aruco_tf.py -> /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/install/ros2_aruco/lib/python3.10/site-packages/ros2_aruco
+[1.527s] byte-compiling /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/install/ros2_aruco/lib/python3.10/site-packages/ros2_aruco/aruco_tf.py to aruco_tf.cpython-310.pyc
+[1.533s] running install_data
+[1.537s] running install_egg_info
+[1.538s] removing '/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/install/ros2_aruco/lib/python3.10/site-packages/ros2_aruco-0.1.0-py3.10.egg-info' (and everything under it)
+[1.544s] Copying ../../../build/ros2_aruco/ros2_aruco.egg-info to /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/install/ros2_aruco/lib/python3.10/site-packages/ros2_aruco-0.1.0-py3.10.egg-info
+[1.597s] running install_scripts
+[1.624s] Installing aruco_generate_marker script to /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/install/ros2_aruco/lib/ros2_aruco
+[1.626s] Installing aruco_node script to /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/install/ros2_aruco/lib/ros2_aruco
+[1.629s] writing list of installed files to '/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco/install.log'
+[1.716s] Invoked command in '/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/src/ros2_aruco/ros2_aruco' returned '0': PYTHONPATH=/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/install/ros2_aruco/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/ros2_aruco build --build-base /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco/build install --record /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco/install.log --single-version-externally-managed install_data
