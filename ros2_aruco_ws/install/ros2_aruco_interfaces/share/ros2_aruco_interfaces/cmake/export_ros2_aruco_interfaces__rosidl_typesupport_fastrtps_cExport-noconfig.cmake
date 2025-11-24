@@ -12,8 +12,8 @@ set_target_properties(ros2_aruco_interfaces::ros2_aruco_interfaces__rosidl_types
   IMPORTED_SONAME_NOCONFIG "libros2_aruco_interfaces__rosidl_typesupport_fastrtps_c.so"
   )
 
-list(APPEND _cmake_import_check_targets ros2_aruco_interfaces::ros2_aruco_interfaces__rosidl_typesupport_fastrtps_c )
-list(APPEND _cmake_import_check_files_for_ros2_aruco_interfaces::ros2_aruco_interfaces__rosidl_typesupport_fastrtps_c "${_IMPORT_PREFIX}/lib/libros2_aruco_interfaces__rosidl_typesupport_fastrtps_c.so" )
+list(APPEND _IMPORT_CHECK_TARGETS ros2_aruco_interfaces::ros2_aruco_interfaces__rosidl_typesupport_fastrtps_c )
+list(APPEND _IMPORT_CHECK_FILES_FOR_ros2_aruco_interfaces::ros2_aruco_interfaces__rosidl_typesupport_fastrtps_c "${_IMPORT_PREFIX}/lib/libros2_aruco_interfaces__rosidl_typesupport_fastrtps_c.so" )
 
 # Commands beyond this point should not need to know the version.
 set(CMAKE_IMPORT_FILE_VERSION)

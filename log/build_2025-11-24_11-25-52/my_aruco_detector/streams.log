@@ -1,0 +1,33 @@
+[1.112s] Invoking command in '/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/my_aruco_detector': PYTHONPATH=/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/my_aruco_detector/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/install/my_aruco_detector/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/my_aruco_detector build --build-base /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/my_aruco_detector/build install --record /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/my_aruco_detector/install.log --single-version-externally-managed install_data
+[1.327s] running egg_info
+[1.328s] creating ../../build/my_aruco_detector/my_aruco_detector.egg-info
+[1.329s] writing ../../build/my_aruco_detector/my_aruco_detector.egg-info/PKG-INFO
+[1.334s] writing dependency_links to ../../build/my_aruco_detector/my_aruco_detector.egg-info/dependency_links.txt
+[1.337s] writing entry points to ../../build/my_aruco_detector/my_aruco_detector.egg-info/entry_points.txt
+[1.340s] writing requirements to ../../build/my_aruco_detector/my_aruco_detector.egg-info/requires.txt
+[1.342s] writing top-level names to ../../build/my_aruco_detector/my_aruco_detector.egg-info/top_level.txt
+[1.344s] writing manifest file '../../build/my_aruco_detector/my_aruco_detector.egg-info/SOURCES.txt'
+[1.353s] reading manifest file '../../build/my_aruco_detector/my_aruco_detector.egg-info/SOURCES.txt'
+[1.356s] writing manifest file '../../build/my_aruco_detector/my_aruco_detector.egg-info/SOURCES.txt'
+[1.358s] running build
+[1.358s] running build_py
+[1.359s] creating /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/my_aruco_detector/build
+[1.359s] creating /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/my_aruco_detector/build/lib
+[1.360s] creating /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/my_aruco_detector/build/lib/my_aruco_detector
+[1.362s] copying my_aruco_detector/__init__.py -> /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/my_aruco_detector/build/lib/my_aruco_detector
+[1.365s] running install
+[1.365s] running install_lib
+[1.367s] creating /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/install/my_aruco_detector/lib/python3.10/site-packages/my_aruco_detector
+[1.369s] copying /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/my_aruco_detector/build/lib/my_aruco_detector/__init__.py -> /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/install/my_aruco_detector/lib/python3.10/site-packages/my_aruco_detector
+[1.374s] byte-compiling /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/install/my_aruco_detector/lib/python3.10/site-packages/my_aruco_detector/__init__.py to __init__.cpython-310.pyc
+[1.379s] running install_data
+[1.380s] creating /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/install/my_aruco_detector/share/ament_index
+[1.380s] creating /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/install/my_aruco_detector/share/ament_index/resource_index
+[1.382s] creating /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/install/my_aruco_detector/share/ament_index/resource_index/packages
+[1.383s] copying resource/my_aruco_detector -> /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/install/my_aruco_detector/share/ament_index/resource_index/packages
+[1.387s] copying package.xml -> /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/install/my_aruco_detector/share/my_aruco_detector
+[1.392s] running install_egg_info
+[1.396s] Copying ../../build/my_aruco_detector/my_aruco_detector.egg-info to /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/install/my_aruco_detector/lib/python3.10/site-packages/my_aruco_detector-0.0.0-py3.10.egg-info
+[1.439s] running install_scripts
+[1.471s] writing list of installed files to '/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/my_aruco_detector/install.log'
+[1.487s] Invoked command in '/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/my_aruco_detector' returned '0': PYTHONPATH=/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/my_aruco_detector/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/install/my_aruco_detector/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/my_aruco_detector build --build-base /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/my_aruco_detector/build install --record /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/my_aruco_detector/install.log --single-version-externally-managed install_data

@@ -5,7 +5,6 @@ file(REMOVE_RECURSE
   "rosidl_generator_cpp/ros2_aruco_interfaces/msg/detail/aruco_markers__struct.hpp"
   "rosidl_generator_cpp/ros2_aruco_interfaces/msg/detail/aruco_markers__traits.hpp"
   "rosidl_generator_cpp/ros2_aruco_interfaces/msg/detail/aruco_markers__type_support.hpp"
-  "rosidl_generator_cpp/ros2_aruco_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp"
 )
 
 # Per-language clean rules from dependency scanning.

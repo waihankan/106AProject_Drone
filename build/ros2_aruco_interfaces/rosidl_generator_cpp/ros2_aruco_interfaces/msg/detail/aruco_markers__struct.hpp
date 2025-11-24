@@ -2,9 +2,6 @@
 // with input from ros2_aruco_interfaces:msg/ArucoMarkers.idl
 // generated code does not contain a copyright notice
 
-// IWYU pragma: private, include "ros2_aruco_interfaces/msg/aruco_markers.hpp"
-
-
 #ifndef ROS2_ARUCO_INTERFACES__MSG__DETAIL__ARUCO_MARKERS__STRUCT_HPP_
 #define ROS2_ARUCO_INTERFACES__MSG__DETAIL__ARUCO_MARKERS__STRUCT_HPP_
 

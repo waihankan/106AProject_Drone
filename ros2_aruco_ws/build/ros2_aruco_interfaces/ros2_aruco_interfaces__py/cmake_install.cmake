@@ -1,8 +1,8 @@
-# Install script for directory: /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco_interfaces/ros2_aruco_interfaces__py
+# Install script for directory: /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco_interfaces/ros2_aruco_interfaces__py
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/install/ros2_aruco_interfaces")
+  set(CMAKE_INSTALL_PREFIX "/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/install/ros2_aruco_interfaces")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

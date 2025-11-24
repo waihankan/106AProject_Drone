@@ -2,9 +2,6 @@
 // with input from ros2_aruco_interfaces:msg/ArucoMarkers.idl
 // generated code does not contain a copyright notice
 
-// IWYU pragma: private, include "ros2_aruco_interfaces/msg/aruco_markers.h"
-
-
 #ifndef ROS2_ARUCO_INTERFACES__MSG__DETAIL__ARUCO_MARKERS__TYPE_SUPPORT_H_
 #define ROS2_ARUCO_INTERFACES__MSG__DETAIL__ARUCO_MARKERS__TYPE_SUPPORT_H_
 
@@ -27,7 +24,7 @@ ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(
   ros2_aruco_interfaces,
   msg,
   ArucoMarkers
-)(void);
+)();
 
 #ifdef __cplusplus
 }

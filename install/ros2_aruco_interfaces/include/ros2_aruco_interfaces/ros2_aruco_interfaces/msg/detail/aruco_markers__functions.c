@@ -114,7 +114,7 @@ ros2_aruco_interfaces__msg__ArucoMarkers__copy(
 }
 
 ros2_aruco_interfaces__msg__ArucoMarkers *
-ros2_aruco_interfaces__msg__ArucoMarkers__create(void)
+ros2_aruco_interfaces__msg__ArucoMarkers__create()
 {
   rcutils_allocator_t allocator = rcutils_get_default_allocator();
   ros2_aruco_interfaces__msg__ArucoMarkers * msg = (ros2_aruco_interfaces__msg__ArucoMarkers *)allocator.allocate(sizeof(ros2_aruco_interfaces__msg__ArucoMarkers), allocator.state);
