@@ -1,5 +1,6 @@
 Running the Aruco Node:
-ros2 run ros2_aruco aruco_node
+ros2 run ros2_aruco aruco_node //Not needed
+
 
 Aruco Recognition Launch file:
 ros2 launch ros2_aruco aruco_recognition.launch.py
@@ -14,7 +15,7 @@ ros2 run usb_cam usb_cam_node --ros-args -p camera_info_url:='file:///home/cc/ee
 
 
 
-Manually set fixed frame to default_cam for aruco visualization
+Manually set fixed frame to camera for aruco visualization
 
 If colcon build fails:
 rm -rf build install log
