@@ -124,7 +124,7 @@ ros_workspace/src/
 
 ## Hand Gesture Control
 
-See [GESTURE_CONTROL.md](GESTURE_CONTROL.md) for detailed architecture and implementation guide.
+See [GESTURE_CONTROL.md](docs/GESTURE_CONTROL.md) for detailed architecture and implementation guide.
 
 **Quick Overview:**
 - External camera detects hand position using MediaPipe
@@ -147,8 +147,7 @@ See [GESTURE_CONTROL.md](GESTURE_CONTROL.md) for detailed architecture and imple
 
 ## References
 
-- [Gesture Control Guide](GESTURE_CONTROL.md) - Complete implementation guide
+- [Gesture Control Guide](docs/GESTURE_CONTROL.md) - Complete implementation guide
 - [tello-ros2 GitHub](https://github.com/tentone/tello-ros2)
-- [MediaPipe Hands](https://google.github.io/mediapipe/solutions/hands)
 - [DJI Tello SDK](https://github.com/dji-sdk/Tello-Python)
 - [ROS2 Humble Docs](https://docs.ros.org/en/humble/)
