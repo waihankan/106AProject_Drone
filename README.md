@@ -4,10 +4,6 @@ ROS2 Humble workspace for controlling DJI Tello drones using **hand gestures** d
 
 Built on [tello-ros2](https://github.com/tentone/tello-ros2) with MediaPipe for hand detection.
 
-## Prerequisites
-
-- Docker
-- DJI Tello drone
 
 ## Quick Start
 
