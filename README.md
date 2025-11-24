@@ -109,6 +109,7 @@ Automatically installed via Dockerfile:
 
 ## References
 
-- [tello-ros2](https://github.com/tentone/tello-ros2) - Base driver
-- [MediaPipe Hands](https://google.github.io/mediapipe/solutions/hands) - Hand tracking
-- [ROS2 Humble](https://docs.ros.org/en/humble/) - Robot framework
+- [Gesture Control Guide](docs/GESTURE_CONTROL.md) - Complete implementation guide
+- [tello-ros2 GitHub](https://github.com/tentone/tello-ros2)
+- [DJI Tello SDK](https://github.com/dji-sdk/Tello-Python)
+- [ROS2 Humble Docs](https://docs.ros.org/en/humble/)
