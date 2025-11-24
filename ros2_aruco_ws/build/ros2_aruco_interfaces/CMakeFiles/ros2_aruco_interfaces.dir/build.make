@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/hieu-hoang/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces
+CMAKE_SOURCE_DIR = /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/hieu-hoang/ros2_aruco_ws/build/ros2_aruco_interfaces
+CMAKE_BINARY_DIR = /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco_interfaces
 
 # Utility rule file for ros2_aruco_interfaces.
 
@@ -66,7 +66,7 @@ include CMakeFiles/ros2_aruco_interfaces.dir/compiler_depend.make
 # Include the progress variables for this target.
 include CMakeFiles/ros2_aruco_interfaces.dir/progress.make
 
-CMakeFiles/ros2_aruco_interfaces: /home/hieu-hoang/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces/msg/ArucoMarkers.msg
+CMakeFiles/ros2_aruco_interfaces: /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces/msg/ArucoMarkers.msg
 CMakeFiles/ros2_aruco_interfaces: /opt/ros/jazzy/share/geometry_msgs/msg/Accel.idl
 CMakeFiles/ros2_aruco_interfaces: /opt/ros/jazzy/share/geometry_msgs/msg/AccelStamped.idl
 CMakeFiles/ros2_aruco_interfaces: /opt/ros/jazzy/share/geometry_msgs/msg/AccelWithCovariance.idl
@@ -143,6 +143,6 @@ CMakeFiles/ros2_aruco_interfaces.dir/clean:
 .PHONY : CMakeFiles/ros2_aruco_interfaces.dir/clean
 
 CMakeFiles/ros2_aruco_interfaces.dir/depend:
-	cd /home/hieu-hoang/ros2_aruco_ws/build/ros2_aruco_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/hieu-hoang/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces /home/hieu-hoang/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces /home/hieu-hoang/ros2_aruco_ws/build/ros2_aruco_interfaces /home/hieu-hoang/ros2_aruco_ws/build/ros2_aruco_interfaces /home/hieu-hoang/ros2_aruco_ws/build/ros2_aruco_interfaces/CMakeFiles/ros2_aruco_interfaces.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco_interfaces /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco_interfaces /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco_interfaces/CMakeFiles/ros2_aruco_interfaces.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/ros2_aruco_interfaces.dir/depend
 

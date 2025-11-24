@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/hieu-hoang/ros2_aruco_ws/src/usb_cam/include -isystem /opt/ros/jazzy/src/gtest_vendor/include -isystem /usr/include/opencv4
+CXX_INCLUDES = -I/home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/src/usb_cam/include -isystem /opt/ros/jazzy/src/gtest_vendor/include -isystem /usr/include/opencv4
 
 CXX_FLAGS = -std=gnu++17 -Wall -Wextra -Wpedantic -Werror
 

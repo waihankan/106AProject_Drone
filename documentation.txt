@@ -5,9 +5,6 @@ Aruco Recognition Launch file:
 ros2 launch ros2_aruco aruco_recognition.launch.py
 
 Running the webcam node:
-ros2 run usb_cam usb_cam_node_exe \
---ros-args \
--p camera_info_url:="file://${HOME}/ros2_aruco_ws/config/ost.yaml" \
--p camera_name:=narrow_stereo
+ros2 run usb_cam usb_cam_node_exe
 
 Manually set fixed frame to default_cam for aruco visualization

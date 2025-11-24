@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/hieu-hoang/ros2_aruco_ws/src/usb_cam
+CMAKE_SOURCE_DIR = /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/src/usb_cam
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/hieu-hoang/ros2_aruco_ws/build/usb_cam
+CMAKE_BINARY_DIR = /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/usb_cam
 
 # Utility rule file for usb_cam_uninstall.
 
@@ -67,7 +67,7 @@ include CMakeFiles/usb_cam_uninstall.dir/compiler_depend.make
 include CMakeFiles/usb_cam_uninstall.dir/progress.make
 
 CMakeFiles/usb_cam_uninstall:
-	/usr/bin/cmake -P /home/hieu-hoang/ros2_aruco_ws/build/usb_cam/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
+	/usr/bin/cmake -P /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/usb_cam/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
 
 usb_cam_uninstall: CMakeFiles/usb_cam_uninstall
 usb_cam_uninstall: CMakeFiles/usb_cam_uninstall.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/usb_cam_uninstall.dir/clean:
 .PHONY : CMakeFiles/usb_cam_uninstall.dir/clean
 
 CMakeFiles/usb_cam_uninstall.dir/depend:
-	cd /home/hieu-hoang/ros2_aruco_ws/build/usb_cam && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/hieu-hoang/ros2_aruco_ws/src/usb_cam /home/hieu-hoang/ros2_aruco_ws/src/usb_cam /home/hieu-hoang/ros2_aruco_ws/build/usb_cam /home/hieu-hoang/ros2_aruco_ws/build/usb_cam /home/hieu-hoang/ros2_aruco_ws/build/usb_cam/CMakeFiles/usb_cam_uninstall.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/usb_cam && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/src/usb_cam /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/src/usb_cam /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/usb_cam /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/usb_cam /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/usb_cam/CMakeFiles/usb_cam_uninstall.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/usb_cam_uninstall.dir/depend
 

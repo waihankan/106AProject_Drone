@@ -2,7 +2,7 @@
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/hieu-hoang/ros2_aruco_ws/install/usb_cam")
+  set(CMAKE_INSTALL_PREFIX "/home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/install/usb_cam")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

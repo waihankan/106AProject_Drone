@@ -1,4 +1,4 @@
 import sys
 if sys.prefix == '/usr':
     sys.real_prefix = sys.prefix
-    sys.prefix = sys.exec_prefix = '/home/hieu-hoang/ros2_aruco_ws/install/my_aruco_detector'
+    sys.prefix = sys.exec_prefix = '/home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/install/my_aruco_detector'

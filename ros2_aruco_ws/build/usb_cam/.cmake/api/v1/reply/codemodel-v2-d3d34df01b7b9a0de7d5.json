@@ -1,0 +1,166 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-60ddafa8f58e2c011b9c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					]
+				},
+				{
+					"build" : "gtest",
+					"jsonFile" : "directory-gtest-0908a8c91ddba5d6c989.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "/opt/ros/jazzy/src/gtest_vendor",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "usb_cam",
+					"targetIndexes" : 
+					[
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "gtest",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "gtest::@0af4add9fe94340e763e",
+					"jsonFile" : "target-gtest-6f28c65b751b691d4c26.json",
+					"name" : "gtest",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "gtest_main::@0af4add9fe94340e763e",
+					"jsonFile" : "target-gtest_main-7c4829f8cb48a0e0a1a8.json",
+					"name" : "gtest_main",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "test_pixel_formats::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-test_pixel_formats-2003c52588113b7e09dd.json",
+					"name" : "test_pixel_formats",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "test_usb_cam_utils::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-test_usb_cam_utils-28a99d1b4ff88fc44cc3.json",
+					"name" : "test_usb_cam_utils",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-d0c5ecc83b7aa6c1f159.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "usb_cam::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-usb_cam-c2fd6b8d40a25a5fc41e.json",
+					"name" : "usb_cam",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "usb_cam_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-usb_cam_node-ff3c903d678d285c2be6.json",
+					"name" : "usb_cam_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "usb_cam_node_exe::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-usb_cam_node_exe-8b38efef01f4dbda3e23.json",
+					"name" : "usb_cam_node_exe",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "usb_cam_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-usb_cam_uninstall-b159479b34360432aa3a.json",
+					"name" : "usb_cam_uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/usb_cam",
+		"source" : "/home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/src/usb_cam"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

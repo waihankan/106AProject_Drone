@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/hieu-hoang/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces
+CMAKE_SOURCE_DIR = /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/hieu-hoang/ros2_aruco_ws/build/ros2_aruco_interfaces
+CMAKE_BINARY_DIR = /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco_interfaces
 
 # Utility rule file for ament_cmake_python_copy_ros2_aruco_interfaces.
 
@@ -67,7 +67,7 @@ include CMakeFiles/ament_cmake_python_copy_ros2_aruco_interfaces.dir/compiler_de
 include CMakeFiles/ament_cmake_python_copy_ros2_aruco_interfaces.dir/progress.make
 
 CMakeFiles/ament_cmake_python_copy_ros2_aruco_interfaces:
-	/usr/bin/cmake -E copy_directory /home/hieu-hoang/ros2_aruco_ws/build/ros2_aruco_interfaces/rosidl_generator_py/ros2_aruco_interfaces /home/hieu-hoang/ros2_aruco_ws/build/ros2_aruco_interfaces/ament_cmake_python/ros2_aruco_interfaces/ros2_aruco_interfaces
+	/usr/bin/cmake -E copy_directory /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco_interfaces/rosidl_generator_py/ros2_aruco_interfaces /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco_interfaces/ament_cmake_python/ros2_aruco_interfaces/ros2_aruco_interfaces
 
 ament_cmake_python_copy_ros2_aruco_interfaces: CMakeFiles/ament_cmake_python_copy_ros2_aruco_interfaces
 ament_cmake_python_copy_ros2_aruco_interfaces: CMakeFiles/ament_cmake_python_copy_ros2_aruco_interfaces.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/ament_cmake_python_copy_ros2_aruco_interfaces.dir/clean:
 .PHONY : CMakeFiles/ament_cmake_python_copy_ros2_aruco_interfaces.dir/clean
 
 CMakeFiles/ament_cmake_python_copy_ros2_aruco_interfaces.dir/depend:
-	cd /home/hieu-hoang/ros2_aruco_ws/build/ros2_aruco_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/hieu-hoang/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces /home/hieu-hoang/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces /home/hieu-hoang/ros2_aruco_ws/build/ros2_aruco_interfaces /home/hieu-hoang/ros2_aruco_ws/build/ros2_aruco_interfaces /home/hieu-hoang/ros2_aruco_ws/build/ros2_aruco_interfaces/CMakeFiles/ament_cmake_python_copy_ros2_aruco_interfaces.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco_interfaces && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco_interfaces /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco_interfaces /home/hieu-hoang/106AProject_Drone/ros2_aruco_ws/build/ros2_aruco_interfaces/CMakeFiles/ament_cmake_python_copy_ros2_aruco_interfaces.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/ament_cmake_python_copy_ros2_aruco_interfaces.dir/depend
 
