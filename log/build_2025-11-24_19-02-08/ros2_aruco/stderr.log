@@ -1,0 +1,5 @@
+  File "/home/hieu/Documents/106AProject_Drone/install/ros2_aruco/lib/python3.10/site-packages/ros2_aruco/aruco_tf.py", line 44
+        def __init__(self):
+    ^
+SyntaxError: invalid non-printable character U+00A0
+

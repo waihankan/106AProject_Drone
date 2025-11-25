@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -Dusb_cam_EXPORTS
 
-CXX_INCLUDES = -I/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/src/usb_cam/include -isystem /usr/include/opencv4
+CXX_INCLUDES = -I/home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/usb_cam/include -isystem /usr/include/opencv4
 
 CXX_FLAGS = -fPIC -Wall -Wextra -Wpedantic -Werror
 

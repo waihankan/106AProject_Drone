@@ -1,0 +1,26 @@
+[0.668s] Invoking command in '/home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/ros2_aruco/ros2_aruco': PYTHONPATH=/home/hieu/Documents/106AProject_Drone/build/ros2_aruco/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/hieu/Documents/106AProject_Drone/install/ros2_aruco/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../../build/ros2_aruco build --build-base /home/hieu/Documents/106AProject_Drone/build/ros2_aruco/build install --record /home/hieu/Documents/106AProject_Drone/build/ros2_aruco/install.log --single-version-externally-managed install_data
+[0.845s] running egg_info
+[0.846s] writing ../../../../build/ros2_aruco/ros2_aruco.egg-info/PKG-INFO
+[0.846s] writing dependency_links to ../../../../build/ros2_aruco/ros2_aruco.egg-info/dependency_links.txt
+[0.846s] writing entry points to ../../../../build/ros2_aruco/ros2_aruco.egg-info/entry_points.txt
+[0.846s] writing requirements to ../../../../build/ros2_aruco/ros2_aruco.egg-info/requires.txt
+[0.846s] writing top-level names to ../../../../build/ros2_aruco/ros2_aruco.egg-info/top_level.txt
+[0.847s] reading manifest file '../../../../build/ros2_aruco/ros2_aruco.egg-info/SOURCES.txt'
+[0.848s] writing manifest file '../../../../build/ros2_aruco/ros2_aruco.egg-info/SOURCES.txt'
+[0.848s] running build
+[0.848s] running build_py
+[0.849s] copying ros2_aruco/aruco_tf.py -> /home/hieu/Documents/106AProject_Drone/build/ros2_aruco/build/lib/ros2_aruco
+[0.849s] running install
+[0.849s] running install_lib
+[0.849s] copying /home/hieu/Documents/106AProject_Drone/build/ros2_aruco/build/lib/ros2_aruco/aruco_tf.py -> /home/hieu/Documents/106AProject_Drone/install/ros2_aruco/lib/python3.10/site-packages/ros2_aruco
+[0.850s] byte-compiling /home/hieu/Documents/106AProject_Drone/install/ros2_aruco/lib/python3.10/site-packages/ros2_aruco/aruco_tf.py to aruco_tf.cpython-310.pyc
+[0.851s] running install_data
+[0.851s] running install_egg_info
+[0.852s] removing '/home/hieu/Documents/106AProject_Drone/install/ros2_aruco/lib/python3.10/site-packages/ros2_aruco-0.1.0-py3.10.egg-info' (and everything under it)
+[0.853s] Copying ../../../../build/ros2_aruco/ros2_aruco.egg-info to /home/hieu/Documents/106AProject_Drone/install/ros2_aruco/lib/python3.10/site-packages/ros2_aruco-0.1.0-py3.10.egg-info
+[0.853s] running install_scripts
+[0.872s] Installing aruco_generate_marker script to /home/hieu/Documents/106AProject_Drone/install/ros2_aruco/lib/ros2_aruco
+[0.873s] Installing aruco_node script to /home/hieu/Documents/106AProject_Drone/install/ros2_aruco/lib/ros2_aruco
+[0.873s] Installing aruco_tf script to /home/hieu/Documents/106AProject_Drone/install/ros2_aruco/lib/ros2_aruco
+[0.873s] writing list of installed files to '/home/hieu/Documents/106AProject_Drone/build/ros2_aruco/install.log'
+[0.889s] Invoked command in '/home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/ros2_aruco/ros2_aruco' returned '0': PYTHONPATH=/home/hieu/Documents/106AProject_Drone/build/ros2_aruco/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/hieu/Documents/106AProject_Drone/install/ros2_aruco/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../../build/ros2_aruco build --build-base /home/hieu/Documents/106AProject_Drone/build/ros2_aruco/build install --record /home/hieu/Documents/106AProject_Drone/build/ros2_aruco/install.log --single-version-externally-managed install_data

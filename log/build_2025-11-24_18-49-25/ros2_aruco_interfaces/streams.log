@@ -1,0 +1,231 @@
+[0.355s] Invoking command in '/home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hieu/Documents/106AProject_Drone/install/ros2_aruco:/home/hieu/Documents/106AProject_Drone/install/my_aruco_detector:/opt/ros/humble /usr/bin/cmake /home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces -DCMAKE_INSTALL_PREFIX=/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces
+[0.402s] -- The C compiler identification is GNU 11.4.0
+[0.449s] -- The CXX compiler identification is GNU 11.4.0
+[0.455s] -- Detecting C compiler ABI info
+[0.515s] -- Detecting C compiler ABI info - done
+[0.521s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.521s] -- Detecting C compile features
+[0.521s] -- Detecting C compile features - done
+[0.524s] -- Detecting CXX compiler ABI info
+[0.594s] -- Detecting CXX compiler ABI info - done
+[0.601s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.601s] -- Detecting CXX compile features
+[0.602s] -- Detecting CXX compile features - done
+[0.604s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.726s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.798s] -- Found geometry_msgs: 4.9.0 (/opt/ros/humble/share/geometry_msgs/cmake)
+[0.829s] -- Found rosidl_generator_c: 3.1.7 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.833s] -- Found rosidl_adapter: 3.1.7 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.840s] -- Found rosidl_generator_cpp: 3.1.7 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.851s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.865s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.898s] -- Found rosidl_default_generators: 1.2.0 (/opt/ros/humble/share/rosidl_default_generators/cmake)
+[1.166s] -- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)
+[1.589s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.752s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.770s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.10.12", minimum required is "3.6") 
+[1.771s] -- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)
+[1.793s] -- Found PythonLibs: /usr/lib/x86_64-linux-gnu/libpython3.10.so (found suitable version "3.10.12", minimum required is "3.5") 
+[1.793s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[1.793s] -- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10
+[1.793s] -- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.10.so
+[1.810s] -- Found PythonExtra: .so  
+[1.869s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[1.887s] -- Added test 'copyright' to check source files copyright and LICENSE
+[1.888s] -- Added test 'lint_cmake' to check CMake code style
+[1.889s] -- Added test 'xmllint' to check XML markup files
+[1.891s] -- Configuring done
+[1.924s] -- Generating done
+[1.934s] -- Build files have been written to: /home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces
+[1.941s] Invoked command in '/home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hieu/Documents/106AProject_Drone/install/ros2_aruco:/home/hieu/Documents/106AProject_Drone/install/my_aruco_detector:/opt/ros/humble /usr/bin/cmake /home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces -DCMAKE_INSTALL_PREFIX=/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces
+[1.943s] Invoking command in '/home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hieu/Documents/106AProject_Drone/install/ros2_aruco:/home/hieu/Documents/106AProject_Drone/install/my_aruco_detector:/opt/ros/humble /usr/bin/cmake --build /home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces -- -j12 -l12
+[1.981s] [  3%] [34m[1mGenerating C code for ROS interfaces[0m
+[1.990s] [  6%] [34m[1mGenerating C++ code for ROS interfaces[0m
+[2.000s] [  6%] Built target ament_cmake_python_copy_ros2_aruco_interfaces
+[2.185s] running egg_info
+[2.186s] creating ros2_aruco_interfaces.egg-info
+[2.186s] writing ros2_aruco_interfaces.egg-info/PKG-INFO
+[2.186s] writing dependency_links to ros2_aruco_interfaces.egg-info/dependency_links.txt
+[2.186s] writing top-level names to ros2_aruco_interfaces.egg-info/top_level.txt
+[2.186s] writing manifest file 'ros2_aruco_interfaces.egg-info/SOURCES.txt'
+[2.188s] reading manifest file 'ros2_aruco_interfaces.egg-info/SOURCES.txt'
+[2.189s] writing manifest file 'ros2_aruco_interfaces.egg-info/SOURCES.txt'
+[2.189s] [  6%] Built target ros2_aruco_interfaces__cpp
+[2.200s] [  9%] [34m[1mGenerating C++ type support dispatch for ROS interfaces[0m
+[2.203s] [ 16%] [34m[1mGenerating C++ type support for eProsima Fast-RTPS[0m
+[2.203s] [ 16%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[2.211s] [ 16%] Built target ament_cmake_python_build_ros2_aruco_interfaces_egg
+[2.304s] [ 19%] [32mBuilding C object CMakeFiles/ros2_aruco_interfaces__rosidl_generator_c.dir/rosidl_generator_c/ros2_aruco_interfaces/msg/detail/aruco_markers__functions.c.o[0m
+[2.366s] [ 22%] [32m[1mLinking C shared library libros2_aruco_interfaces__rosidl_generator_c.so[0m
+[2.413s] [ 22%] Built target ros2_aruco_interfaces__rosidl_generator_c
+[2.418s] [ 25%] [32mBuilding CXX object CMakeFiles/ros2_aruco_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/ros2_aruco_interfaces/msg/detail/dds_fastrtps/aruco_markers__type_support.cpp.o[0m
+[2.425s] [ 29%] [34m[1mGenerating C type support for eProsima Fast-RTPS[0m
+[2.425s] [ 32%] [34m[1mGenerating C type support dispatch for ROS interfaces[0m
+[2.431s] [ 35%] [34m[1mGenerating C introspection for ROS interfaces[0m
+[2.478s] [ 38%] [32mBuilding CXX object CMakeFiles/ros2_aruco_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/ros2_aruco_interfaces/msg/aruco_markers__type_support.cpp.o[0m
+[2.495s] [ 41%] [32mBuilding CXX object CMakeFiles/ros2_aruco_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/ros2_aruco_interfaces/msg/detail/aruco_markers__type_support.cpp.o[0m
+[2.701s] [ 45%] [32mBuilding CXX object CMakeFiles/ros2_aruco_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/ros2_aruco_interfaces/msg/aruco_markers__type_support.cpp.o[0m
+[2.703s] [ 48%] [32mBuilding C object CMakeFiles/ros2_aruco_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/ros2_aruco_interfaces/msg/detail/aruco_markers__type_support.c.o[0m
+[2.737s] [ 51%] [32m[1mLinking CXX shared library libros2_aruco_interfaces__rosidl_typesupport_c.so[0m
+[2.738s] [ 54%] [32mBuilding CXX object CMakeFiles/ros2_aruco_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/ros2_aruco_interfaces/msg/detail/aruco_markers__type_support_c.cpp.o[0m
+[2.746s] [ 58%] [32m[1mLinking C shared library libros2_aruco_interfaces__rosidl_typesupport_introspection_c.so[0m
+[2.783s] [ 61%] [32m[1mLinking CXX shared library libros2_aruco_interfaces__rosidl_typesupport_cpp.so[0m
+[2.787s] [ 61%] Built target ros2_aruco_interfaces__rosidl_typesupport_introspection_c
+[2.788s] [ 61%] Built target ros2_aruco_interfaces__rosidl_typesupport_c
+[2.806s] [ 64%] [32m[1mLinking CXX shared library libros2_aruco_interfaces__rosidl_typesupport_fastrtps_cpp.so[0m
+[2.833s] [ 64%] Built target ros2_aruco_interfaces__rosidl_typesupport_cpp
+[2.854s] [ 67%] [32m[1mLinking CXX shared library libros2_aruco_interfaces__rosidl_typesupport_introspection_cpp.so[0m
+[2.879s] [ 67%] Built target ros2_aruco_interfaces__rosidl_typesupport_fastrtps_cpp
+[2.920s] [ 67%] Built target ros2_aruco_interfaces__rosidl_typesupport_introspection_cpp
+[3.007s] [ 70%] [32m[1mLinking CXX shared library libros2_aruco_interfaces__rosidl_typesupport_fastrtps_c.so[0m
+[3.071s] [ 70%] Built target ros2_aruco_interfaces__rosidl_typesupport_fastrtps_c
+[3.089s] [ 70%] Built target ros2_aruco_interfaces
+[3.108s] [ 74%] [34m[1mGenerating Python code for ROS interfaces[0m
+[3.346s] [ 74%] Built target ros2_aruco_interfaces__py
+[3.364s] [ 77%] [32mBuilding C object CMakeFiles/ros2_aruco_interfaces__rosidl_generator_py.dir/rosidl_generator_py/ros2_aruco_interfaces/msg/_aruco_markers_s.c.o[0m
+[3.458s] [ 80%] [32m[1mLinking C shared library rosidl_generator_py/ros2_aruco_interfaces/libros2_aruco_interfaces__rosidl_generator_py.so[0m
+[3.498s] [ 80%] Built target ros2_aruco_interfaces__rosidl_generator_py
+[3.517s] [ 83%] [32mBuilding C object CMakeFiles/ros2_aruco_interfaces__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/ros2_aruco_interfaces/_ros2_aruco_interfaces_s.ep.rosidl_typesupport_introspection_c.c.o[0m
+[3.518s] [ 90%] [32mBuilding C object CMakeFiles/ros2_aruco_interfaces__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/ros2_aruco_interfaces/_ros2_aruco_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c.o[0m
+[3.518s] [ 90%] [32mBuilding C object CMakeFiles/ros2_aruco_interfaces__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/ros2_aruco_interfaces/_ros2_aruco_interfaces_s.ep.rosidl_typesupport_c.c.o[0m
+[3.607s] [ 96%] [32m[1mLinking C shared library rosidl_generator_py/ros2_aruco_interfaces/ros2_aruco_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so[0m
+[3.607s] [ 96%] [32m[1mLinking C shared library rosidl_generator_py/ros2_aruco_interfaces/ros2_aruco_interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so[0m
+[3.607s] [100%] [32m[1mLinking C shared library rosidl_generator_py/ros2_aruco_interfaces/ros2_aruco_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so[0m
+[3.645s] [100%] Built target ros2_aruco_interfaces__rosidl_typesupport_c__pyext
+[3.645s] [100%] Built target ros2_aruco_interfaces__rosidl_typesupport_fastrtps_c__pyext
+[3.645s] [100%] Built target ros2_aruco_interfaces__rosidl_typesupport_introspection_c__pyext
+[3.657s] Invoked command in '/home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hieu/Documents/106AProject_Drone/install/ros2_aruco:/home/hieu/Documents/106AProject_Drone/install/my_aruco_detector:/opt/ros/humble /usr/bin/cmake --build /home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces -- -j12 -l12
+[3.666s] Invoking command in '/home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hieu/Documents/106AProject_Drone/install/ros2_aruco:/home/hieu/Documents/106AProject_Drone/install/my_aruco_detector:/opt/ros/humble /usr/bin/cmake --install /home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces
+[3.673s] -- Install configuration: ""
+[3.673s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ament_index/resource_index/rosidl_interfaces/ros2_aruco_interfaces
+[3.673s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces
+[3.673s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg
+[3.673s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail
+[3.673s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail/aruco_markers__type_support.h
+[3.673s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail/aruco_markers__struct.h
+[3.673s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail/aruco_markers__functions.h
+[3.674s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail/aruco_markers__functions.c
+[3.674s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/aruco_markers.h
+[3.674s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/rosidl_generator_c__visibility_control.h
+[3.674s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/environment/library_path.sh
+[3.674s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/environment/library_path.dsv
+[3.674s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_generator_c.so
+[3.675s] -- Set runtime path of "/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_generator_c.so" to ""
+[3.675s] -- Up-to-date: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces
+[3.675s] -- Up-to-date: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg
+[3.675s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[3.675s] -- Up-to-date: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail
+[3.675s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail/aruco_markers__rosidl_typesupport_fastrtps_c.h
+[3.675s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_typesupport_fastrtps_c.so
+[3.676s] -- Set runtime path of "/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_typesupport_fastrtps_c.so" to ""
+[3.676s] -- Up-to-date: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces
+[3.676s] -- Up-to-date: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg
+[3.676s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp
+[3.676s] -- Up-to-date: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail
+[3.676s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail/aruco_markers__struct.hpp
+[3.676s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail/aruco_markers__type_support.hpp
+[3.676s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail/aruco_markers__traits.hpp
+[3.676s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail/aruco_markers__builder.hpp
+[3.676s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/aruco_markers.hpp
+[3.676s] -- Up-to-date: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces
+[3.677s] -- Up-to-date: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg
+[3.677s] -- Up-to-date: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail
+[3.677s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail/aruco_markers__rosidl_typesupport_fastrtps_cpp.hpp
+[3.677s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail/dds_fastrtps
+[3.677s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[3.677s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_typesupport_fastrtps_cpp.so
+[3.677s] -- Set runtime path of "/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_typesupport_fastrtps_cpp.so" to ""
+[3.677s] -- Up-to-date: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces
+[3.677s] -- Up-to-date: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg
+[3.678s] -- Up-to-date: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail
+[3.678s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail/aruco_markers__rosidl_typesupport_introspection_c.h
+[3.678s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail/aruco_markers__type_support.c
+[3.678s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[3.678s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_typesupport_introspection_c.so
+[3.678s] -- Set runtime path of "/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_typesupport_introspection_c.so" to ""
+[3.678s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_typesupport_c.so
+[3.678s] -- Set runtime path of "/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_typesupport_c.so" to ""
+[3.679s] -- Up-to-date: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces
+[3.679s] -- Up-to-date: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg
+[3.679s] -- Up-to-date: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail
+[3.679s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail/aruco_markers__type_support.cpp
+[3.679s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/include/ros2_aruco_interfaces/ros2_aruco_interfaces/msg/detail/aruco_markers__rosidl_typesupport_introspection_cpp.hpp
+[3.679s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_typesupport_introspection_cpp.so
+[3.679s] -- Set runtime path of "/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_typesupport_introspection_cpp.so" to ""
+[3.679s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_typesupport_cpp.so
+[3.680s] -- Set runtime path of "/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_typesupport_cpp.so" to ""
+[3.680s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/environment/pythonpath.sh
+[3.680s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/environment/pythonpath.dsv
+[3.680s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces-0.1.0-py3.10.egg-info
+[3.680s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces-0.1.0-py3.10.egg-info/SOURCES.txt
+[3.680s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces-0.1.0-py3.10.egg-info/top_level.txt
+[3.680s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces-0.1.0-py3.10.egg-info/PKG-INFO
+[3.680s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces-0.1.0-py3.10.egg-info/dependency_links.txt
+[3.681s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces
+[3.681s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/msg
+[3.681s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/msg/_aruco_markers_s.c
+[3.681s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/msg/_aruco_markers.py
+[3.681s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/msg/__init__.py
+[3.681s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/ros2_aruco_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+[3.681s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/ros2_aruco_interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+[3.681s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/libros2_aruco_interfaces__rosidl_generator_py.so
+[3.682s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/_ros2_aruco_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+[3.682s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/__init__.py
+[3.682s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/_ros2_aruco_interfaces_s.ep.rosidl_typesupport_introspection_c.c
+[3.682s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/_ros2_aruco_interfaces_s.ep.rosidl_typesupport_c.c
+[3.682s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/ros2_aruco_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+[3.710s] Listing '/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces'...
+[3.710s] Compiling '/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/__init__.py'...
+[3.710s] Listing '/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/msg'...
+[3.710s] Compiling '/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/msg/__init__.py'...
+[3.710s] Compiling '/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/msg/_aruco_markers.py'...
+[3.714s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/ros2_aruco_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+[3.714s] -- Set runtime path of "/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/ros2_aruco_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so" to ""
+[3.714s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/ros2_aruco_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+[3.714s] -- Set runtime path of "/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/ros2_aruco_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so" to ""
+[3.714s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/ros2_aruco_interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+[3.715s] -- Set runtime path of "/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/local/lib/python3.10/dist-packages/ros2_aruco_interfaces/ros2_aruco_interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so" to ""
+[3.715s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_generator_py.so
+[3.715s] -- Set runtime path of "/home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/lib/libros2_aruco_interfaces__rosidl_generator_py.so" to ""
+[3.715s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/msg/ArucoMarkers.idl
+[3.715s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/msg/ArucoMarkers.msg
+[3.716s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ament_index/resource_index/package_run_dependencies/ros2_aruco_interfaces
+[3.716s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ament_index/resource_index/parent_prefix_path/ros2_aruco_interfaces
+[3.716s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/environment/ament_prefix_path.sh
+[3.716s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/environment/ament_prefix_path.dsv
+[3.716s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/environment/path.sh
+[3.716s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/environment/path.dsv
+[3.716s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/local_setup.bash
+[3.717s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/local_setup.sh
+[3.717s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/local_setup.zsh
+[3.717s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/local_setup.dsv
+[3.717s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/package.dsv
+[3.717s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ament_index/resource_index/packages/ros2_aruco_interfaces
+[3.717s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/export_ros2_aruco_interfaces__rosidl_generator_cExport.cmake
+[3.718s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/export_ros2_aruco_interfaces__rosidl_generator_cExport-noconfig.cmake
+[3.718s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/export_ros2_aruco_interfaces__rosidl_typesupport_fastrtps_cExport.cmake
+[3.718s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/export_ros2_aruco_interfaces__rosidl_typesupport_fastrtps_cExport-noconfig.cmake
+[3.718s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/export_ros2_aruco_interfaces__rosidl_generator_cppExport.cmake
+[3.718s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/export_ros2_aruco_interfaces__rosidl_typesupport_fastrtps_cppExport.cmake
+[3.718s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/export_ros2_aruco_interfaces__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake
+[3.718s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/ros2_aruco_interfaces__rosidl_typesupport_introspection_cExport.cmake
+[3.719s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/ros2_aruco_interfaces__rosidl_typesupport_introspection_cExport-noconfig.cmake
+[3.719s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/ros2_aruco_interfaces__rosidl_typesupport_cExport.cmake
+[3.719s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/ros2_aruco_interfaces__rosidl_typesupport_cExport-noconfig.cmake
+[3.719s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/ros2_aruco_interfaces__rosidl_typesupport_introspection_cppExport.cmake
+[3.719s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/ros2_aruco_interfaces__rosidl_typesupport_introspection_cppExport-noconfig.cmake
+[3.719s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/ros2_aruco_interfaces__rosidl_typesupport_cppExport.cmake
+[3.719s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/ros2_aruco_interfaces__rosidl_typesupport_cppExport-noconfig.cmake
+[3.720s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/export_ros2_aruco_interfaces__rosidl_generator_pyExport.cmake
+[3.720s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/export_ros2_aruco_interfaces__rosidl_generator_pyExport-noconfig.cmake
+[3.720s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/rosidl_cmake-extras.cmake
+[3.720s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/ament_cmake_export_dependencies-extras.cmake
+[3.720s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/ament_cmake_export_include_directories-extras.cmake
+[3.720s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/ament_cmake_export_libraries-extras.cmake
+[3.721s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/ament_cmake_export_targets-extras.cmake
+[3.721s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[3.721s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[3.721s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/ros2_aruco_interfacesConfig.cmake
+[3.721s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/cmake/ros2_aruco_interfacesConfig-version.cmake
+[3.721s] -- Installing: /home/hieu/Documents/106AProject_Drone/install/ros2_aruco_interfaces/share/ros2_aruco_interfaces/package.xml
+[3.724s] Invoked command in '/home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hieu/Documents/106AProject_Drone/install/ros2_aruco:/home/hieu/Documents/106AProject_Drone/install/my_aruco_detector:/opt/ros/humble /usr/bin/cmake --install /home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces

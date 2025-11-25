@@ -1,0 +1,19 @@
+[0.366s] Invoking command in '/home/hieu/Documents/106AProject_Drone/build/usb_cam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hieu/Documents/106AProject_Drone/install/ros2_aruco:/home/hieu/Documents/106AProject_Drone/install/my_aruco_detector:/opt/ros/humble /usr/bin/cmake --build /home/hieu/Documents/106AProject_Drone/build/usb_cam -- -j12 -l12
+[0.418s] [ 14%] Built target gtest_main
+[0.418s] [ 28%] Built target usb_cam
+[0.418s] [ 42%] Built target usb_cam_node_exe
+[0.419s] [ 57%] Built target gtest
+[0.431s] [35m[1mConsolidate compiler generated dependencies of target test_pixel_formats[0m
+[0.431s] [35m[1mConsolidate compiler generated dependencies of target test_usb_cam_utils[0m
+[0.442s] [ 64%] [32mBuilding CXX object CMakeFiles/usb_cam_node.dir/src/usb_cam_node.cpp.o[0m
+[0.448s] [ 78%] Built target test_pixel_formats
+[0.450s] [ 92%] Built target test_usb_cam_utils
+[0.568s] In file included from [01m[K/home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/usb_cam/src/usb_cam_node.cpp:34[m[K:
+[0.568s] [01m[K/home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/usb_cam/include/usb_cam/usb_cam_node.hpp:38:10:[m[K [01;31m[Kfatal error: [m[Kcamera_info_manager/camera_info_manager.hpp: No such file or directory
+[0.568s]    38 | #include [01;31m[K"camera_info_manager/camera_info_manager.hpp"[m[K
+[0.568s]       |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[0.568s] compilation terminated.
+[0.570s] gmake[2]: *** [CMakeFiles/usb_cam_node.dir/build.make:76: CMakeFiles/usb_cam_node.dir/src/usb_cam_node.cpp.o] Error 1
+[0.570s] gmake[1]: *** [CMakeFiles/Makefile2:189: CMakeFiles/usb_cam_node.dir/all] Error 2
+[0.571s] gmake: *** [Makefile:146: all] Error 2
+[0.574s] Invoked command in '/home/hieu/Documents/106AProject_Drone/build/usb_cam' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hieu/Documents/106AProject_Drone/install/ros2_aruco:/home/hieu/Documents/106AProject_Drone/install/my_aruco_detector:/opt/ros/humble /usr/bin/cmake --build /home/hieu/Documents/106AProject_Drone/build/usb_cam -- -j12 -l12

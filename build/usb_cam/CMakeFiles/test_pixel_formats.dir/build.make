@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/src/usb_cam
+CMAKE_SOURCE_DIR = /home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/usb_cam
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/usb_cam
+CMAKE_BINARY_DIR = /home/hieu/Documents/106AProject_Drone/build/usb_cam
 
 # Include any dependencies generated for this target.
 include CMakeFiles/test_pixel_formats.dir/depend.make
@@ -70,18 +70,18 @@ include CMakeFiles/test_pixel_formats.dir/progress.make
 include CMakeFiles/test_pixel_formats.dir/flags.make
 
 CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.o: CMakeFiles/test_pixel_formats.dir/flags.make
-CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.o: /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/src/usb_cam/test/test_pixel_formats.cpp
+CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.o: /home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/usb_cam/test/test_pixel_formats.cpp
 CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.o: CMakeFiles/test_pixel_formats.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/usb_cam/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.o -MF CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.o.d -o CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.o -c /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/src/usb_cam/test/test_pixel_formats.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hieu/Documents/106AProject_Drone/build/usb_cam/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.o -MF CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.o.d -o CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.o -c /home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/usb_cam/test/test_pixel_formats.cpp
 
 CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/src/usb_cam/test/test_pixel_formats.cpp > CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/usb_cam/test/test_pixel_formats.cpp > CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.i
 
 CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/src/usb_cam/test/test_pixel_formats.cpp -o CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/usb_cam/test/test_pixel_formats.cpp -o CMakeFiles/test_pixel_formats.dir/test/test_pixel_formats.cpp.s
 
 # Object files for target test_pixel_formats
 test_pixel_formats_OBJECTS = \
@@ -150,7 +150,7 @@ test_pixel_formats: /usr/lib/x86_64-linux-gnu/libopencv_photo.so.4.5.4d
 test_pixel_formats: /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.4.5.4d
 test_pixel_formats: /usr/lib/x86_64-linux-gnu/libopencv_core.so.4.5.4d
 test_pixel_formats: CMakeFiles/test_pixel_formats.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/usb_cam/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable test_pixel_formats"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hieu/Documents/106AProject_Drone/build/usb_cam/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable test_pixel_formats"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test_pixel_formats.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -162,6 +162,6 @@ CMakeFiles/test_pixel_formats.dir/clean:
 .PHONY : CMakeFiles/test_pixel_formats.dir/clean
 
 CMakeFiles/test_pixel_formats.dir/depend:
-	cd /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/usb_cam && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/src/usb_cam /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/src/usb_cam /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/usb_cam /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/usb_cam /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/usb_cam/CMakeFiles/test_pixel_formats.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/hieu/Documents/106AProject_Drone/build/usb_cam && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/usb_cam /home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/usb_cam /home/hieu/Documents/106AProject_Drone/build/usb_cam /home/hieu/Documents/106AProject_Drone/build/usb_cam /home/hieu/Documents/106AProject_Drone/build/usb_cam/CMakeFiles/test_pixel_formats.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/test_pixel_formats.dir/depend
 

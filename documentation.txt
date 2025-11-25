@@ -4,18 +4,16 @@ ros2 run ros2_aruco aruco_node //Not needed
 
 Aruco Recognition Launch file:
 ros2 launch ros2_aruco aruco_recognition.launch.py
+Alternative: Launch Recognition node with TF:
+ros2 launch ros2_aruco aruco_tf_launcher.launch.py
 
 Running the webcam node:
-ros2 run usb_cam usb_cam_node_exe
-
-Cam node with Hieu's Calibration Directory
-ros2 run usb_cam usb_cam_node --ros-args -p camera_info_url:='file:///home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/config/ost.yaml'
-
-ros2 run usb_cam usb_cam_node --ros-args -p camera_info_url:='file:///home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/config2/ost.yaml'
-
+ros2 launch usb_cam camera.launch.py
 
 
 Manually set fixed frame to camera for aruco visualization
 
 If colcon build fails:
+New systems only: install colcon
+Then:
 rm -rf build install log

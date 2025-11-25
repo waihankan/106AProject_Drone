@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/src/usb_cam/src/usb_cam.cpp" "CMakeFiles/usb_cam.dir/src/usb_cam.cpp.o" "gcc" "CMakeFiles/usb_cam.dir/src/usb_cam.cpp.o.d"
+  "/home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/usb_cam/src/usb_cam.cpp" "CMakeFiles/usb_cam.dir/src/usb_cam.cpp.o" "gcc" "CMakeFiles/usb_cam.dir/src/usb_cam.cpp.o.d"
   )
 
 # Targets to which this target links.

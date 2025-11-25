@@ -1,0 +1,1 @@
+Invoking command in '/home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hieu/Documents/106AProject_Drone/install/ros2_aruco:/home/hieu/Documents/106AProject_Drone/install/my_aruco_detector:/opt/ros/humble /usr/bin/cmake --build /home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces -- -j12 -l12

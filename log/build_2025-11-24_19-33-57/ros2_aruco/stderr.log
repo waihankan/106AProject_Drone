@@ -1,0 +1,5 @@
+  File "/home/hieu/Documents/106AProject_Drone/install/ros2_aruco/lib/python3.10/site-packages/ros2_aruco/aruco_tf.py", line 358
+    rclpy.spin(node)testing
+                    ^^^^^^^
+SyntaxError: invalid syntax
+

@@ -1,0 +1,23 @@
+[0.366s] Invoking command in '/home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hieu/Documents/106AProject_Drone/install/ros2_aruco:/home/hieu/Documents/106AProject_Drone/install/my_aruco_detector:/opt/ros/humble /usr/bin/cmake --build /home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces -- -j12 -l12
+[0.414s] [  3%] Built target ros2_aruco_interfaces__cpp
+[0.416s] [ 12%] Built target ros2_aruco_interfaces__rosidl_generator_c
+[0.429s] [ 12%] Built target ament_cmake_python_copy_ros2_aruco_interfaces
+[0.443s] [ 25%] Built target ros2_aruco_interfaces__rosidl_typesupport_fastrtps_cpp
+[0.443s] [ 32%] Built target ros2_aruco_interfaces__rosidl_typesupport_introspection_cpp
+[0.443s] [ 41%] Built target ros2_aruco_interfaces__rosidl_typesupport_cpp
+[0.443s] [ 51%] Built target ros2_aruco_interfaces__rosidl_typesupport_introspection_c
+[0.445s] [ 70%] Built target ros2_aruco_interfaces__rosidl_typesupport_c
+[0.445s] [ 70%] Built target ros2_aruco_interfaces__rosidl_typesupport_fastrtps_c
+[0.466s] [ 70%] Built target ros2_aruco_interfaces
+[0.484s] [ 74%] Built target ros2_aruco_interfaces__py
+[0.504s] [ 80%] Built target ros2_aruco_interfaces__rosidl_generator_py
+[0.527s] [ 87%] Built target ros2_aruco_interfaces__rosidl_typesupport_c__pyext
+[0.527s] [ 93%] Built target ros2_aruco_interfaces__rosidl_typesupport_introspection_c__pyext
+[0.527s] [100%] Built target ros2_aruco_interfaces__rosidl_typesupport_fastrtps_c__pyext
+[0.612s] running egg_info
+[0.612s] writing ros2_aruco_interfaces.egg-info/PKG-INFO
+[0.612s] writing dependency_links to ros2_aruco_interfaces.egg-info/dependency_links.txt
+[0.612s] writing top-level names to ros2_aruco_interfaces.egg-info/top_level.txt
+[0.614s] reading manifest file 'ros2_aruco_interfaces.egg-info/SOURCES.txt'
+[0.614s] writing manifest file 'ros2_aruco_interfaces.egg-info/SOURCES.txt'
+[0.634s] [100%] Built target ament_cmake_python_build_ros2_aruco_interfaces_egg

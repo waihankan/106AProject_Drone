@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces
+CMAKE_SOURCE_DIR = /home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/src/ros2_aruco/ros2_aruco_interfaces
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/ros2_aruco_interfaces
+CMAKE_BINARY_DIR = /home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,9 +142,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/ros2_aruco_interfaces/CMakeFiles /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/ros2_aruco_interfaces//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces/CMakeFiles /home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cc/ee106a/fa25/class/ee106a-ado/ros_workspaces/106AProject_Drone/build/ros2_aruco_interfaces/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hieu/Documents/106AProject_Drone/build/ros2_aruco_interfaces/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
