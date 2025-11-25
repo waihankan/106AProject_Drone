@@ -1,0 +1,7 @@
+digraph G {
+"camera" -> "ar_marker_0"[label=" Broadcaster: default_authority\nAverage rate: 27.933\nBuffer length: 5.012\nMost recent transform: 1764044085.662499\nOldest transform: 1764044080.65056\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1764044085.7286563"[ shape=plaintext ] ;
+}->"camera";
+}

@@ -1,0 +1,20 @@
+[0.667s] Invoking command in '/home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/my_aruco_detector': PYTHONPATH=/home/hieu/Documents/106AProject_Drone/build/my_aruco_detector/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/hieu/Documents/106AProject_Drone/install/my_aruco_detector/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/my_aruco_detector build --build-base /home/hieu/Documents/106AProject_Drone/build/my_aruco_detector/build install --record /home/hieu/Documents/106AProject_Drone/build/my_aruco_detector/install.log --single-version-externally-managed install_data
+[0.848s] running egg_info
+[0.848s] writing ../../build/my_aruco_detector/my_aruco_detector.egg-info/PKG-INFO
+[0.848s] writing dependency_links to ../../build/my_aruco_detector/my_aruco_detector.egg-info/dependency_links.txt
+[0.849s] writing entry points to ../../build/my_aruco_detector/my_aruco_detector.egg-info/entry_points.txt
+[0.849s] writing requirements to ../../build/my_aruco_detector/my_aruco_detector.egg-info/requires.txt
+[0.849s] writing top-level names to ../../build/my_aruco_detector/my_aruco_detector.egg-info/top_level.txt
+[0.850s] reading manifest file '../../build/my_aruco_detector/my_aruco_detector.egg-info/SOURCES.txt'
+[0.851s] writing manifest file '../../build/my_aruco_detector/my_aruco_detector.egg-info/SOURCES.txt'
+[0.851s] running build
+[0.851s] running build_py
+[0.851s] running install
+[0.851s] running install_lib
+[0.852s] running install_data
+[0.852s] running install_egg_info
+[0.853s] removing '/home/hieu/Documents/106AProject_Drone/install/my_aruco_detector/lib/python3.10/site-packages/my_aruco_detector-0.0.0-py3.10.egg-info' (and everything under it)
+[0.854s] Copying ../../build/my_aruco_detector/my_aruco_detector.egg-info to /home/hieu/Documents/106AProject_Drone/install/my_aruco_detector/lib/python3.10/site-packages/my_aruco_detector-0.0.0-py3.10.egg-info
+[0.854s] running install_scripts
+[0.870s] writing list of installed files to '/home/hieu/Documents/106AProject_Drone/build/my_aruco_detector/install.log'
+[0.886s] Invoked command in '/home/hieu/Documents/106AProject_Drone/ros2_aruco_ws/my_aruco_detector' returned '0': PYTHONPATH=/home/hieu/Documents/106AProject_Drone/build/my_aruco_detector/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/hieu/Documents/106AProject_Drone/install/my_aruco_detector/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/my_aruco_detector build --build-base /home/hieu/Documents/106AProject_Drone/build/my_aruco_detector/build install --record /home/hieu/Documents/106AProject_Drone/build/my_aruco_detector/install.log --single-version-externally-managed install_data

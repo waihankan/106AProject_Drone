@@ -134,7 +134,7 @@ class ArucoNode(rclpy.node.Node):
         )
         self.get_logger().info(f"Marker size: {self.marker_size}")
         
-        self.marker_size_map = {0: 0.05, 1: .05, 2: 0.05, 3: 0.05, 4: 0.05, 5: 0.05, 11: 0.05, 
+        self.marker_size_map = {0: 0.05, 1: 0.05, 2: 0.05, 3: 0.05, 4: 0.05, 5: 0.05, 11: 0.05, 
                                 6: 0.15, 7: 0.15, 8: 0.15, 9: 0.15, 10: 0.15}
         self.get_logger().info(f"Marker size map for marker ids is: {self.marker_size_map}")
 
@@ -156,7 +156,6 @@ class ArucoNode(rclpy.node.Node):
         self.camera_frame = (
             self.get_parameter("camera_frame").get_parameter_value().string_value
         )
-        self.get_logger().info(f"Camera frame parameter: '{self.camera_frame}'")
 
         # Make sure we have a valid dictionary id:
         try:
@@ -170,21 +169,13 @@ class ArucoNode(rclpy.node.Node):
             options = "\n".join([s for s in dir(cv2.aruco) if s.startswith("DICT")])
             self.get_logger().error("valid options: {}".format(options))
 
-        # Set up subscriptions with compatible QoS
-        from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
-        
-        qos = QoSProfile(
-            reliability=ReliabilityPolicy.BEST_EFFORT,
-            history=HistoryPolicy.KEEP_LAST,
-            depth=1
-        )
-        
+        # Set up subscriptions
         self.info_sub = self.create_subscription(
-            CameraInfo, info_topic, self.info_callback, qos
+            CameraInfo, info_topic, self.info_callback, qos_profile_sensor_data
         )
 
         self.create_subscription(
-            Image, image_topic, self.image_callback, qos
+            Image, image_topic, self.image_callback, qos_profile_sensor_data
         )
 
         # Set up publishers
@@ -193,7 +184,6 @@ class ArucoNode(rclpy.node.Node):
 
         # Set up tf2 broadcaster
         self.tf_broadcaster = TransformBroadcaster(self)
-        self.get_logger().info("✓ TF Broadcaster initialized")
 
         # Set up fields for camera parameters
         self.info_msg = None
@@ -204,43 +194,28 @@ class ArucoNode(rclpy.node.Node):
         self.aruco_parameters = cv2.aruco.DetectorParameters_create()
 
         self.bridge = CvBridge()
-        
-        # Debug counters
-        self.image_count = 0
-        self.detection_count = 0
 
     def info_callback(self, info_msg):
         self.info_msg = info_msg
-        self.get_logger().info(f"✓ Camera info RECEIVED! Frame ID: '{info_msg.header.frame_id}'")
         self.intrinsic_mat = np.reshape(np.array(self.info_msg.k), (3, 3))
         self.distortion = np.array(self.info_msg.d)
-        self.get_logger().info(f"Camera matrix shape: {self.intrinsic_mat.shape}")
         # Assume that camera parameters will remain the same...
         self.destroy_subscription(self.info_sub)
 
     def image_callback(self, img_msg):
-        self.image_count += 1
-        
         if self.info_msg is None:
-            self.get_logger().warn("✗ No camera info has been received!")
+            self.get_logger().warn("No camera info has been received!")
             return
-
-        # Log every 30th image to avoid spam
-        if self.image_count % 30 == 0:
-            self.get_logger().info(f"Processing image #{self.image_count}")
 
         cv_image = self.bridge.imgmsg_to_cv2(img_msg, desired_encoding="mono8")
         markers = ArucoMarkers()
         pose_array = PoseArray()
-        
-        # Determine frame_id
         if self.camera_frame == "":
-            frame_id_to_use = self.info_msg.header.frame_id
+            markers.header.frame_id = self.info_msg.header.frame_id
+            pose_array.header.frame_id = self.info_msg.header.frame_id
         else:
-            frame_id_to_use = self.camera_frame
-            
-        markers.header.frame_id = frame_id_to_use
-        pose_array.header.frame_id = frame_id_to_use
+            markers.header.frame_id = self.camera_frame
+            pose_array.header.frame_id = self.camera_frame
 
         markers.header.stamp = img_msg.header.stamp
         pose_array.header.stamp = img_msg.header.stamp
@@ -248,15 +223,6 @@ class ArucoNode(rclpy.node.Node):
         corners, marker_ids, rejected = cv2.aruco.detectMarkers(
             cv_image, self.aruco_dictionary, parameters=self.aruco_parameters
         )
-
-        # DEBUG: Log detection results
-        if marker_ids is not None:
-            self.detection_count += 1
-            self.get_logger().info(f"✓ DETECTED {len(marker_ids)} markers: {marker_ids.flatten()}")
-        else:
-            if self.image_count % 30 == 0:
-                self.get_logger().info("✗ No markers detected in this frame")
-            return
 
         if marker_ids is not None:
             # process each marker individually to allow for diff marker sizes
@@ -268,10 +234,7 @@ class ArucoNode(rclpy.node.Node):
             goal_markers = []
             final_marker_ids = []
             for i, marker_id in enumerate(marker_ids):
-                marker_size = self.marker_size_map.get(marker_id[0], None)
-                if marker_size is None:
-                    self.get_logger().warn(f"Unknown marker ID {marker_id[0]}, skipping")
-                    continue
+                marker_size = self.marker_size_map[marker_id[0]]
                 if marker_size == 0.05:
                     turtlebot_corners.append(corners[i])
                     turtlebot_markers.append(marker_id)
@@ -289,7 +252,8 @@ class ArucoNode(rclpy.node.Node):
                     goal_rvecs, goal_tvecs = cv2.aruco.estimatePoseSingleMarkers(
                         goal_corners, goal_markers, self.intrinsic_mat, self.distortion
                     )
-                self.get_logger().info(f"Goal markers: {[m[0] for m in goal_markers]}")
+                self.get_logger().info(f"info is {goal_rvecs}, {goal_tvecs}")
+                self.get_logger().info(f"info is {goal_markers}")
                 rvecs.extend(goal_rvecs)
                 tvecs.extend(goal_tvecs)
                 final_marker_ids.extend(goal_markers)
@@ -304,12 +268,9 @@ class ArucoNode(rclpy.node.Node):
                     turtlebot_rvecs, turtlebot_tvecs = cv2.aruco.estimatePoseSingleMarkers(
                         turtlebot_corners, turtlebot_markers, self.intrinsic_mat, self.distortion
                     )
-                self.get_logger().info(f"Turtlebot markers: {[m[0] for m in turtlebot_markers]}")
                 rvecs.extend(turtlebot_rvecs)
                 tvecs.extend(turtlebot_tvecs)
                 final_marker_ids.extend(turtlebot_markers)
-
-            self.get_logger().info(f"Processing {len(final_marker_ids)} markers for TF broadcast")
 
             for i, marker_id in enumerate(final_marker_ids):
                 pose = Pose()
@@ -320,6 +281,8 @@ class ArucoNode(rclpy.node.Node):
                 rot_matrix = np.eye(4)
                 rot_matrix[0:3, 0:3] = cv2.Rodrigues(np.array(rvecs[i][0]))[0]
 
+                # quat = tf_transformations.quaternion_from_matrix(rot_matrix)
+                # quat = transformations.quaternion_from_matrix(rot_matrix)
                 quat = quaternion_from_matrix(rot_matrix)
 
                 pose.orientation.x = quat[0]
@@ -331,7 +294,9 @@ class ArucoNode(rclpy.node.Node):
                 transform = TransformStamped()
                 transform.header.stamp = img_msg.header.stamp
                 if self.camera_frame == "":
-                    transform.header.frame_id = self.info_msg.header.frame_id
+                    # Note the info_msg header is better practice just testing this
+                    # transform.header.frame_id = self.info_msg.header.frame_id
+                    transform.header.frame_id = "camera"
                 else:
                     transform.header.frame_id = self.camera_frame
                 transform.child_frame_id = f"ar_marker_{marker_id[0]}"
@@ -344,12 +309,6 @@ class ArucoNode(rclpy.node.Node):
                 transform.transform.rotation.z = pose.orientation.z
                 transform.transform.rotation.w = pose.orientation.w
                 
-                # DEBUG: Log TF broadcast
-                self.get_logger().info(
-                    f"Broadcasting TF: {transform.header.frame_id} -> {transform.child_frame_id} "
-                    f"at pos({pose.position.x:.3f}, {pose.position.y:.3f}, {pose.position.z:.3f})"
-                )
-                
                 self.tf_broadcaster.sendTransform(transform)
                 pose_array.poses.append(pose)
                 markers.poses.append(pose)
@@ -357,7 +316,6 @@ class ArucoNode(rclpy.node.Node):
 
             self.poses_pub.publish(pose_array)
             self.markers_pub.publish(markers)
-            self.get_logger().info(f"✓ Published poses and markers for {len(final_marker_ids)} markers")
 
 
 def main():
