@@ -206,9 +206,9 @@ while True:
         # Distance control (forward/back)
         if z is not None:
             if z > (TARGET_Z + Z_TOL):
-                fb = SPEED_FB          # too far -> move forward
+                fb = -SPEED_FB          # too far -> move forward
             elif z < (TARGET_Z - Z_TOL):
-                fb = -SPEED_FB         # too close -> move backward
+                fb = SPEED_FB         # too close -> move backward
 
         # Send command to drone
         tello.send_rc_control(lr, fb, ud, yaw)
@@ -224,13 +224,14 @@ while True:
             print("Taking off...")
             tello.takeoff()
             flying = True
+
     elif key == ord('l'):
         if flying:
             print("Landing...")
             tello.land()
             flying = False
-            # Also stop motion
             tello.send_rc_control(0, 0, 0, 0)
+
     elif key == ord('q'):
         print("Quitting...")
         if flying:
@@ -238,6 +239,21 @@ while True:
             tello.land()
             flying = False
         break
+
+    elif key == 27:  # ESC key
+        print("EMERGENCY STOP!")
+        try:
+            tello.emergency()
+        except Exception as e:
+            print("Emergency command failed:", e)
+        flying = False
+        # just in case, stop motion commands
+        try:
+            tello.send_rc_control(0, 0, 0, 0)
+        except:
+            pass
+        break
+
 
 # Cleanup
 cv2.destroyAllWindows()

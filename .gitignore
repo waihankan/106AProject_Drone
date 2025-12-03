@@ -1,5 +1,6 @@
 # macOS
 .DS_Store
+.venv/
 
 # ROS2 build artifacts
 ros_workspace/build/
