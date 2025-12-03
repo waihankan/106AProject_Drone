@@ -140,6 +140,9 @@ while True:
 	deadzone_coords = (negative_x,positive_x,negative_y,positive_y)
 
 	corners, ids, rejected = arucoDetector.detectMarkers(frame)
+	if ids is None:
+		print("No Arucos detected!! Landing the drone.")
+		#Land drone
 	rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(
         corners, marker_size, camera_matrix, distortion) #Grabbing translation vector to pass into display
 
