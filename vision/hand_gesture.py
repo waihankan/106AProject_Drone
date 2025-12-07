@@ -1,6 +1,7 @@
 import cv2
 import mediapipe as mp
 import numpy as np
+import config
 from interfaces.vision import IVision, VisionTarget
 from utils.logger import setup_logger
 
@@ -31,41 +32,15 @@ class HandGestureVision(IVision):
 
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
-                # 0: Wrist
-                # 4: Thumb Tip
-                # 8: Index Tip
-                
+                # --- Landmark Extraction ---
+                wrist = hand_landmarks.landmark[0]
                 thumb_tip = hand_landmarks.landmark[4]
                 index_tip = hand_landmarks.landmark[8]
-                wrist = hand_landmarks.landmark[0]
-                
-                # Calculate pinch distance
-                dist = self._calculate_distance(thumb_tip, index_tip)
-                
-                # Pinch Threshold (tuned for normalized coordinates)
-                # 0.05 is roughly 5% of screen width/height
-                PINCH_THRESHOLD = 0.05 
-                is_pinched = dist < PINCH_THRESHOLD
-                
-                # Center point is midpoint of pinch
-                cx = (thumb_tip.x + index_tip.x) / 2
-                cy = (thumb_tip.y + index_tip.y) / 2
-                
-                # Normalize (-1 to 1)
-                norm_x = (2 * cx) - 1
-                norm_y = (2 * cy) - 1
-                
-                # Calculate Robust Palm Scale (Depth Proxy)
-                # 0: Wrist
-                # 5: Index MCP
-                # 9: Middle MCP
-                # 17: Pinky MCP
-                
-                wrist = hand_landmarks.landmark[0]
                 index_mcp = hand_landmarks.landmark[5]
                 middle_mcp = hand_landmarks.landmark[9]
                 pinky_mcp = hand_landmarks.landmark[17]
-                
+
+                # --- Robust Scale Calculation (Palm Size) ---
                 # 1. Palm Height (Wrist to Middle Knuckle) - Robust to Yaw
                 palm_height = self._calculate_distance(wrist, middle_mcp)
                 
@@ -73,14 +48,27 @@ class HandGestureVision(IVision):
                 palm_width = self._calculate_distance(index_mcp, pinky_mcp)
                 
                 # 3. Robust Scale: Max of both. 
-                # One dimension usually stays true during rotation.
                 robust_size = max(palm_height, palm_width)
-                
-                # Use this linear size as 'area'
                 area = robust_size
+
+                # --- Pinch Detection ---
+                # Calculate pinch distance
+                dist = self._calculate_distance(thumb_tip, index_tip)
                 
-                # Visual Feedback
-                # Convert back to pixel for drawing
+                # Dynamic Pinch Threshold (Distance < Ratio * PalmSize)
+                pinch_threshold = max(robust_size * config.HAND_PINCH_RATIO, 0.02)
+                is_pinched = dist < pinch_threshold
+                
+                # --- Control Point Calculation ---
+                # Center point is midpoint of pinch
+                cx = (thumb_tip.x + index_tip.x) / 2
+                cy = (thumb_tip.y + index_tip.y) / 2
+                
+                # Normalize (-1 to 1) for control output
+                norm_x = (2 * cx) - 1
+                norm_y = (2 * cy) - 1
+
+                # --- Visualization ---
                 px_t = (int(thumb_tip.x * w), int(thumb_tip.y * h))
                 px_i = (int(index_tip.x * w), int(index_tip.y * h))
                 px_c = (int(cx * w), int(cy * h))
@@ -98,9 +86,9 @@ class HandGestureVision(IVision):
                         area=area,
                         raw_corners=None
                     ))
-                    cv2.putText(frame, "PINCH: MOVING", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                    cv2.putText(frame, "PINCH: MOVING", (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
                 else:
-                    cv2.putText(frame, "OPEN: HOVERING", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+                    cv2.putText(frame, "OPEN: HOVERING", (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
                 # Draw skeleton
                 self.mp_draw.draw_landmarks(frame, hand_landmarks, self.mp_hands.HAND_CONNECTIONS)

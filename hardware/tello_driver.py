@@ -11,6 +11,7 @@ class TelloDrone(IDrone):
     def __init__(self):
         self.tello = Tello()
         self.frame_read = None
+        self.flight_thread = None
 
     def connect(self):
         logger.info("Connecting to Tello...")
@@ -23,12 +24,22 @@ class TelloDrone(IDrone):
         self.tello.end()
 
     def takeoff(self):
+        if self.flight_thread and self.flight_thread.is_alive():
+            logger.warning("Drone is busy (Takeoff/Land in progress). Ignoring command.")
+            return
+        
         logger.info("Taking off...")
-        self.tello.takeoff()
+        self.flight_thread = threading.Thread(target=self.tello.takeoff, daemon=True)
+        self.flight_thread.start()
 
     def land(self):
+        if self.flight_thread and self.flight_thread.is_alive():
+            logger.warning("Drone is busy (Takeoff/Land in progress). Ignoring command.")
+            return
+
         logger.info("Landing...")
-        self.tello.land()
+        self.flight_thread = threading.Thread(target=self.tello.land, daemon=True)
+        self.flight_thread.start()
 
     def stream_on(self):
         logger.info("Starting video stream...")
