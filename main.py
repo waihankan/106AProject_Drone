@@ -215,7 +215,7 @@ def main():
     if config.HARDWARE_MODE == 'mock':
         drone = MockDrone()
     else:
-        drone = TelloDrone()
+        drone = TelloDrone(retry_count=1)
 
     # 2. Initialize Vision (The thing that Sees)
     if config.VISION_MODE == 'hand':
@@ -244,7 +244,42 @@ def main():
 
     try:
         # 4. Setup
-        drone.connect()
+        
+        # Show Splash Screen to indicate connection attempt
+        if config.HARDWARE_MODE == 'tello':
+            splash = np.zeros((400, 800, 3), dtype=np.uint8)
+            cv2.putText(splash, "CONNECTING TO TELLO...", (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
+            cv2.putText(splash, "Please ensure WiFi is connected.", (50, 250), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
+            cv2.imshow("Drone Control Panel", splash)
+            cv2.waitKey(100)
+            
+        # Try to connect
+        connected = False
+        while not connected:
+            success = drone.connect()
+            if success:
+                connected = True
+            else:
+                # Show Error Screen
+                if config.HARDWARE_MODE == 'tello':
+                    splash = np.zeros((400, 800, 3), dtype=np.uint8)
+                    cv2.putText(splash, "CONNECTION FAILED!", (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), 2)
+                    cv2.putText(splash, "1. Check WiFi Connection", (50, 220), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+                    cv2.putText(splash, "2. Check Firewall / VPN", (50, 250), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+                    cv2.putText(splash, "3. Press 'r' to Retry, 'q' to Quit", (50, 300), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
+                    cv2.imshow("Drone Control Panel", splash)
+                    
+                    key = cv2.waitKey(0) & 0xFF
+                    if key == ord('q'):
+                        print("Quitting...")
+                        return
+                    elif key == ord('r'):
+                        cv2.putText(splash, "RETRYING...", (50, 350), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+                        cv2.imshow("Drone Control Panel", splash)
+                        cv2.waitKey(100)
+                        continue
+                else:
+                    break # Should not happen in mock mode, but break to avoid loop
         if config.ENABLE_DRONE_STREAM:
             drone.stream_on()
         
@@ -308,7 +343,7 @@ def main():
                 if ret:
                     control_frame = frame
                     # Flip webcam for intuitive mirror interaction
-                    # control_frame = cv2.flip(control_frame, 1) 
+                    control_frame = cv2.flip(control_frame, 1) 
 
             # --- Logic ---
             

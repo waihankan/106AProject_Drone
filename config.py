@@ -2,7 +2,7 @@
 import numpy as np
 
 # Hardware Mode: 'tello' or 'mock'
-HARDWARE_MODE = 'mock'
+HARDWARE_MODE = 'tello'
 
 # Vision Mode: 'aruco' or 'hand'
 VISION_MODE = 'aruco'

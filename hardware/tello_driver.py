@@ -8,15 +8,21 @@ import time
 logger = setup_logger("TelloDriver")
 
 class TelloDrone(IDrone):
-    def __init__(self):
+    def __init__(self, retry_count=3):
         self.tello = Tello()
+        self.tello.retry_count = retry_count # Override default retry count (default is 3)
         self.frame_read = None
         self.flight_thread = None
 
     def connect(self):
         logger.info("Connecting to Tello...")
-        self.tello.connect()
-        logger.info(f"Connected. Battery: {self.get_battery()}%")
+        try:
+            self.tello.connect()
+            logger.info(f"Connected. Battery: {self.get_battery()}%")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to connect to Tello: {e}")
+            return False
 
     def disconnect(self):
         logger.info("Disconnecting...")
