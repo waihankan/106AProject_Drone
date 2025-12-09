@@ -7,18 +7,42 @@ from utils.logger import setup_logger
 logger = setup_logger("ArucoVision")
 
 class ArucoVision(IVision):
-    def __init__(self, dict_id=aruco.DICT_4X4_50):
+    def __init__(self, dict_id=aruco.DICT_4X4_250):
         self.aruco_dict = aruco.getPredefinedDictionary(dict_id)
         self.parameters = aruco.DetectorParameters()
-        # Older OpenCV versions might need:
-        # self.parameters = aruco.DetectorParameters_create()
+        
+        # New OpenCV 4.7+ / 4.11 API
+        self.detector = aruco.ArucoDetector(self.aruco_dict, self.parameters)
 
     def process(self, frame) -> list[VisionTarget]:
         if frame is None:
             return []
 
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        corners, ids, rejected = aruco.detectMarkers(gray, self.aruco_dict, parameters=self.parameters)
+        # Workaround: Aruco detection fails on mirrored (flipped) images.
+        # But User wants mirrored display.
+        # Solution: Unflip for detection, then remap coordinates back.
+        
+        # 1. Unflip the frame to get "Real World" view for detection
+        unflipped_frame = cv2.flip(frame, 1)
+        gray = cv2.cvtColor(unflipped_frame, cv2.COLOR_BGR2GRAY)
+        
+        # 2. Detect on unflipped frame
+        corners, ids, rejected = self.detector.detectMarkers(gray)
+        
+        # 3. Remap corners back to mirrored space if detected
+        if ids is not None and len(corners) > 0:
+            h, w = frame.shape[:2]
+            for i in range(len(corners)):
+                # corners[i] shape is (1, 4, 2) -> (batch, corners, xy)
+                # Formula: x_mirrored = w - 1 - x_original
+                corners[i][0, :, 0] = w - 1 - corners[i][0, :, 0]
+        
+        # 4. Draw on original (mirrored) frame with remapped corners
+        if ids is not None:
+             aruco.drawDetectedMarkers(frame, corners, ids)
+
+
+
         
         targets = []
         h, w, _ = frame.shape

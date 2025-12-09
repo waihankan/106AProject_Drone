@@ -24,7 +24,7 @@ from utils.logger import setup_logger
 
 logger = setup_logger("Main")
 
-def draw_hud(frame, battery, is_flying, current_commands=None):
+def draw_hud(frame, battery, is_flying, current_commands=None, primary_target=None, controller=None):
     """Draws Heads-Up Display (HUD) with transparent overlays."""
     if frame is None: return
 
@@ -36,6 +36,7 @@ def draw_hud(frame, battery, is_flying, current_commands=None):
     color_green = (0, 255, 0)
     color_red = (0, 0, 255)
     color_cyan = (255, 255, 0)
+    color_orange = (0, 165, 255)
     color_bg = (0, 0, 0)
     font = cv2.FONT_HERSHEY_SIMPLEX
     
@@ -66,13 +67,121 @@ def draw_hud(frame, battery, is_flying, current_commands=None):
     state_color = color_green if is_flying else color_red
     text_size = cv2.getTextSize(state_text, font, 0.8, 2)[0]
     cv2.putText(overlay, state_text, ((w - text_size[0]) // 2, 28), font, 0.8, state_color, 2)
-
-    # --- Crosshair ---
-    cx, cy = w // 2, h // 2
-    cv2.line(overlay, (cx - 20, cy), (cx + 20, cy), color_white, 1)
-    cv2.line(overlay, (cx, cy - 20), (cx, cy + 20), color_white, 1)
-    cv2.circle(overlay, (cx, cy), 10, color_white, 1)
     
+    # --- Target Status ---
+    # Centered just below top bar
+    if primary_target:
+        status_msg = f"LOCKED: ID {primary_target.id}"
+        status_color = color_green
+        ts_size = cv2.getTextSize(status_msg, font, 0.7, 2)[0]
+        cv2.putText(overlay, status_msg, ((w - ts_size[0]) // 2, 70), font, 0.7, status_color, 2)
+    elif config.VISION_MODE == 'aruco':
+        # Only show searching text for Aruco
+        status_msg = "NO TARGET - SEARCHING..."
+        status_color = color_red
+        ts_size = cv2.getTextSize(status_msg, font, 0.7, 2)[0]
+        cv2.putText(overlay, status_msg, ((w - ts_size[0]) // 2, 70), font, 0.7, status_color, 2)
+
+    # --- Deadzone Visual ---
+    # Draw Red Box for Deadzone (Only in Absolute/Aruco Mode)
+    if config.VISION_MODE == 'aruco':
+        try:
+             dz = config.DEADZONE_RATIO # e.g. 0.3
+        except:
+             dz = 0.2
+        
+        # Calculate box coordinates from center
+        cx, cy = w // 2, h // 2
+        
+        # Aspect Ratio logic to match Controller
+        # Controller uses: ratio_y = ratio_x * (16/9).
+        # But wait, Normalized Coordinates means:
+        # X=1 is Edge. Y=1 is Edge.
+        # If I draw a box 0.3 * Width and 0.3 * Height.
+        # Width=1280 (0.3->384). Height=720 (0.3->216).
+        # 384 vs 216. 
+        # Physical Ratio = 384/216 = 1.77.
+        # So a "Normal" normalized box IS ALREADY physically 16:9 RECTANGLE.
+        # If we want a SQUARE Physical Box using Normalized Coordinates:
+        # We need Physical Width == Physical Height.
+        # W_px = 2 * nx * (W/2) = nx * W
+        # H_px = 2 * ny * (H/2) = ny * H
+        # We want W_px = H_px.
+        # nx * W = ny * H
+        # ny = nx * (W/H).
+        # ny = 0.3 * (16/9) = 0.533.
+        # Normalized Y threshold needs to be LARGER.
+        
+        ratio_x = dz
+        ratio_y = dz * (w / h)
+        
+        # Draw Box corresponding to these normalized thresholds
+        dx = int(w * ratio_x / 2) # Oops. Normalized 1.0 is Edge. 
+        # Normalized 0.3 means 0.3 of Half-Width?
+        # Standard Normalized is -1 to 1. 0 to 1 is Half-Screen.
+        # So 0.3 means 30% of Half-Screen.
+        # Pixel width from center = 0.3 * (W/2).
+        
+        # Wait, Controller logic: abs(x) < ratio_x. 
+        # abs(x) is normalized coord.
+        # So ratio_x IS the fraction of half-width.
+        
+        # Pixel calculation:
+        d_px_x = int((w / 2) * ratio_x)
+        d_px_y = int((h / 2) * ratio_y)
+        
+        # Let's verify Squareness.
+        # If W=1600, H=900. ratio_x=0.2. ratio_y=0.2*1.77=0.355.
+        # dx = 800 * 0.2 = 160. 
+        # dy = 450 * 0.355 = 159.75.
+        # dx ~= dy. It IS Square!
+        
+        # Pixel calculation:
+        d_px_x = int((w / 2) * ratio_x)
+        d_px_y = int((h / 2) * ratio_y)
+        
+        # Top-Left, Bottom-Right
+        p1 = (cx - d_px_x, cy - d_px_y)
+        p2 = (cx + d_px_x, cy + d_px_y)
+        
+        # --- Calibration UI ---
+        # Check Calibration State from Controller
+        is_calibrated = getattr(controller, 'is_calibrated', True) # Default True for safety if attr missing
+        
+        if not is_calibrated:
+            # Flashing Box (Red/Yellow)
+            import time
+            flash = (int(time.time() * 5) % 2) == 0
+            box_color = (0, 255, 255) if flash else (0, 0, 255) # Yellow/Red flash
+            
+            thickness = 3
+            cv2.rectangle(overlay, p1, p2, box_color, thickness)
+            
+            # Calibration Instruction Text
+            calib_msg = "HOLD ARUCO TAG IN BOX TO CALIBRATE"
+            calib_color = (0, 255, 255)
+            c_size = cv2.getTextSize(calib_msg, font, 0.8, 2)[0]
+            cv2.putText(overlay, calib_msg, ((w - c_size[0]) // 2, cy - d_px_y - 20), font, 0.8, calib_color, 2)
+            
+            # Progress Bar?
+            calib_frames = getattr(controller, 'calibration_frames', 0)
+            if calib_frames > 0:
+                 progress = calib_frames / 60.0
+                 # Draw bar below box
+                 bar_w = int((d_px_x * 2) * progress)
+                 cv2.rectangle(overlay, (p1[0], p2[1] + 10), (p1[0] + bar_w, p2[1] + 20), (0, 255, 0), -1)
+
+        else:
+            # Normal Operation (Solid Green Box? Or Red?)
+            # User likes Red Box for Deadzone.
+            # Maybe Green if "Locked/In Zone"? 
+            # Let's keep it Red/Green based on entry?
+            # User didn't ask for that. Keep standard Red.
+            cv2.rectangle(overlay, p1, p2, (0, 0, 255), 2)
+            
+            # Optional: Show "CALIBRATED" briefly?
+    
+
     # --- Bottom Panel (Commands) ---
     if current_commands:
         # Transparent Box at bottom left
@@ -128,7 +237,10 @@ def main():
     else:
         logger.info("Mock Mode: Using simulated drone video for control (Shared Webcam).")
 
-    controller = FollowController(target_id=0)
+    # Determine Target ID based on Vision Mode
+    # Hand Gesture is hardcoded to ID 0. Aruco uses Config (User=2).
+    active_target_id = config.TARGET_ID if config.VISION_MODE == 'aruco' else 0
+    controller = FollowController(target_id=active_target_id)
 
     try:
         # 4. Setup
@@ -147,9 +259,12 @@ def main():
         last_frame_time = time.time()
         
         while True:
+            window_shown = False # Initialization for loop
+
             # --- Stream Acquisition ---
             
             # Update Battery periodically (every 10s)
+            
             if time.time() - last_battery_time > 10.0:
                  # Run in thread or just quick read? SDK get_battery is usually blocking 
                  # but fast enough. For safety, let's keep it simple for now or skip if busy.
@@ -165,7 +280,6 @@ def main():
             if config.ENABLE_DRONE_STREAM:
                 drone_frame = drone.get_frame()
                 
-                # Watchdog Logic
                 if config.HARDWARE_MODE == 'tello' and drone_frame is None:
                      if time.time() - last_frame_time > config.WATCHDOG_TIMEOUT:
                         logger.warning("DRONE VIDEO LOST!")
@@ -194,7 +308,7 @@ def main():
                 if ret:
                     control_frame = frame
                     # Flip webcam for intuitive mirror interaction
-                    control_frame = cv2.flip(control_frame, 1) 
+                    # control_frame = cv2.flip(control_frame, 1) 
 
             # --- Logic ---
             
@@ -208,7 +322,7 @@ def main():
                 primary_target = None
                 for t in targets:
                      # Aruco ID 0 or Hand Gesture ID 0 (Follow)
-                    if t.id == 0:
+                    if t.id == active_target_id:
                         primary_target = t
                         break
                     # Hand Gesture ID 1 (Stop)
@@ -218,19 +332,20 @@ def main():
 
                 # 6. Control Update
                 # Calculate commands ALWAYS (for visualization)
-                lr, fb, ud, yaw = controller.update(primary_target, {})
+                # Enable Absolute Mode (Center Tracking) if using Aruco
+                is_absolute = (config.VISION_MODE == 'aruco')
+                lr, fb, ud, yaw = controller.update(primary_target, {}, absolute_mode=is_absolute)
                 
                 # 7. Draw HUD
                 current_cmds = (lr, fb, ud, yaw)
-                draw_hud(control_frame, battery_level, is_flying, current_cmds)
+                draw_hud(control_frame, battery_level, is_flying, current_cmds, primary_target, controller)
                 
                 if drone_frame is not None:
                      # For drone frame, we might not want to reprint commands if they overwrite interesting stuff,
                      # but for consistency let's show them.
-                     draw_hud(drone_frame, battery_level, is_flying, current_cmds)
+                     draw_hud(drone_frame, battery_level, is_flying, current_cmds, primary_target, controller)
 
             # --- Display ---
-            window_shown = False
             if drone_frame is not None:
                 cv2.imshow("Drone Stream", drone_frame)
                 window_shown = True
@@ -244,7 +359,7 @@ def main():
             if not window_shown:
                 # Create a black dummy window for status/input
                 dummy = 255 * np.ones((400, 600, 3), dtype=np.uint8) 
-                draw_hud(dummy, battery_level, is_flying)
+                draw_hud(dummy, battery_level, is_flying, controller=controller)
                 cv2.putText(dummy, "NO VIDEO", (200, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
                 cv2.imshow("Drone Control Panel", dummy)
 
@@ -255,8 +370,14 @@ def main():
                 break
             elif key == ord('t') or key == ord('T'):
                 if not is_flying:
-                    drone.takeoff()
-                    is_flying = True
+                    # Safety Check: Calibration
+                    is_calibrated = getattr(controller, 'is_calibrated', True)
+                    if config.VISION_MODE == 'aruco' and not is_calibrated:
+                         print("BLOCKED: Calibrate first!") # Console log
+                         pass
+                    else:
+                        drone.takeoff()
+                        is_flying = True
             elif key == ord('l') or key == ord('L'):
                 if is_flying:
                     drone.land()

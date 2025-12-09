@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 import time
 from interfaces.drone import IDrone
 from utils.logger import setup_logger

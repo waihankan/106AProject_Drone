@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>106A | Democratizing Drone Control</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">106A Robotics</a>
+            <div class="nav-links">
+                <a href="#how-it-works">How It Works</a>
+                <a href="#features">Capabilities</a>
+                <a href="#engineering">Engineering</a>
+                <a href="#roadmap">Roadmap</a>
+                <a href="https://github.com/waihankan/106AProject_Drone" target="_blank" class="btn-small">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1 class="fade-in">Democratizing<br>Flight Control.</h1>
+                <p class="subtitle fade-in delay-1">A computer vision-based autonomy stack that translates natural human
+                    intent into precise aerial maneuvers. No controller required.</p>
+                <div class="hero-actions fade-in delay-2">
+                    <a href="#demo" class="btn-primary">View Demonstration</a>
+                    <a href="#engineering" class="btn-secondary">Read the Code</a>
+                </div>
+            </div>
+            <!-- Placeholder for hero visual/diagram -->
+            <div class="hero-visual fade-in delay-2">
+                <div class="placeholder-box">
+                    <span>System Visualization</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- The Problem / Philosophy -->
+    <section class="problem-section">
+        <div class="container">
+            <div class="grid-2">
+                <div class="text-block">
+                    <span class="tag">The Barrier</span>
+                    <h2>Interfaces are Hostile.</h2>
+                    <p>Traditional UAV flight requires mastering complex radio controllers with non-intuitive mapping.
+                        The cognitive load of translating specific joystick vectors to 3D movement excludes most users
+                        from the experience of flight.</p>
+                </div>
+                <div class="text-block">
+                    <span class="tag">The Solution</span>
+                    <h2>Intent-Based Autonomy.</h2>
+                    <p>We built a system that understands <strong>human semantics</strong>. By mapping hand geometry to
+                        PID control loops, we bypass the need for mechanical abstraction. You don't "pilot" the drone;
+                        you beckon it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works (New Section) -->
+    <section id="how-it-works" class="process-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag">System Architecture</span>
+                <h2>The Information Pipeline.</h2>
+            </div>
+            <div class="process-grid">
+                <div class="process-step">
+                    <div class="step-number">01</div>
+                    <h3>Acquisition</h3>
+                    <p>Webcam captures 720p 30fps feed. <code>MediaPipe Hands</code> extracts 21-point skeletal
+                        landmarks in real-time.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">02</div>
+                    <h3>Interpretation</h3>
+                    <p><code>HandGestureVision</code> calculates "Robust Scale" palm geometry to normalize depth, making
+                        tracking robust to hand rotation (yaw/pitch).</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">03</div>
+                    <h3>Control</h3>
+                    <p><code>FollowController</code> applies Cascaded Filtering (EMA + Slew Rate) and maps normalized
+                        coordinates to velocity commands.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">04</div>
+                    <h3>Actuation</h3>
+                    <p><code>TelloDriver</code> transmits RC commands via UDP, executing the physical maneuver with <
+                            50ms latency.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Features -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag">Capabilities</span>
+                <h2>Engineered for Reality.</h2>
+            </div>
+
+            <div class="feature-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <div class="icon">✋</div>
+                    <h3>Pinch-to-Fly Interface</h3>
+                    <p>A natural "Deadman's Switch" interaction. The drone hovers autonomously until it detects a
+                        specific "Pinch" gesture (Thumb + Index processing), maximizing safety.</p>
+                    <div class="code-snippet">
+                        <div class="code-header">vision/hand_gesture.py</div>
+                        <code>pinch_threshold = max(robust_size * RATIO, 0.02)
+is_pinched = dist < pinch_threshold</code>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <div class="icon">⚓</div>
+                    <h3>"Velcro" Tracking Stability</h3>
+                    <p>Raw CV data is noisy. We implemented a dual-stage filter: <strong>EMA</strong> (Exponential
+                        Moving Average) for input smoothing and <strong>Slew Rate Limiting</strong> for output inertia
+                        simulation.</p>
+                    <div class="code-snippet">
+                        <div class="code-header">control/follow_controller.py</div>
+                        <code># Alpha 0.15 = Heavy Smoothing
+self.smooth_x = _apply_ema(self.smooth_x, target.x, 0.15)</code>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <div class="icon">🛡️</div>
+                    <h3>Priority Control Logic</h3>
+                    <p>To prevent the "Zoom-on-Turn" spiral effect, the controller actively suppresses forward movement
+                        if the target is not centered, ensuring stable rotation before approach.</p>
+                    <div class="code-snippet">
+                        <div class="code-header">control/follow_controller.py</div>
+                        <code>if needs_centering_lr:
+    desired_fb = 0 # Suppress approach</code>
+                    </div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card">
+                    <div class="icon">🔌</div>
+                    <h3>Modular "Digital Twin"</h3>
+                    <p>A Factory Pattern architecture allows seamless switching between physical hardware and a mock
+                        environment, enabling safe algorithm testing without battery constraints.</p>
+                    <div class="code-snippet">
+                        <div class="code-header">main.py</div>
+                        <code>drone = MockDrone() if config.MOCK else TelloDrone()</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Engineering Narrative -->
+    <section id="engineering" class="engineering-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag">Under the Hood</span>
+                <h2>The Struggle for Smoothness.</h2>
+                <p class="subtitle">Robotics is the art of handling edge cases. Here are the specific technical
+                    challenges we overcame.</p>
+            </div>
+
+            <div class="engineering-block">
+                <h3>1. The "Jitter vs. Lag" Optimization</h3>
+                <p>One of the classic control theory problems is balancing responsiveness with stability. A naive direct
+                    mapping of hand position to velocity resulted in violent oscillations. Increasing smoothing (lower
+                    alpha) introduced "phase lag," causing the drone to chase its own tail.</p>
+                <p><strong>The Solution:</strong> We decoupled the input and output smoothing. High-frequency input
+                    noise is filtered with a low-alpha EMA, while the output commands are clamped by a "Max
+                    Acceleration" slew limiter. This creates a drone that feels "heavy" and deliberate, rather than
+                    twitchy.</p>
+            </div>
+
+            <div class="engineering-block">
+                <h3>2. Solving the "Scale Ambiguity"</h3>
+                <p>Estimating distance with a single 2D camera is difficult because a "small hand" could be far away, or
+                    just... a small hand. Furthermore, rotating your hand (yaw/pitch) changes its apparent width.</p>
+                <p><strong>The Solution:</strong> We implemented a <code>Robust Scale</code> calculation (Line 51 in
+                    <code>hand_gesture.py</code>) that dynamically selects the maximum dimension between
+                    "Wrist-to-Middle" (robust to yaw) and "Index-to-Pinky" (robust to pitch). This provides a stable
+                    depth proxy regardless of hand orientation.</p>
+            </div>
+
+            <div class="engineering-block">
+                <h3>3. Deterministic Calibration State</h3>
+                <p>Early versions used "Dynamic Latching," where the drone guessed the reference distance on startup.
+                    This led to drift. We pivoted to a meaningful "Handshake" interaction: the user must hold the target
+                    in a predefined deadzone for 2 seconds (60 frames) to lock the ground truth. This shifted the system
+                    from proactive guessing to reactive locking.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap (New Section) -->
+    <section id="roadmap" class="roadmap-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag">The Future</span>
+                <h2>Roadmap.</h2>
+            </div>
+            <div class="roadmap-grid">
+                <div class="roadmap-item">
+                    <span class="status-dot todo"></span>
+                    <h4>ArUco "Follow Me" Mode</h4>
+                    <p>Extending the stack to support high-precision marker tracking for hands-free "selfie" following
+                        functionality. (In Development)</p>
+                </div>
+                <div class="roadmap-item">
+                    <span class="status-dot todo"></span>
+                    <h4>Optical Flow Stabilization</h4>
+                    <p>Implementing ground texture analysis to reduce drift when hovering without GPS lock.</p>
+                </div>
+                <div class="roadmap-item">
+                    <span class="status-dot done"></span>
+                    <h4>Gesture Control Core</h4>
+                    <p>Robust Pinch-to-fly and Hover logic (Completed v1.0).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Built with Python, OpenCV, and MediaPipe.</p>
+            <div class="socials">
+                <a href="https://github.com/waihankan/106AProject_Drone" target="_blank">View Source on GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
