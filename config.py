@@ -5,7 +5,7 @@ import numpy as np
 HARDWARE_MODE = 'mock'
 
 # Vision Mode: 'aruco' or 'hand'
-VISION_MODE = 'hand'
+VISION_MODE = 'aruco'
 
 # Enable Drone Video Stream (FPV)
 ENABLE_DRONE_STREAM = False

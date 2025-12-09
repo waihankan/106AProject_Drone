@@ -195,7 +195,7 @@ class FollowController(IController):
              if absolute_mode:
                  # User Request: "Larger should be +value". Consistent with Hand Mode.
                  # User Request: "Very slow to respond". Need higher gain for Aruco.
-                 # Hand Mode uses * 20. Let's try * 60 for Aruco (3x responsive).
+                 # Hand Mode uses * 20. Let's try * 40 for Aruco (Was 60, too sensitive).
                  desired_fb = int(delta_area * 60 * self.k_pitch)
              else:
                  # Relative Mode (Hand) - Positive logic (Closer = Positive Delta = Forward?)
