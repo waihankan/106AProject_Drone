@@ -24,7 +24,7 @@ from utils.logger import setup_logger
 
 logger = setup_logger("Main")
 
-def draw_hud(frame, battery, is_flying, current_commands=None, primary_target=None, controller=None):
+def draw_hud(frame, battery, is_flying, current_commands=None, primary_target=None, controller=None, show_deadzone=True):
     """Draws Heads-Up Display (HUD) with transparent overlays."""
     if frame is None: return
 
@@ -84,7 +84,7 @@ def draw_hud(frame, battery, is_flying, current_commands=None, primary_target=No
 
     # --- Deadzone Visual ---
     # Draw Red Box for Deadzone (Only in Absolute/Aruco Mode)
-    if config.VISION_MODE == 'aruco':
+    if show_deadzone and config.VISION_MODE == 'aruco':
         try:
              dz = config.DEADZONE_RATIO # e.g. 0.3
         except:
@@ -115,20 +115,6 @@ def draw_hud(frame, battery, is_flying, current_commands=None, primary_target=No
         ratio_x = dz
         ratio_y = dz * (w / h)
         
-        # Draw Box corresponding to these normalized thresholds
-        dx = int(w * ratio_x / 2) # Oops. Normalized 1.0 is Edge. 
-        # Normalized 0.3 means 0.3 of Half-Width?
-        # Standard Normalized is -1 to 1. 0 to 1 is Half-Screen.
-        # So 0.3 means 30% of Half-Screen.
-        # Pixel width from center = 0.3 * (W/2).
-        
-        # Wait, Controller logic: abs(x) < ratio_x. 
-        # abs(x) is normalized coord.
-        # So ratio_x IS the fraction of half-width.
-        
-        # Pixel calculation:
-        d_px_x = int((w / 2) * ratio_x)
-        d_px_y = int((h / 2) * ratio_y)
         
         # Let's verify Squareness.
         # If W=1600, H=900. ratio_x=0.2. ratio_y=0.2*1.77=0.355.
@@ -282,6 +268,7 @@ def main():
                     break # Should not happen in mock mode, but break to avoid loop
         if config.ENABLE_DRONE_STREAM:
             drone.stream_on()
+            print("asdfghsdfghjklasdfghjklasdfghj")
         
         # Initial Battery
         battery_level = drone.get_battery()
@@ -293,8 +280,22 @@ def main():
         is_flying = False
         last_frame_time = time.time()
         
+
+        SEARCH_YAW_DPS = 30          # yaw speed while rotating
+        SEARCH_STEP_DEG = 30         # rotate this many degrees each step
+        SEARCH_PAUSE_S = 1.0         # pause this long after each step to search
+
+        search_phase = "ROTATE"      # "ROTATE" or "PAUSE"
+        search_phase_t0 = time.time()
+        stop_yaw_frames = 0          # force yaw=0 a few frames right after lock
+
+        
         while True:
             window_shown = False # Initialization for loop
+            # status for on-screen display (drone window)
+            search_status = ""          # e.g. "YAWING (ROTATE)" / "SEARCH PAUSE" / "MARKER FOUND"
+            marker_found_on_drone = False
+
 
             # --- Stream Acquisition ---
             
@@ -375,15 +376,75 @@ def main():
                 current_cmds = (lr, fb, ud, yaw)
                 draw_hud(control_frame, battery_level, is_flying, current_cmds, primary_target, controller)
                 
+                # --- Drone HUD + Drone ArUco detection (no deadzone on drone view) ---
+                drone_display = None
+                drone_primary_target = None
+
                 if drone_frame is not None:
-                     # For drone frame, we might not want to reprint commands if they overwrite interesting stuff,
-                     # but for consistency let's show them.
-                     draw_hud(drone_frame, battery_level, is_flying, current_cmds, primary_target, controller)
+                    # Flip only the camera image first
+                    drone_display = cv2.flip(drone_frame, 1)
+
+                    # Detect ArUco using the DRONE image (not webcam)
+                    if config.VISION_MODE == 'aruco':
+                        drone_targets = vision.process(drone_display)
+
+                        for t in drone_targets:
+                            if t.id == active_target_id:
+                                drone_primary_target = t
+                                break
+
+                        # Extra explicit message (optional)
+                        if drone_primary_target is not None:
+                            tx, ty, tz = drone_primary_target.tvec  # meters
+                            ty = -ty  # opencv's positive y is downward
+
+                            # Distance to marker
+                            dist = np.linalg.norm([tx, ty, tz])
+
+                            vec_text_1 = f"tvec (m): x={tx:+.2f}, y={ty:+.2f}, z={tz:+.2f}"
+                            vec_text_2 = f"distance: {dist:.2f} m"
+
+                            cv2.putText(
+                                drone_display,
+                                vec_text_1,
+                                (30, 170),
+                                cv2.FONT_HERSHEY_SIMPLEX,
+                                0.7,
+                                (0, 255, 0),
+                                2
+                            )
+
+                            cv2.putText(
+                                drone_display,
+                                vec_text_2,
+                                (30, 200),
+                                cv2.FONT_HERSHEY_SIMPLEX,
+                                0.7,
+                                (0, 255, 255),
+                                2
+                            )
+                            cv2.putText(drone_display, "DRONE ARUCO DETECTED", (30, 110),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+
+                        # Draw HUD onto the flipped drone image, but NO deadzone
+                    draw_hud(drone_display, battery_level, is_flying, current_cmds, drone_primary_target, controller, show_deadzone=False)
 
             # --- Display ---
-            if drone_frame is not None:
-                cv2.imshow("Drone Stream", drone_frame)
+            if drone_display is not None:
+                if search_status:
+                    cv2.putText(
+                        drone_display,
+                        search_status,
+                        (30, 150),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.9,
+                        (0, 255, 255),
+                        2
+                    )
+
+                cv2.imshow("Drone Stream", drone_display)
                 window_shown = True
+
             
             if control_frame is not None:
                 cv2.imshow("Control View (Webcam)", control_frame)
@@ -415,6 +476,8 @@ def main():
                         is_flying = True
             elif key == ord('l') or key == ord('L'):
                 if is_flying:
+                    drone.send_rc_control(0, 0, 0, 0)
+                    time.sleep(0.05)
                     drone.land()
                     is_flying = False
             
@@ -460,7 +523,36 @@ def main():
                 lr, fb, ud, yaw = man_lr, man_fb, man_ud, man_yaw
                 if control_frame is not None:
                      cv2.putText(control_frame, "MANUAL OVERRIDE", (300, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 3)
+            
+            # --- Search yaw on DRONE camera when no ArUco is detected ---
+            # --- Search yaw on DRONE camera when no ArUco is detected ---
+            if config.VISION_MODE == 'aruco' and is_flying and (not manual_input):
+                now = time.time()
+                rotate_time = SEARCH_STEP_DEG / float(SEARCH_YAW_DPS)
 
+                if drone_primary_target is None:
+                    if search_phase == "ROTATE":
+                        search_status = "YAWING (ROTATE)"
+                        if (now - search_phase_t0) >= rotate_time:
+                            search_phase = "PAUSE"
+                            search_phase_t0 = now
+                        lr, fb, ud, yaw = 0, 0, 0, SEARCH_YAW_DPS
+                    else:
+                        search_status = "SEARCH PAUSE"
+                        if (now - search_phase_t0) >= SEARCH_PAUSE_S:
+                            search_phase = "ROTATE"
+                            search_phase_t0 = now
+                        lr, fb, ud, yaw = 0, 0, 0, 0
+                else:
+                    search_status = "MARKER FOUND"
+                    search_phase = "ROTATE"
+                    search_phase_t0 = now
+                    stop_yaw_frames = 3
+
+                if drone_primary_target is not None and stop_yaw_frames > 0:
+                    lr, fb, ud, yaw = 0, 0, 0, 0
+                    stop_yaw_frames -= 1
+    
             # Send FINAL command (Vision or Manual)
             if is_flying:
                 drone.send_rc_control(lr, fb, ud, yaw)
@@ -481,3 +573,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
