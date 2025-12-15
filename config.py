@@ -2,7 +2,7 @@
 import numpy as np
 
 # Hardware Mode: 'tello' or 'mock'
-HARDWARE_MODE = 'tello'
+HARDWARE_MODE = 'mock'
 
 # Vision Mode: 'aruco' or 'hand'
 VISION_MODE = 'aruco'
@@ -47,7 +47,7 @@ DRONE_CAMERA_MATRIX = np.array([
     [  0.0,   0.0,   1.0]
 ])
 DRONE_DISTORTION_COEFFS = np.zeros((5, 1))
-DRONE_MARKER_SIZE = 0.05
+DRONE_MARKER_SIZE = 0.13
 #----------------To be changed--------------------
 
 # Control Parameters

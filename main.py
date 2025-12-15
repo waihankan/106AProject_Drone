@@ -286,15 +286,14 @@ def main():
         SEARCH_PAUSE_S = 1.0         # pause this long after each step to search
 
         search_phase = "ROTATE"      # "ROTATE" or "PAUSE"
-        search_phase_t0 = time.time()
         stop_yaw_frames = 0          # force yaw=0 a few frames right after lock
-
-        
+        search_enabled = False 
+        marker_was_found = False
+        search_status = "" 
         while True:
             window_shown = False # Initialization for loop
             # status for on-screen display (drone window)
-            search_status = ""          # e.g. "YAWING (ROTATE)" / "SEARCH PAUSE" / "MARKER FOUND"
-            marker_found_on_drone = False
+         # e.g. "YAWING (ROTATE)" / "SEARCH PAUSE" / "MARKER FOUND"
 
 
             # --- Stream Acquisition ---
@@ -425,22 +424,21 @@ def main():
                             )
                             cv2.putText(drone_display, "DRONE ARUCO DETECTED", (30, 110),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+                        if search_status:
+                            cv2.putText(
+                                drone_display,
+                                search_status,
+                                (1000, 150),
+                                cv2.FONT_HERSHEY_SIMPLEX,
+                                0.9,
+                                (0, 255, 255),
+                                2
+                            )    
 
                         # Draw HUD onto the flipped drone image, but NO deadzone
                     draw_hud(drone_display, battery_level, is_flying, current_cmds, drone_primary_target, controller, show_deadzone=False)
 
-            # --- Display ---
-            if drone_display is not None:
-                if search_status:
-                    cv2.putText(
-                        drone_display,
-                        search_status,
-                        (30, 150),
-                        cv2.FONT_HERSHEY_SIMPLEX,
-                        0.9,
-                        (0, 255, 255),
-                        2
-                    )
+
 
                 cv2.imshow("Drone Stream", drone_display)
                 window_shown = True
@@ -480,6 +478,17 @@ def main():
                     time.sleep(0.05)
                     drone.land()
                     is_flying = False
+            elif key == ord('c') or key == ord('C'):
+            # Toggle search mode (only meaningful in aruco + flying)
+                if config.VISION_MODE == 'aruco' and is_flying:
+                    search_enabled = not search_enabled
+                    search_phase = "ROTATE"
+                    search_phase_t0 = time.time()
+                    stop_yaw_frames = 0
+                    search_status = "SEARCH ENABLED" if search_enabled else "SEARCH DISABLED"
+                else:
+                    search_status = "SEARCH: must be flying in ARUCO mode"
+
             
             # Manual Control Override (Emergency)
             # Hold 'm' to enable manual control (stops vision control)
@@ -503,7 +512,7 @@ def main():
                 man_lr = 50
                 manual_input = True
             
-            # Arrow Keys (Up/Down/Yaw) - Map to I/K/J/L for easier keyboard access
+            # Arrow Keys (Up/Down/Yaw) - Map to I/K/J/U for easier keyboard access
             elif key == ord('i'): # Up
                 man_ud = 50
                 manual_input = True
@@ -513,9 +522,9 @@ def main():
             elif key == ord('j'): # Yaw Left
                 man_yaw = -50
                 manual_input = True
-            elif key == ord('l'): # Yaw Right causes conflict with Land? 'l' is Land. 
-                # Let's map Land to 'space'? Or Yaw Right to 'u'.
-                # Let's stick to simple WASD + Up/Down (I/K) for now.
+            elif key == ord('u'): # Yaw Right 
+                man_yaw = 50
+                manual_input = True
                 pass
             
             if manual_input:
@@ -523,13 +532,11 @@ def main():
                 lr, fb, ud, yaw = man_lr, man_fb, man_ud, man_yaw
                 if control_frame is not None:
                      cv2.putText(control_frame, "MANUAL OVERRIDE", (300, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 3)
-            
+
             # --- Search yaw on DRONE camera when no ArUco is detected ---
-            # --- Search yaw on DRONE camera when no ArUco is detected ---
-            if config.VISION_MODE == 'aruco' and is_flying and (not manual_input):
+            if config.VISION_MODE == 'aruco' and is_flying and (not manual_input) and search_enabled:
                 now = time.time()
                 rotate_time = SEARCH_STEP_DEG / float(SEARCH_YAW_DPS)
-
                 if drone_primary_target is None:
                     if search_phase == "ROTATE":
                         search_status = "YAWING (ROTATE)"
@@ -547,11 +554,10 @@ def main():
                     search_status = "MARKER FOUND"
                     search_phase = "ROTATE"
                     search_phase_t0 = now
-                    stop_yaw_frames = 3
-
-                if drone_primary_target is not None and stop_yaw_frames > 0:
                     lr, fb, ud, yaw = 0, 0, 0, 0
-                    stop_yaw_frames -= 1
+
+
+
     
             # Send FINAL command (Vision or Manual)
             if is_flying:
