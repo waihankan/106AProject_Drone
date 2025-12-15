@@ -392,18 +392,23 @@ def main():
 
         SEARCH_YAW_DPS = 30  # yaw speed while rotating
         SEARCH_STEP_DEG = 30  # rotate this many degrees each step
-        SEARCH_PAUSE_S = 1.0  # pause this long after each step to search
+        SEARCH_PAUSE_S = 0.2  # pause this long after each step to search
 
         search_phase = "ROTATE"  # "ROTATE" or "PAUSE"
         stop_yaw_frames = 0  # force yaw=0 a few frames right after lock
         search_enabled = False
         marker_was_found = False
-        search_status = ""
+        search_status = "SEARCH DISABLED"
 
         numOfWP = 5
         waypoints = []
         wp_idx = 0
         STOP_DIST = 0.5  # meters
+        search_idx = 0
+        
+        LOST_FRAMES_TO_SEARCH = 8
+        found_frames = 0
+        lost_frames = 0
 
         while True:
             window_shown = False  # Initialization for loop
@@ -450,6 +455,9 @@ def main():
                     # Mock driver already flips it? Let's check.
                     # Usually webcam raw is not flipped.
                     control_frame = cv2.flip(control_frame, 1)
+                    # In mock mode expose the raw (unflipped) webcam frame as drone_frame
+                    # so later drone_display = cv2.flip(drone_frame, 1) matches control_frame.
+                    drone_frame = frame.copy()
 
             elif control_cap and control_cap.isOpened():
                 ret, frame = control_cap.read()
@@ -531,6 +539,12 @@ def main():
                             # Distance to marker
                             dist = np.linalg.norm([tx, ty, tz])
 
+                    
+                            found_frames += 1
+                            lost_frames = 0
+                            last_tvec = np.array([tx, ty, tz], dtype=np.float32)
+                            last_dist = float(dist)
+                             
                             vec_text_1 = (
                                 f"tvec (m): x={tx:+.2f}, y={ty:+.2f}, z={tz:+.2f}"
                             )
@@ -564,14 +578,29 @@ def main():
                                 (0, 255, 0),
                                 2,
                             )
+                        else:
+                            found_frames = 0
+                            lost_frames += 1   
+                            
                         if search_status:
                             cv2.putText(
                                 drone_display,
                                 search_status,
-                                (1000, 150),
+                                (600, 150),
                                 cv2.FONT_HERSHEY_SIMPLEX,
                                 0.9,
                                 (0, 255, 255),
+                                2,
+                            )
+                        if search_idx != 0:
+                            how_many_search = f"Search #{search_idx}"
+                            cv2.putText(
+                                drone_display,
+                                how_many_search,
+                                (600, 110),
+                                cv2.FONT_HERSHEY_SIMPLEX,
+                                0.8,
+                                (0, 255, 0),
                                 2,
                             )
 
@@ -586,8 +615,8 @@ def main():
                             show_deadzone=False,
                         )
 
-                cv2.imshow("Drone Stream", drone_display)
-                window_shown = True
+                    cv2.imshow("Drone Stream", drone_display)
+                    window_shown = True
 
             if control_frame is not None:
                 cv2.imshow("Control View (Webcam)", control_frame)
@@ -617,6 +646,7 @@ def main():
                 break
             elif key == ord("t") or key == ord("T"):
                 if not is_flying:
+                    manual_input = True
                     # Safety Check: Calibration
                     is_calibrated = getattr(controller, "is_calibrated", True)
                     if config.VISION_MODE == "aruco" and not is_calibrated:
@@ -627,11 +657,13 @@ def main():
                         is_flying = True
             elif key == ord("l") or key == ord("L"):
                 if is_flying:
+                    manual_input = True
                     drone.send_rc_control(0, 0, 0, 0)
                     time.sleep(0.05)
                     drone.land()
                     is_flying = False
             elif key == ord("c") or key == ord("C"):
+                manual_input = True
                 # Toggle search mode (only meaningful in aruco + flying)
                 if config.VISION_MODE == "aruco" and is_flying:
                     search_enabled = not search_enabled
@@ -702,32 +734,50 @@ def main():
                 and (not manual_input)
                 and search_enabled
             ):
+                have_plan = (len(waypoints) > 0)
+                mid_execution = have_plan and (wp_idx < numOfWP)
                 now = time.time()
                 rotate_time = SEARCH_STEP_DEG / float(SEARCH_YAW_DPS)
                 if search_status == "MARKER FOUND" or search_status == "APPROACHING":
-                    if search_status == "MARKER FOUND":
-                        search_status = "APPROACHING"
-                        waypoint =waypoints[wp_idx]
 
-                    if reached_waypoint(tx, ty, tz, waypoint):
-                        wp_idx += 1
-                        if wp_idx == numOfWP:
+                    # if we are executing and the marker is lost -> enter search, do NOT reset wp_idx/waypoints
+                    if drone_primary_target is None:
+                        if lost_frames < LOST_FRAMES_TO_SEARCH:
+                            search_status = "APPROACHING"
+                            waypoint = waypoints[wp_idx]
+                            lr, fb, ud, yaw = rc_to_reach_tvec(tx, ty, tz, waypoint)
+                        else:
+                            search_status = "YAWING (ROTATE)"
+                            search_phase = "ROTATE"
+                            search_phase_t0 = now
+                            lr, fb, ud, yaw = 0, 0, 0, SEARCH_YAW_DPS
+
+                    else:
+                        # marker visible: execute waypoint follower
+                        if search_status == "MARKER FOUND":
+                            search_status = "APPROACHING"
+                        waypoint = waypoints[wp_idx]
+                        if reached_waypoint(tx, ty, tz, waypoint):  
+                            wp_idx += 1
+                            if wp_idx == numOfWP:
+                                wp_idx = 0
+                                search_status = "ARRIVED"
+                                lr, fb, ud, yaw = 0, 0, 0, 0
+                            else:
+                                waypoint = waypoints[wp_idx]
+                                lr, fb, ud, yaw = rc_to_reach_tvec(tx, ty, tz, waypoint)                           
+                        else:
+                            lr, fb, ud, yaw = rc_to_reach_tvec(tx, ty, tz, waypoint)
+                           
+
+                        # stop condition
+                        if abs(dist - 0.5) < 0.05:
                             wp_idx = 0
                             search_status = "ARRIVED"
                             lr, fb, ud, yaw = 0, 0, 0, 0
-                        else:
-                            waypoint =waypoints[wp_idx]
-                            lr, fb, ud = rc_to_reach_tvec(tx, ty, tz, waypoint)
-                            yaw = 0
-                    else:
-                        waypoint =waypoints[wp_idx]
-                        lr, fb, ud = rc_to_reach_tvec(tx, ty, tz, waypoint)
-                        yaw = 0
-                    if abs(dist - 0.5) < 0.05:
-                        wp_idx = 0
-                        search_status = "ARRIVED"
-                    
+
                 elif drone_primary_target is None:
+                    # normal search when we don't see marker
                     if search_phase == "ROTATE":
                         search_status = "YAWING (ROTATE)"
                         if (now - search_phase_t0) >= rotate_time:
@@ -735,24 +785,37 @@ def main():
                             search_phase_t0 = now
                         lr, fb, ud, yaw = 0, 0, 0, SEARCH_YAW_DPS
                     else:
-                        search_status = "SEARCH PAUSE"  
+                        search_status = "SEARCH PAUSE"
                         if (now - search_phase_t0) >= SEARCH_PAUSE_S:
                             search_phase = "ROTATE"
                             search_phase_t0 = now
-                        lr, fb, ud, yaw = 0, 0, 0, 0
-                else:
-                    
-                    if search_status != "ARRIVED":
-                        search_status = "MARKER FOUND"
-                    waypoints = generate_spiral_waypoints(tx, ty, tz)
-                    search_phase = "ROTATE"
-                    search_phase_t0 = now
-                    lr, fb, ud, yaw = 0, 0, 0, 0
+                            lr, fb, ud, yaw = 0, 0, 0, 0
 
-            
+                else:
+                    # marker is visible here
+                    if search_status == "ARRIVED":
+                        # waypoints = generate_spiral_waypoints(tx, ty, tz)
+                        # wp_idx = 0
+                        # search_idx += 1
+                        # search_status = "MARKER FOUND"
+                        lr, fb, ud, yaw = 0, 0, 0, 0
+
+                    elif mid_execution:
+                        # we were executing, marker was lost, now it's back -> resume SAME traj
+                        search_status = "APPROACHING"
+                        lr, fb, ud, yaw = 0, 0, 0, 0
+
+                    else:
+                        # no plan yet (or somehow lost it) -> plan once
+                        waypoints = generate_spiral_waypoints(tx, ty, tz)
+                        wp_idx = 0
+                        search_idx += 1
+                        search_status = "MARKER FOUND"
+                        lr, fb, ud, yaw = 0, 0, 0, 0
+
             try:
                 logger.info(
-                    f"LR:{lr:.2f} FB:{fb:.2f} UD:{ud:.2f} YAW:{yaw:.2f} IDX:{wp_idx} | SEARCH:{search_status}"
+                    f"LR:{lr:.2f} FB:{fb:.2f} UD:{ud:.2f} YAW:{yaw:.2f} IDX:{wp_idx} | STATUS:{search_status}"
                 )
             except Exception:
                 pass

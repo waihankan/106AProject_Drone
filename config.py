@@ -2,7 +2,7 @@
 import numpy as np
 
 # Hardware Mode: 'tello' or 'mock'
-HARDWARE_MODE = 'mock'
+HARDWARE_MODE = 'tello'
 
 # Vision Mode: 'aruco' or 'hand'
 VISION_MODE = 'aruco'
@@ -16,7 +16,6 @@ ENABLE_DRONE_STREAM = True
 # Webcam ID (default 0)
 WEBCAM_ID = 0
 TARGET_ID = 2
-
 
 # Tello Settings
 TELLO_IP = '192.168.10.1'
