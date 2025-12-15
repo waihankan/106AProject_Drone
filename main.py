@@ -240,7 +240,46 @@ def main():
     # Determine Target ID based on Vision Mode
     # Hand Gesture is hardcoded to ID 0. Aruco uses Config (User=2).
     active_target_id = config.TARGET_ID if config.VISION_MODE == 'aruco' else 0
-    controller = FollowController(target_id=active_target_id)
+
+    # Initialize Controller (Planning Mode or Standard Mode)
+    planner = None
+    recorder = None
+    visualizer = None
+    position_estimator = None
+
+    if config.ENABLE_PLANNING_MODE:
+        logger.info("Planning Mode ENABLED")
+        from planning.sequence_planner import SequencePlanner
+        from planning.position_estimator import PositionEstimator
+        from planning.trajectory_recorder import TrajectoryRecorder
+        from planning.trajectory_visualizer import TrajectoryVisualizer
+        from control.sequence_controller import SequenceController
+
+        # Initialize planning components
+        position_estimator = PositionEstimator(
+            marker_size=config.ARUCO_MARKER_SIZE,
+            vision_weight=config.VISION_FUSION_WEIGHT,
+            velocity_weight=config.VELOCITY_FUSION_WEIGHT
+        )
+        planner = SequencePlanner(
+            hover_duration=config.WAYPOINT_HOVER_DURATION,
+            position_tol=config.WAYPOINT_POSITION_TOL,
+            area_tol=config.WAYPOINT_AREA_TOL,
+            stability_frames=config.WAYPOINT_STABILITY_FRAMES,
+            search_timeout=config.SEARCH_TIMEOUT
+        )
+        recorder = TrajectoryRecorder()
+        visualizer = TrajectoryVisualizer(
+            enable_realtime=config.ENABLE_REALTIME_VIZ,
+            smooth_factor=config.TRAJECTORY_SMOOTH_FACTOR
+        )
+
+        # Use SequenceController
+        controller = SequenceController(planner=planner, position_estimator=position_estimator)
+        logger.info("Press 'p' to start discovery, 'c' to confirm waypoints, 'v' to save trajectory")
+    else:
+        logger.info("Planning Mode DISABLED - using standard FollowController")
+        controller = FollowController(target_id=active_target_id)
 
     try:
         # 4. Setup
@@ -346,30 +385,64 @@ def main():
                     control_frame = cv2.flip(control_frame, 1) 
 
             # --- Logic ---
-            
+
             # 5. Vision Processing
             # Only process if we have a frame to process
             targets = []
             if control_frame is not None:
                 targets = vision.process(control_frame)
-                
-                # Find Target
-                primary_target = None
-                for t in targets:
-                     # Aruco ID 0 or Hand Gesture ID 0 (Follow)
-                    if t.id == active_target_id:
-                        primary_target = t
-                        break
-                    # Hand Gesture ID 1 (Stop)
-                    elif t.id == 1 and config.VISION_MODE == 'hand':
-                        primary_target = None 
-                        cv2.putText(control_frame, "STOP COMMAND", (300, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 3)
+
+                # Update planner if in planning mode
+                if planner is not None:
+                    planner.update(targets)
+                    primary_target = planner.get_current_target(targets)
+                else:
+                    # Standard mode: Find Target
+                    primary_target = None
+                    for t in targets:
+                         # Aruco ID 0 or Hand Gesture ID 0 (Follow)
+                        if t.id == active_target_id:
+                            primary_target = t
+                            break
+                        # Hand Gesture ID 1 (Stop)
+                        elif t.id == 1 and config.VISION_MODE == 'hand':
+                            primary_target = None
+                            cv2.putText(control_frame, "STOP COMMAND", (300, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 3)
 
                 # 6. Control Update
                 # Calculate commands ALWAYS (for visualization)
                 # Enable Absolute Mode (Center Tracking) if using Aruco
                 is_absolute = (config.VISION_MODE == 'aruco')
                 lr, fb, ud, yaw = controller.update(primary_target, {}, absolute_mode=is_absolute)
+
+                # 6.5. Position Estimation & Trajectory Recording (Planning Mode)
+                if planner is not None and is_flying:
+                    # Update position from vision if marker visible
+                    if primary_target and primary_target.raw_corners is not None:
+                        position_estimator.update_from_vision(
+                            primary_target,
+                            config.CAMERA_MATRIX,
+                            config.DISTORTION_COEFFS
+                        )
+
+                    # Update position from velocity commands (dead reckoning)
+                    position_estimator.update_from_velocity(lr, fb, ud, yaw)
+
+                    # Record trajectory point
+                    if recorder.recording:
+                        recorder.record_point(
+                            position=position_estimator.get_position(),
+                            target_id=primary_target.id if primary_target else None,
+                            velocity_cmd=(lr, fb, ud, yaw),
+                            state=planner.get_state().value,
+                            battery=battery_level,
+                            marker_visible=primary_target is not None,
+                            confidence=position_estimator.get_confidence()
+                        )
+
+                        # Update real-time visualization every 10 frames
+                        if len(recorder.trajectory) % 10 == 0:
+                            visualizer.update_realtime(recorder.trajectory)
                 
                 # 7. Draw HUD
                 current_cmds = (lr, fb, ud, yaw)
@@ -413,10 +486,45 @@ def main():
                     else:
                         drone.takeoff()
                         is_flying = True
+                        # If in planning mode, start mission after takeoff
+                        if planner is not None:
+                            from planning.planner import PlannerState
+                            if planner.get_state() == PlannerState.READY:
+                                planner.start_mission()
+                                logger.info("Mission started!")
             elif key == ord('l') or key == ord('L'):
                 if is_flying:
                     drone.land()
                     is_flying = False
+
+            # Planning Mode Keys
+            elif key == ord('p'):
+                if planner and not is_flying:
+                    planner.start_discovery()
+                    logger.info("Discovery mode started. Show markers to camera.")
+
+            elif key == ord('c'):
+                if planner:
+                    from planning.planner import PlannerState
+                    if planner.get_state() == PlannerState.DISCOVERY:
+                        planner.confirm_waypoints()
+                        recorder.start_recording()
+                        waypoint_info = planner.get_waypoint_info()
+                        logger.info(f"Waypoints confirmed: {waypoint_info['total_waypoints']} markers. "
+                                   f"Sequence: {waypoint_info['waypoint_sequence']}")
+
+            elif key == ord('v'):
+                if recorder and recorder.trajectory:
+                    import time as time_module
+                    timestamp = time_module.strftime("%Y%m%d_%H%M%S")
+                    json_path = f"trajectory_{timestamp}.json"
+                    png_path = f"trajectory_{timestamp}.png"
+
+                    recorder.save_to_file(json_path)
+                    visualizer.visualize_post_flight(recorder.trajectory, png_path)
+
+                    stats = recorder.get_statistics()
+                    logger.info(f"Trajectory saved! Stats: {stats}")
             
             # Manual Control Override (Emergency)
             # Hold 'm' to enable manual control (stops vision control)
