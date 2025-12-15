@@ -752,7 +752,7 @@ def main():
             
             try:
                 logger.info(
-                    f"LR:{lr} FB:{fb} UD:{ud} YAW:{yaw} IDX:{wp_idx} | SEARCH:{search_status}"
+                    f"LR:{lr:.2f} FB:{fb:.2f} UD:{ud:.2f} YAW:{yaw:.2f} IDX:{wp_idx} | SEARCH:{search_status}"
                 )
             except Exception:
                 pass
