@@ -392,7 +392,7 @@ def main():
 
         SEARCH_YAW_DPS = 30  # yaw speed while rotating
         SEARCH_STEP_DEG = 30  # rotate this many degrees each step
-        SEARCH_PAUSE_S = 0.2  # pause this long after each step to search
+        SEARCH_PAUSE_S = 1 # pause this long after each step to search
 
         search_phase = "ROTATE"  # "ROTATE" or "PAUSE"
         stop_yaw_frames = 0  # force yaw=0 a few frames right after lock
@@ -753,6 +753,7 @@ def main():
                             lr, fb, ud, yaw = 0, 0, 0, SEARCH_YAW_DPS
 
                     else:
+                        lost_frames = 0
                         # marker visible: execute waypoint follower
                         if search_status == "MARKER FOUND":
                             search_status = "APPROACHING"
@@ -792,6 +793,7 @@ def main():
                             lr, fb, ud, yaw = 0, 0, 0, 0
 
                 else:
+                    lost_frames = 0
                     # marker is visible here
                     if search_status == "ARRIVED":
                         # waypoints = generate_spiral_waypoints(tx, ty, tz)
@@ -815,7 +817,8 @@ def main():
 
             try:
                 logger.info(
-                    f"LR:{lr:.2f} FB:{fb:.2f} UD:{ud:.2f} YAW:{yaw:.2f} IDX:{wp_idx} | STATUS:{search_status}"
+                    # f"LR:{lr:.2f} FB:{fb:.2f} UD:{ud:.2f} YAW:{yaw:.2f} IDX:{wp_idx} | STATUS:{search_status}"
+                    f"lost_frame: {lost_frames}  IDX : {wp_idx}  search: {search_idx}"
                 )
             except Exception:
                 pass
