@@ -817,8 +817,8 @@ def main():
 
             try:
                 logger.info(
-                    # f"LR:{lr:.2f} FB:{fb:.2f} UD:{ud:.2f} YAW:{yaw:.2f} IDX:{wp_idx} | STATUS:{search_status}"
-                    f"lost_frame: {lost_frames}  IDX : {wp_idx}  search: {search_idx}"
+                    f"LR:{lr:.2f} FB:{fb:.2f} UD:{ud:.2f} YAW:{yaw:.2f} IDX:{wp_idx} | STATUS:{search_status}"
+                    # f"lost_frame: {lost_frames}  IDX : {wp_idx}  search: {search_idx}"
                 )
             except Exception:
                 pass
