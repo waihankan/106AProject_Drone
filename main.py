@@ -395,9 +395,7 @@ def main():
         SEARCH_PAUSE_S = 1 # pause this long after each step to search
 
         search_phase = "ROTATE"  # "ROTATE" or "PAUSE"
-        stop_yaw_frames = 0  # force yaw=0 a few frames right after lock
         search_enabled = False
-        marker_was_found = False
         search_status = "SEARCH DISABLED"
 
         numOfWP = 5
@@ -536,15 +534,14 @@ def main():
                             tx, ty, tz = drone_primary_target.tvec  # meters
                             ty = -ty  # opencv's positive y is downward
 
+                            last_tx, last_ty, last_tz = tx, ty, tz
                             # Distance to marker
                             dist = np.linalg.norm([tx, ty, tz])
-
+                            last_dist = dist
                     
                             found_frames += 1
                             lost_frames = 0
-                            last_tvec = np.array([tx, ty, tz], dtype=np.float32)
-                            last_dist = float(dist)
-                             
+ 
                             vec_text_1 = (
                                 f"tvec (m): x={tx:+.2f}, y={ty:+.2f}, z={tz:+.2f}"
                             )
@@ -745,7 +742,7 @@ def main():
                         if lost_frames < LOST_FRAMES_TO_SEARCH:
                             search_status = "APPROACHING"
                             waypoint = waypoints[wp_idx]
-                            lr, fb, ud, yaw = rc_to_reach_tvec(tx, ty, tz, waypoint)
+                            lr, fb, ud, yaw = rc_to_reach_tvec(last_tx, last_ty, last_tz, waypoint)
                         else:
                             search_status = "YAWING (ROTATE)"
                             search_phase = "ROTATE"
@@ -770,7 +767,6 @@ def main():
                         else:
                             lr, fb, ud, yaw = rc_to_reach_tvec(tx, ty, tz, waypoint)
                            
-
                         # stop condition
                         if abs(dist - 0.5) < 0.05:
                             wp_idx = 0
@@ -793,8 +789,8 @@ def main():
                             lr, fb, ud, yaw = 0, 0, 0, 0
 
                 else:
+                    # marker is visible here                  
                     lost_frames = 0
-                    # marker is visible here
                     if search_status == "ARRIVED":
                         # waypoints = generate_spiral_waypoints(tx, ty, tz)
                         # wp_idx = 0
@@ -817,8 +813,8 @@ def main():
 
             try:
                 logger.info(
-                    f"LR:{lr:.2f} FB:{fb:.2f} UD:{ud:.2f} YAW:{yaw:.2f} IDX:{wp_idx} | STATUS:{search_status}"
-                    # f"lost_frame: {lost_frames}  IDX : {wp_idx}  search: {search_idx}"
+                    # f"LR:{lr:.2f} FB:{fb:.2f} UD:{ud:.2f} YAW:{yaw:.2f} IDX:{wp_idx} | STATUS:{search_status}"
+                    f"lost_frame: {lost_frames}  IDX : {wp_idx}  waypoint: {waypoint} LR:{lr:.2f} FB:{fb:.2f} UD:{ud:.2f}"
                 )
             except Exception:
                 pass
