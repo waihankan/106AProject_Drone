@@ -369,109 +369,102 @@
                             </div>
                         </section>
 
-                        <!-- Follow Me Mode -->
-                        <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="follow-mode">
-                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">4. Follow Me Mode</h2>
-                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
-                                Follow Me Mode combines vision detection with intelligent control algorithms to
-                                autonomously
-                                track targets. When the target is lost, the system automatically initiates search
-                                behavior
-                                with spiral waypoint navigation.
+                    <!-- Follow Me Mode -->
+                    <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="follow-mode">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">4. Follow Me Mode</h2>
+                        <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
+                            In "Follow Me" mode, if the ArUco marker is not detected by the drone's camera, the drone 
+                            initiates a search procedure by yawing at 30° per second, followed by a one-second pause. 
+                            Upon detection of a marker at a distance greater than 0.5 meters (with an acceptable tolerance), 
+                            a 5-waypoint spiral trajectory is calculated, and the drone proceeds to travel through these 
+                            waypoints toward the ArUco marker. Should the drone lose track of the marker while approaching 
+                            it, the search procedure is re-initiated. Once the marker is reacquired, the drone resumes 
+                            execution of the previously planned trajectory rather than calculating a new one.
+
+                        </p>
+                        <p>
+                            If the ArUco marker becomes invisible after the drone has "arrived," it will rotate to search 
+                            again and, upon successful reacquisition of the ArUco marker, a new trajectory will be planned 
+                            to maintain the "follow" behavior.
+                        </p>
+                        <div
+                            class="scroll-section w-full h-[500px] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md border border-gray-200 dark:border-gray-800 overflow-y-auto">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">4.1. Following
+                                Controller</h3>
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">
+                                The FollowController implements a sophisticated tracking algorithm with two primary
+                                objectives: centering the target in the frame and maintaining desired distance. 
                             </p>
+                            <img
+                                src="assets/followmeflowchart.png"
+                                alt="Follow me flowchart"
+                                class="w-full mx-auto rounded-md border border-gray-700"
+                            />
 
                             <div
-                                class="scroll-section w-full h-[500px] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md border border-gray-200 dark:border-gray-800 overflow-y-auto">
-                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">4.1. Following
-                                    Controller</h3>
-                                <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">
-                                    The FollowController implements a sophisticated tracking algorithm with two primary
-                                    objectives: centering the target in the frame and maintaining desired distance. The
-                                    system uses priority-based control, first ensuring the target is centered before
-                                    adjusting distance.
-                                </p>
-
-                                <div
-                                    class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6 mb-6 border border-blue-200 dark:border-blue-800">
-                                    <h4 class="font-bold text-gray-900 dark:text-white mb-3">Control Features</h4>
-                                    <div class="space-y-3">
-                                        <div class="flex items-start">
-                                            <span
-                                                class="material-symbols-outlined text-blue-600 mr-3 mt-0.5">speed</span>
-                                            <div>
-                                                <p class="font-semibold text-gray-900 dark:text-white">Exponential
-                                                    Moving
-                                                    Average (EMA)</p>
-                                                <p class="text-sm text-gray-600 dark:text-gray-400">Smoothing factor α =
-                                                    0.15 for stable output and reduced oscillation</p>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-start">
-                                            <span
-                                                class="material-symbols-outlined text-blue-600 mr-3 mt-0.5">trending_up</span>
-                                            <div>
-                                                <p class="font-semibold text-gray-900 dark:text-white">Slew Rate
-                                                    Limiting
-                                                </p>
-                                                <p class="text-sm text-gray-600 dark:text-gray-400">Maximum acceleration
-                                                    of
-                                                    10 units/tick prevents jerky movements</p>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-start">
-                                            <span
-                                                class="material-symbols-outlined text-blue-600 mr-3 mt-0.5">adjust</span>
-                                            <div>
-                                                <p class="font-semibold text-gray-900 dark:text-white">Deadzone
-                                                    Protection
-                                                </p>
-                                                <p class="text-sm text-gray-600 dark:text-gray-400">Central zone with
-                                                    aspect
-                                                    ratio correction for stable hover</p>
-                                            </div>
+                                class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6 mb-6 mt-8 border border-blue-200 dark:border-blue-800">
+                                <h4 class="font-bold text-gray-900 dark:text-white mb-3">Control elements</h4>
+                                <div class="space-y-3">
+                                    <div class="flex items-start">
+                                        <span class="material-symbols-outlined text-blue-600 mr-3 mt-0.5">speed</span>
+                                        <div>
+                                            <p class="font-semibold text-gray-900 dark:text-white">Perception</p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">Drone camera detects the ArUco marker. Use computer 
+                                                vision to obtain a translation vector from the position and size of the aruco marker</p>
                                         </div>
                                     </div>
-                                </div>
-
-                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">4.2. Search and
-                                    Recovery</h3>
-                                <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
-                                    When the target is lost, the system automatically switches to search mode, rotating
-                                    the
-                                    drone in 30-degree increments to locate the target. If the target remains
-                                    undetected,
-                                    spiral waypoint navigation is initiated.
-                                </p>
-
-                                <div class="bg-gray-900 rounded-lg p-6 mb-4">
-                                    <h4 class="font-bold text-white mb-3">Spiral Waypoint Generation</h4>
-                                    <div class="grid grid-cols-5 gap-2 mb-4">
-                                        <div class="bg-blue-600 rounded-lg p-3 text-center">
-                                            <p class="text-white text-xs font-bold">WP1</p>
-                                            <p class="text-blue-200 text-xs mt-1">Center</p>
-                                        </div>
-                                        <div class="bg-blue-500 rounded-lg p-3 text-center">
-                                            <p class="text-white text-xs font-bold">WP2</p>
-                                            <p class="text-blue-200 text-xs mt-1">R = 1.0m</p>
-                                        </div>
-                                        <div class="bg-blue-400 rounded-lg p-3 text-center">
-                                            <p class="text-white text-xs font-bold">WP3</p>
-                                            <p class="text-blue-200 text-xs mt-1">R = 0.8m</p>
-                                        </div>
-                                        <div class="bg-blue-300 rounded-lg p-3 text-center">
-                                            <p class="text-gray-900 text-xs font-bold">WP4</p>
-                                            <p class="text-gray-700 text-xs mt-1">R = 0.6m</p>
-                                        </div>
-                                        <div class="bg-blue-200 rounded-lg p-3 text-center">
-                                            <p class="text-gray-900 text-xs font-bold">WP5</p>
-                                            <p class="text-gray-700 text-xs mt-1">R = 0.4m</p>
+                                    <div class="flex items-start">
+                                        <span
+                                            class="material-symbols-outlined text-blue-600 mr-3 mt-0.5">trending_up</span>
+                                        <div>
+                                            <p class="font-semibold text-gray-900 dark:text-white">Planning
+                                            </p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">A spiral trajectory with 5 waypoints is planned using the translation vector.
+                                            </p>
                                         </div>
                                     </div>
-                                    <p class="text-gray-400 text-sm">5-point spiral descent with radius decay • Waypoint
-                                        tolerance: 0.3m • Stop distance: 0.5m</p>
+                                    <div class="flex items-start">
+                                        <span class="material-symbols-outlined text-blue-600 mr-3 mt-0.5">adjust</span>
+                                        <div>
+                                            <p class="font-semibold text-gray-900 dark:text-white">Actuation
+                                            </p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">Depending on the search status and search phase, yaw or translation command are sent to the drone.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <span class="material-symbols-outlined text-blue-600 mr-3 mt-0.5">check_circle</span>
+                                        <div>
+                                            <p class="font-semibold text-gray-900 dark:text-white">Proportional Control
+                                            </p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">Translation speed is proportional to the deviation of the current position from 
+                                                the desired waypoint. This speed is limited to prevent excessive magnitude.</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </section>
+    
+
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">4.2. Search and
+                                Recovery</h3>
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
+                                When the target is lost, the system automatically switches to search mode, rotating the
+                                drone in 30-degree increments to locate the target. When the marker is in view again, it 
+                                will continue execucting the planned trajectory until arrival.
+                            </p>
+
+                            <div class="bg-gray-900 rounded-lg p-6 mb-4">
+                                <h4 class="font-bold text-white mb-3">Spiral Waypoint Generation</h4>
+                                <img
+                                    src="assets/wp.png"
+                                    alt="Five-point spiral waypoint trajectory"
+                                    class="w-2/3 mx-auto rounded-md border border-gray-700"
+                                />
+
+                                <p class="text-gray-400 text-sm">5-point spiral descent with radius decay • Waypoint
+                                    tolerance: 0.3m • Stop distance: 0.5m</p>
+                            </div>
+                        </div>
+                    </section>
 
                         <!-- ArUco Marker Mode -->
                         <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="aruco-mode">
