@@ -63,7 +63,8 @@
             <!-- Header -->
             <header
                 class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between whitespace-nowrap px-10 py-4 bg-white/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-solid border-gray-200/50 dark:border-gray-800/50">
-                <a href="#introduction" class="flex items-center gap-4 text-gray-900 dark:text-white hover:opacity-80 transition-opacity cursor-pointer">
+                <a href="#introduction"
+                    class="flex items-center gap-4 text-gray-900 dark:text-white hover:opacity-80 transition-opacity cursor-pointer">
                     <div class="size-12">
                         <img src="assets/bear.png" alt="Team Logo" class="w-full h-full object-contain">
                     </div>
@@ -115,647 +116,713 @@
                 <!-- Main Content -->
                 <div class="flex-1 w-full lg:pl-64">
                     <div class="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8 bg-white dark:bg-background-dark">
-                    <section class="pb-16 pt-8 border-b border-gray-200 dark:border-gray-800" id="introduction">
-                        <div class="relative flex flex-col items-start gap-6">
-                            <h1
-                                class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl">
-                                EECS 106A - Team 5 </h1>
-                            <h1
-                                class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em] md:text-3xl">
-                                Tello Drone Control</h1>
-                            <p class="text-gray-700 dark:text-gray-300 text-lg md:text-xl leading-relaxed max-w-2xl">
-                                A sophisticated autonomous drone control system featuring multiple vision-based control
-                                modes, modular architecture, and real-time target tracking capabilities. This project
-                                implements advanced computer vision techniques for DJI Tello drone control through ArUco
-                                markers and hand gesture recognition.
-                            </p>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mt-6">
-                                <div
-                                    class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
-                                    <span
-                                        class="material-symbols-outlined text-4xl text-primary mb-2">qr_code_scanner</span>
-                                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">ArUco Tracking</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Precise 3D pose estimation and
-                                        marker following</p>
-                                </div>
-                                <div
-                                    class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800">
-                                    <span
-                                        class="material-symbols-outlined text-4xl text-purple-600 mb-2">back_hand</span>
-                                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Gesture Control
-                                    </h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Real-time hand tracking with
-                                        pinch detection</p>
-                                </div>
-                                <div
-                                    class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 p-6 rounded-xl border border-green-200 dark:border-green-800">
-                                    <span
-                                        class="material-symbols-outlined text-4xl text-green-600 mb-2">assistant_direction</span>
-                                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Autonomous Follow
-                                    </h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Intelligent tracking with search
-                                        and recovery</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- System Architecture -->
-                    <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="architecture">
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">2. System Architecture</h2>
-                        <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
-                            The system employs a clean, modular architecture built on abstract interfaces, enabling
-                            seamless swapping of components and easy extensibility. The design follows the Interface
-                            Segregation Principle, separating concerns into distinct modules.
-                        </p>
-
-                        <!-- Architecture Diagram -->
-                        <div
-                            class="bg-white dark:bg-gray-900 rounded-xl p-6 my-8 border border-gray-200 dark:border-gray-800 overflow-x-auto">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 text-center">System
-                                Architecture Diagram</h3>
-                            <div class="mermaid">
-                                graph TB
-                                subgraph User["User Input"]
-                                Manual["Manual Controls<br />(WASD, I/K, J/U)"]
-                                Vision["Vision Targets<br />(ArUco/Hand)"]
-                                end
-
-                                subgraph Control["Control Layer"]
-                                Controller["FollowController<br />• PID-based tracking<br />• EMA smoothing<br />• Slew
-                                rate limiting"]
-                                Search["Search Mode<br />• Yaw rotation<br />• Spiral waypoints"]
-                                end
-
-                                subgraph Vision_Layer["Vision Layer"]
-                                ArUco["ArucoVision<br />• 3D pose estimation<br />• Camera calibration<br />• Deadzone
-                                logic"]
-                                Hand["HandGestureVision<br />• MediaPipe tracking<br />• Pinch detection<br />• 21
-                                landmarks"]
-                                end
-
-                                subgraph Hardware["Hardware Layer"]
-                                Tello["TelloDrone<br />• WiFi control<br />• Video stream<br />• Battery monitor"]
-                                Mock["MockDrone<br />• Webcam sim<br />• Testing mode"]
-                                end
-
-                                subgraph Physical["DJI Tello Drone"]
-                                Drone["Physical Quadcopter<br />• Camera<br />• Motors<br />• Sensors"]
-                                end
-
-                                Manual --> Controller
-                                Vision --> ArUco
-                                Vision --> Hand
-                                ArUco --> Controller
-                                Hand --> Controller
-                                Controller --> Search
-                                Search --> Controller
-                                Controller --> Tello
-                                Controller --> Mock
-                                Tello --> Drone
-                                Drone -.Video Feed.-> ArUco
-                                Drone -.Video Feed.-> Hand
-
-                                classDef userClass fill:#e2e8f0,stroke:#64748b,stroke-width:2px,color:#1e293b
-                                classDef controlClass fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e40af
-                                classDef visionClass fill:#fed7aa,stroke:#f97316,stroke-width:2px,color:#7c2d12
-                                classDef hardwareClass fill:#fef3c7,stroke:#eab308,stroke-width:2px,color:#713f12
-                                classDef physicalClass fill:#f1f5f9,stroke:#94a3b8,stroke-width:2px,color:#334155
-
-                                class Manual,Vision userClass
-                                class Controller,Search controlClass
-                                class ArUco,Hand visionClass
-                                class Tello,Mock hardwareClass
-                                class Drone physicalClass
-                            </div>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-4">
-                                Data flows from vision detection through the controller to hardware, with manual
-                                override capabilities
-                            </p>
-                        </div>
-
-                        <div
-                            class="bg-gray-50 dark:bg-gray-900 rounded-xl p-6 my-8 border border-gray-200 dark:border-gray-800">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Core Components</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div
-                                    class="bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
-                                    <h4 class="font-bold text-gray-900 dark:text-white mb-2">Hardware Layer</h4>
-                                    <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                                        <li>• IDrone Interface</li>
-                                        <li>• TelloDrone Driver</li>
-                                        <li>• MockDrone Simulator</li>
-                                    </ul>
-                                </div>
-                                <div
-                                    class="bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
-                                    <h4 class="font-bold text-gray-900 dark:text-white mb-2">Vision Layer</h4>
-                                    <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                                        <li>• IVision Interface</li>
-                                        <li>• ArucoVision</li>
-                                        <li>• HandGestureVision</li>
-                                    </ul>
-                                </div>
-                                <div
-                                    class="bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
-                                    <h4 class="font-bold text-gray-900 dark:text-white mb-2">Control Layer</h4>
-                                    <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                                        <li>• IController Interface</li>
-                                        <li>• FollowController</li>
-                                        <li>• PID-based tracking</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mt-4">
-                            Data flows from the drone's camera through the vision processing pipeline, where targets are
-                            detected and tracked. The controller generates appropriate RC commands based on target
-                            position and distance, maintaining stable flight through exponential moving average
-                            smoothing and slew rate limiting.
-                        </p>
-                    </section>
-
-                    <!-- Hand Gesture Control -->
-                    <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="hand-gesture">
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">3. Hand Gesture Control</h2>
-                        <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
-                            Hand Gesture Control leverages MediaPipe for real-time hand tracking, enabling intuitive
-                            drone control through natural gestures. The system detects pinch gestures to activate
-                            following mode.
-                        </p>
-
-                        <div
-                            class="scroll-section w-full h-[500px] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md border border-gray-200 dark:border-gray-800 overflow-y-auto">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">3.1. Gesture
-                                Recognition</h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">
-                                MediaPipe tracks 21 hand landmarks in real-time, with the system specifically monitoring
-                                the distance between thumb tip and index finger tip to detect pinch gestures. This
-                                provides a reliable and intuitive control interface.
-                            </p>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                <div
-                                    class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
-                                    <div class="flex items-center mb-3">
-                                        <span
-                                            class="material-symbols-outlined text-4xl text-purple-600 mr-3">pinch</span>
-                                        <div>
-                                            <p class="font-bold text-gray-900 dark:text-white">Pinch Gesture</p>
-                                            <p class="text-sm text-gray-600 dark:text-gray-400">Activate Follow Mode</p>
-                                        </div>
-                                    </div>
-                                    <p class="text-sm text-gray-700 dark:text-gray-300">Thumb and index finger touching
-                                        triggers autonomous tracking of hand position</p>
-                                </div>
-                                <div
-                                    class="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
-                                    <div class="flex items-center mb-3">
-                                        <span
-                                            class="material-symbols-outlined text-4xl text-green-600 mr-3">front_hand</span>
-                                        <div>
-                                            <p class="font-bold text-gray-900 dark:text-white">Open Hand</p>
-                                            <p class="text-sm text-gray-600 dark:text-gray-400">Hover/Stop Command</p>
-                                        </div>
-                                    </div>
-                                    <p class="text-sm text-gray-700 dark:text-gray-300">Opening hand immediately stops
-                                        drone movement and initiates hover state</p>
-                                </div>
-                            </div>
-
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">3.2. Tracking Behavior
-                            </h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
-                                The hand gesture mode operates in "relative mode," meaning the drone continuously
-                                adjusts to follow hand movements without a fixed reference distance. This creates a
-                                dynamic, responsive control experience.
-                            </p>
-
-                            <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 mb-4">
-                                <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Technical Specifications
-                                </h4>
-                                <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm space-y-1">
-                                    <li>Single hand tracking (max 1 hand detected)</li>
-                                    <li>21 landmark points per hand</li>
-                                    <li>Pinch threshold dynamically calculated</li>
-                                    <li>Real-time processing at ~30 FPS</li>
-                                    <li>Immediate stop on gesture release (safety feature)</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Follow Me Mode -->
-                    <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="follow-mode">
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">4. Follow Me Mode</h2>
-                        <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
-                            Follow Me Mode combines vision detection with intelligent control algorithms to autonomously
-                            track targets. When the target is lost, the system automatically initiates search behavior
-                            with spiral waypoint navigation.
-                        </p>
-
-                        <div
-                            class="scroll-section w-full h-[500px] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md border border-gray-200 dark:border-gray-800 overflow-y-auto">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">4.1. Following
-                                Controller</h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">
-                                The FollowController implements a sophisticated tracking algorithm with two primary
-                                objectives: centering the target in the frame and maintaining desired distance. The
-                                system uses priority-based control, first ensuring the target is centered before
-                                adjusting distance.
-                            </p>
-
-                            <div
-                                class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6 mb-6 border border-blue-200 dark:border-blue-800">
-                                <h4 class="font-bold text-gray-900 dark:text-white mb-3">Control Features</h4>
-                                <div class="space-y-3">
-                                    <div class="flex items-start">
-                                        <span class="material-symbols-outlined text-blue-600 mr-3 mt-0.5">speed</span>
-                                        <div>
-                                            <p class="font-semibold text-gray-900 dark:text-white">Exponential Moving
-                                                Average (EMA)</p>
-                                            <p class="text-sm text-gray-600 dark:text-gray-400">Smoothing factor α =
-                                                0.15 for stable output and reduced oscillation</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <span
-                                            class="material-symbols-outlined text-blue-600 mr-3 mt-0.5">trending_up</span>
-                                        <div>
-                                            <p class="font-semibold text-gray-900 dark:text-white">Slew Rate Limiting
-                                            </p>
-                                            <p class="text-sm text-gray-600 dark:text-gray-400">Maximum acceleration of
-                                                10 units/tick prevents jerky movements</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <span class="material-symbols-outlined text-blue-600 mr-3 mt-0.5">adjust</span>
-                                        <div>
-                                            <p class="font-semibold text-gray-900 dark:text-white">Deadzone Protection
-                                            </p>
-                                            <p class="text-sm text-gray-600 dark:text-gray-400">Central zone with aspect
-                                                ratio correction for stable hover</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">4.2. Search and
-                                Recovery</h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
-                                When the target is lost, the system automatically switches to search mode, rotating the
-                                drone in 30-degree increments to locate the target. If the target remains undetected,
-                                spiral waypoint navigation is initiated.
-                            </p>
-
-                            <div class="bg-gray-900 rounded-lg p-6 mb-4">
-                                <h4 class="font-bold text-white mb-3">Spiral Waypoint Generation</h4>
-                                <div class="grid grid-cols-5 gap-2 mb-4">
-                                    <div class="bg-blue-600 rounded-lg p-3 text-center">
-                                        <p class="text-white text-xs font-bold">WP1</p>
-                                        <p class="text-blue-200 text-xs mt-1">Center</p>
-                                    </div>
-                                    <div class="bg-blue-500 rounded-lg p-3 text-center">
-                                        <p class="text-white text-xs font-bold">WP2</p>
-                                        <p class="text-blue-200 text-xs mt-1">R = 1.0m</p>
-                                    </div>
-                                    <div class="bg-blue-400 rounded-lg p-3 text-center">
-                                        <p class="text-white text-xs font-bold">WP3</p>
-                                        <p class="text-blue-200 text-xs mt-1">R = 0.8m</p>
-                                    </div>
-                                    <div class="bg-blue-300 rounded-lg p-3 text-center">
-                                        <p class="text-gray-900 text-xs font-bold">WP4</p>
-                                        <p class="text-gray-700 text-xs mt-1">R = 0.6m</p>
-                                    </div>
-                                    <div class="bg-blue-200 rounded-lg p-3 text-center">
-                                        <p class="text-gray-900 text-xs font-bold">WP5</p>
-                                        <p class="text-gray-700 text-xs mt-1">R = 0.4m</p>
-                                    </div>
-                                </div>
-                                <p class="text-gray-400 text-sm">5-point spiral descent with radius decay • Waypoint
-                                    tolerance: 0.3m • Stop distance: 0.5m</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- ArUco Marker Mode -->
-                    <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="aruco-mode">
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">5. ArUco Marker Mode</h2>
-                        <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
-                            The ArUco Marker Mode provides precise 3D pose estimation using calibrated camera
-                            parameters. This mode is ideal for applications requiring accurate distance measurement and
-                            stable tracking performance.
-                        </p>
-
-                        <div
-                            class="scroll-section w-full h-[500px] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md border border-gray-200 dark:border-gray-800 overflow-y-auto">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">5.1. Detection and
-                                Calibration</h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">
-                                The system uses OpenCV's ArUco detector with camera calibration matrices to estimate the
-                                marker's 3D position. Before flight, the user must perform a calibration by holding the
-                                marker within the deadzone for 2 seconds to establish a reference distance.
-                            </p>
-
-                            <div
-                                class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-6 mb-6 border border-blue-200 dark:border-blue-800">
-                                <h4 class="font-bold text-gray-900 dark:text-white mb-3">Key Features</h4>
-                                <ul class="space-y-2 text-gray-700 dark:text-gray-300">
-                                    <li class="flex items-start">
-                                        <span
-                                            class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
-                                        <span><strong>3D Pose Estimation:</strong> Translation vectors (tvec) provide
-                                            accurate distance and position data</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <span
-                                            class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
-                                        <span><strong>Deadzone Logic:</strong> 30% central region prevents jitter and
-                                            ensures stability</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <span
-                                            class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
-                                        <span><strong>Absolute Reference:</strong> Maintains fixed distance based on
-                                            initial calibration</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <span
-                                            class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
-                                        <span><strong>Marker Size:</strong> 13cm markers optimized for detection
-                                            range</span>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">5.2. Control Algorithm
-                            </h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
-                                The controller uses proportional gains to center the marker and maintain desired
-                                distance:
-                            </p>
-                            <div class="bg-gray-900 rounded-lg p-4 mb-4 font-mono text-sm text-green-400">
-                                <p>k_yaw = 150 # Rotation speed</p>
-                                <p>k_throttle = 150 # Vertical speed</p>
-                                <p>k_pitch = 3000 # Forward/backward (60x base gain)</p>
-                                <p>deadzone_ratio = 0.3 # 30% center zone</p>
-                            </div>
-                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
-                                The system prioritizes centering the marker before adjusting distance, ensuring smooth
-                                and predictable behavior.
-                            </p>
-                        </div>
-                    </section>
-
-                    <!-- Demo Videos -->
-                    <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="demos">
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">6. Demo Videos</h2>
-                        <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-8">
-                            Watch our autonomous drone control system in action across all three modes. These
-                            demonstrations showcase the real-time performance and capabilities of each control paradigm.
-                        </p>
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                            <!-- ArUco Mode Demo -->
-                            <div
-                                class="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
-                                <div
-                                    class="aspect-video bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 flex items-center justify-center relative">
-                                    <div class="absolute inset-0 flex items-center justify-center">
-                                        <span
-                                            class="material-symbols-outlined text-6xl text-blue-600 opacity-50">qr_code_scanner</span>
-                                    </div>
-                                    <!-- Replace with actual video -->
-                                    <!-- <video class="w-full h-full object-cover" controls>
-                                    <source src="assets/aruco-demo.mp4" type="video/mp4">
-                                </video> -->
+                        <section class="pb-16 pt-8 border-b border-gray-200 dark:border-gray-800" id="introduction">
+                            <div class="relative flex flex-col items-start gap-6">
+                                <h1
+                                    class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl">
+                                    EECS 106A - Team 5 </h1>
+                                <h1
+                                    class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em] md:text-3xl">
+                                    Tello Drone Control</h1>
+                                <p
+                                    class="text-gray-700 dark:text-gray-300 text-lg md:text-xl leading-relaxed max-w-2xl">
+                                    A sophisticated autonomous drone control system featuring multiple vision-based
+                                    control
+                                    modes, modular architecture, and real-time target tracking capabilities. This
+                                    project
+                                    implements advanced computer vision techniques for DJI Tello drone control through
+                                    ArUco
+                                    markers and hand gesture recognition.
+                                </p>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mt-6">
                                     <div
-                                        class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                                        ArUco Demo
-                                    </div>
-                                </div>
-                                <div class="p-4">
-                                    <h3 class="font-bold text-gray-900 dark:text-white mb-2">ArUco Marker Tracking</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Precision 3D pose estimation
-                                        with calibrated distance control and deadzone stability</p>
-                                </div>
-                            </div>
-
-                            <!-- Hand Gesture Demo -->
-                            <div
-                                class="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
-                                <div
-                                    class="aspect-video bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30 flex items-center justify-center relative">
-                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
                                         <span
-                                            class="material-symbols-outlined text-6xl text-purple-600 opacity-50">back_hand</span>
+                                            class="material-symbols-outlined text-4xl text-primary mb-2">qr_code_scanner</span>
+                                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">ArUco Tracking
+                                        </h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Precise 3D pose estimation
+                                            and
+                                            marker following</p>
                                     </div>
-                                    <!-- Replace with actual video -->
-                                    <!-- <video class="w-full h-full object-cover" controls>
-                                    <source src="assets/gesture-demo.mp4" type="video/mp4">
-                                </video> -->
                                     <div
-                                        class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                                        Gesture Demo
+                                        class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800">
+                                        <span
+                                            class="material-symbols-outlined text-4xl text-purple-600 mb-2">back_hand</span>
+                                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Gesture Control
+                                        </h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Real-time hand tracking with
+                                            pinch detection</p>
+                                    </div>
+                                    <div
+                                        class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 p-6 rounded-xl border border-green-200 dark:border-green-800">
+                                        <span
+                                            class="material-symbols-outlined text-4xl text-green-600 mb-2">assistant_direction</span>
+                                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Autonomous
+                                            Follow
+                                        </h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Intelligent tracking with
+                                            search
+                                            and recovery</p>
                                     </div>
                                 </div>
-                                <div class="p-4">
-                                    <h3 class="font-bold text-gray-900 dark:text-white mb-2">Hand Gesture Control</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Intuitive pinch-to-follow
-                                        control with real-time MediaPipe hand tracking</p>
+                            </div>
+                        </section>
+
+                        <!-- System Architecture -->
+                        <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="architecture">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">2. System Architecture
+                            </h2>
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
+                                The system employs a clean, modular architecture built on abstract interfaces, enabling
+                                seamless swapping of components and easy extensibility. The design follows the Interface
+                                Segregation Principle, separating concerns into distinct modules.
+                            </p>
+
+                            <!-- Architecture Diagram -->
+                            <div
+                                class="bg-white dark:bg-gray-900 rounded-xl p-6 my-8 border border-gray-200 dark:border-gray-800 overflow-x-auto">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 text-center">System
+                                    Architecture Diagram</h3>
+                                <div class="mermaid">
+                                    graph TB
+                                    subgraph User["User Input"]
+                                    Manual["Manual Controls<br />(WASD, I/K, J/U)"]
+                                    Vision["Vision Targets<br />(ArUco/Hand)"]
+                                    end
+
+                                    subgraph Control["Control Layer"]
+                                    Controller["FollowController<br />• PID-based tracking<br />• EMA smoothing<br />•
+                                    Slew
+                                    rate limiting"]
+                                    Search["Search Mode<br />• Yaw rotation<br />• Spiral waypoints"]
+                                    end
+
+                                    subgraph Vision_Layer["Vision Layer"]
+                                    ArUco["ArucoVision<br />• 3D pose estimation<br />• Camera calibration<br />•
+                                    Deadzone
+                                    logic"]
+                                    Hand["HandGestureVision<br />• MediaPipe tracking<br />• Pinch detection<br />• 21
+                                    landmarks"]
+                                    end
+
+                                    subgraph Hardware["Hardware Layer"]
+                                    Tello["TelloDrone<br />• WiFi control<br />• Video stream<br />• Battery monitor"]
+                                    Mock["MockDrone<br />• Webcam sim<br />• Testing mode"]
+                                    end
+
+                                    subgraph Physical["DJI Tello Drone"]
+                                    Drone["Physical Quadcopter<br />• Camera<br />• Motors<br />• Sensors"]
+                                    end
+
+                                    Manual --> Controller
+                                    Vision --> ArUco
+                                    Vision --> Hand
+                                    ArUco --> Controller
+                                    Hand --> Controller
+                                    Controller --> Search
+                                    Search --> Controller
+                                    Controller --> Tello
+                                    Controller --> Mock
+                                    Tello --> Drone
+                                    Drone -.Video Feed.-> ArUco
+                                    Drone -.Video Feed.-> Hand
+
+                                    classDef userClass fill:#e2e8f0,stroke:#64748b,stroke-width:2px,color:#1e293b
+                                    classDef controlClass fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e40af
+                                    classDef visionClass fill:#fed7aa,stroke:#f97316,stroke-width:2px,color:#7c2d12
+                                    classDef hardwareClass fill:#fef3c7,stroke:#eab308,stroke-width:2px,color:#713f12
+                                    classDef physicalClass fill:#f1f5f9,stroke:#94a3b8,stroke-width:2px,color:#334155
+
+                                    class Manual,Vision userClass
+                                    class Controller,Search controlClass
+                                    class ArUco,Hand visionClass
+                                    class Tello,Mock hardwareClass
+                                    class Drone physicalClass
+                                </div>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-4">
+                                    Data flows from vision detection through the controller to hardware, with manual
+                                    override capabilities
+                                </p>
+                            </div>
+
+                            <div
+                                class="bg-gray-50 dark:bg-gray-900 rounded-xl p-6 my-8 border border-gray-200 dark:border-gray-800">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Core Components
+                                </h3>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div
+                                        class="bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+                                        <h4 class="font-bold text-gray-900 dark:text-white mb-2">Hardware Layer</h4>
+                                        <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                                            <li>• IDrone Interface</li>
+                                            <li>• TelloDrone Driver</li>
+                                            <li>• MockDrone Simulator</li>
+                                        </ul>
+                                    </div>
+                                    <div
+                                        class="bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+                                        <h4 class="font-bold text-gray-900 dark:text-white mb-2">Vision Layer</h4>
+                                        <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                                            <li>• IVision Interface</li>
+                                            <li>• ArucoVision</li>
+                                            <li>• HandGestureVision</li>
+                                        </ul>
+                                    </div>
+                                    <div
+                                        class="bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+                                        <h4 class="font-bold text-gray-900 dark:text-white mb-2">Control Layer</h4>
+                                        <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                                            <li>• IController Interface</li>
+                                            <li>• FollowController</li>
+                                            <li>• PID-based tracking</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- Follow Me Demo -->
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mt-4">
+                                Data flows from the drone's camera through the vision processing pipeline, where targets
+                                are
+                                detected and tracked. The controller generates appropriate RC commands based on target
+                                position and distance, maintaining stable flight through exponential moving average
+                                smoothing and slew rate limiting.
+                            </p>
+                        </section>
+
+                        <!-- Hand Gesture Control -->
+                        <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="hand-gesture">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">3. Hand Gesture Control
+                            </h2>
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
+                                Hand Gesture Control leverages MediaPipe for real-time hand tracking, enabling intuitive
+                                drone control through natural gestures. The system detects pinch gestures to activate
+                                following mode.
+                            </p>
+
                             <div
-                                class="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
+                                class="scroll-section w-full h-[500px] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md border border-gray-200 dark:border-gray-800 overflow-y-auto">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">3.1. Gesture
+                                    Recognition</h3>
+                                <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">
+                                    MediaPipe tracks 21 hand landmarks in real-time, with the system specifically
+                                    monitoring
+                                    the distance between thumb tip and index finger tip to detect pinch gestures. This
+                                    provides a reliable and intuitive control interface.
+                                </p>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                    <div
+                                        class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
+                                        <div class="flex items-center mb-3">
+                                            <span
+                                                class="material-symbols-outlined text-4xl text-purple-600 mr-3">pinch</span>
+                                            <div>
+                                                <p class="font-bold text-gray-900 dark:text-white">Pinch Gesture</p>
+                                                <p class="text-sm text-gray-600 dark:text-gray-400">Activate Follow Mode
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm text-gray-700 dark:text-gray-300">Thumb and index finger
+                                            touching
+                                            triggers autonomous tracking of hand position</p>
+                                    </div>
+                                    <div
+                                        class="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
+                                        <div class="flex items-center mb-3">
+                                            <span
+                                                class="material-symbols-outlined text-4xl text-green-600 mr-3">front_hand</span>
+                                            <div>
+                                                <p class="font-bold text-gray-900 dark:text-white">Open Hand</p>
+                                                <p class="text-sm text-gray-600 dark:text-gray-400">Hover/Stop Command
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm text-gray-700 dark:text-gray-300">Opening hand immediately
+                                            stops
+                                            drone movement and initiates hover state</p>
+                                    </div>
+                                </div>
+
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">3.2. Tracking
+                                    Behavior
+                                </h3>
+                                <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
+                                    The hand gesture mode operates in "relative mode," meaning the drone continuously
+                                    adjusts to follow hand movements without a fixed reference distance. This creates a
+                                    dynamic, responsive control experience.
+                                </p>
+
+                                <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 mb-4">
+                                    <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Technical
+                                        Specifications
+                                    </h4>
+                                    <ul
+                                        class="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm space-y-1">
+                                        <li>Single hand tracking (max 1 hand detected)</li>
+                                        <li>21 landmark points per hand</li>
+                                        <li>Pinch threshold dynamically calculated</li>
+                                        <li>Real-time processing at ~30 FPS</li>
+                                        <li>Immediate stop on gesture release (safety feature)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Follow Me Mode -->
+                        <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="follow-mode">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">4. Follow Me Mode</h2>
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
+                                Follow Me Mode combines vision detection with intelligent control algorithms to
+                                autonomously
+                                track targets. When the target is lost, the system automatically initiates search
+                                behavior
+                                with spiral waypoint navigation.
+                            </p>
+
+                            <div
+                                class="scroll-section w-full h-[500px] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md border border-gray-200 dark:border-gray-800 overflow-y-auto">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">4.1. Following
+                                    Controller</h3>
+                                <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">
+                                    The FollowController implements a sophisticated tracking algorithm with two primary
+                                    objectives: centering the target in the frame and maintaining desired distance. The
+                                    system uses priority-based control, first ensuring the target is centered before
+                                    adjusting distance.
+                                </p>
+
                                 <div
-                                    class="aspect-video bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30 flex items-center justify-center relative">
-                                    <!-- <div class="absolute inset-0 flex items-center justify-center">
+                                    class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6 mb-6 border border-blue-200 dark:border-blue-800">
+                                    <h4 class="font-bold text-gray-900 dark:text-white mb-3">Control Features</h4>
+                                    <div class="space-y-3">
+                                        <div class="flex items-start">
+                                            <span
+                                                class="material-symbols-outlined text-blue-600 mr-3 mt-0.5">speed</span>
+                                            <div>
+                                                <p class="font-semibold text-gray-900 dark:text-white">Exponential
+                                                    Moving
+                                                    Average (EMA)</p>
+                                                <p class="text-sm text-gray-600 dark:text-gray-400">Smoothing factor α =
+                                                    0.15 for stable output and reduced oscillation</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <span
+                                                class="material-symbols-outlined text-blue-600 mr-3 mt-0.5">trending_up</span>
+                                            <div>
+                                                <p class="font-semibold text-gray-900 dark:text-white">Slew Rate
+                                                    Limiting
+                                                </p>
+                                                <p class="text-sm text-gray-600 dark:text-gray-400">Maximum acceleration
+                                                    of
+                                                    10 units/tick prevents jerky movements</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <span
+                                                class="material-symbols-outlined text-blue-600 mr-3 mt-0.5">adjust</span>
+                                            <div>
+                                                <p class="font-semibold text-gray-900 dark:text-white">Deadzone
+                                                    Protection
+                                                </p>
+                                                <p class="text-sm text-gray-600 dark:text-gray-400">Central zone with
+                                                    aspect
+                                                    ratio correction for stable hover</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">4.2. Search and
+                                    Recovery</h3>
+                                <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
+                                    When the target is lost, the system automatically switches to search mode, rotating
+                                    the
+                                    drone in 30-degree increments to locate the target. If the target remains
+                                    undetected,
+                                    spiral waypoint navigation is initiated.
+                                </p>
+
+                                <div class="bg-gray-900 rounded-lg p-6 mb-4">
+                                    <h4 class="font-bold text-white mb-3">Spiral Waypoint Generation</h4>
+                                    <div class="grid grid-cols-5 gap-2 mb-4">
+                                        <div class="bg-blue-600 rounded-lg p-3 text-center">
+                                            <p class="text-white text-xs font-bold">WP1</p>
+                                            <p class="text-blue-200 text-xs mt-1">Center</p>
+                                        </div>
+                                        <div class="bg-blue-500 rounded-lg p-3 text-center">
+                                            <p class="text-white text-xs font-bold">WP2</p>
+                                            <p class="text-blue-200 text-xs mt-1">R = 1.0m</p>
+                                        </div>
+                                        <div class="bg-blue-400 rounded-lg p-3 text-center">
+                                            <p class="text-white text-xs font-bold">WP3</p>
+                                            <p class="text-blue-200 text-xs mt-1">R = 0.8m</p>
+                                        </div>
+                                        <div class="bg-blue-300 rounded-lg p-3 text-center">
+                                            <p class="text-gray-900 text-xs font-bold">WP4</p>
+                                            <p class="text-gray-700 text-xs mt-1">R = 0.6m</p>
+                                        </div>
+                                        <div class="bg-blue-200 rounded-lg p-3 text-center">
+                                            <p class="text-gray-900 text-xs font-bold">WP5</p>
+                                            <p class="text-gray-700 text-xs mt-1">R = 0.4m</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-400 text-sm">5-point spiral descent with radius decay • Waypoint
+                                        tolerance: 0.3m • Stop distance: 0.5m</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- ArUco Marker Mode -->
+                        <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="aruco-mode">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">5. ArUco Marker Mode</h2>
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
+                                The ArUco Marker Mode provides precise 3D pose estimation using calibrated camera
+                                parameters. This mode is ideal for applications requiring accurate distance measurement
+                                and
+                                stable tracking performance.
+                            </p>
+
+                            <div
+                                class="scroll-section w-full h-[500px] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md border border-gray-200 dark:border-gray-800 overflow-y-auto">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">5.1. Detection and
+                                    Calibration</h3>
+                                <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">
+                                    The system uses OpenCV's ArUco detector with camera calibration matrices to estimate
+                                    the
+                                    marker's 3D position. Before flight, the user must perform a calibration by holding
+                                    the
+                                    marker within the deadzone for 2 seconds to establish a reference distance.
+                                </p>
+
+                                <div
+                                    class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-6 mb-6 border border-blue-200 dark:border-blue-800">
+                                    <h4 class="font-bold text-gray-900 dark:text-white mb-3">Key Features</h4>
+                                    <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                                        <li class="flex items-start">
+                                            <span
+                                                class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
+                                            <span><strong>3D Pose Estimation:</strong> Translation vectors (tvec)
+                                                provide
+                                                accurate distance and position data</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span
+                                                class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
+                                            <span><strong>Deadzone Logic:</strong> 30% central region prevents jitter
+                                                and
+                                                ensures stability</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span
+                                                class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
+                                            <span><strong>Absolute Reference:</strong> Maintains fixed distance based on
+                                                initial calibration</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span
+                                                class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
+                                            <span><strong>Marker Size:</strong> 13cm markers optimized for detection
+                                                range</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">5.2. Control
+                                    Algorithm
+                                </h3>
+                                <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
+                                    The controller uses proportional gains to center the marker and maintain desired
+                                    distance:
+                                </p>
+                                <div class="bg-gray-900 rounded-lg p-4 mb-4 font-mono text-sm text-green-400">
+                                    <p>k_yaw = 150 # Rotation speed</p>
+                                    <p>k_throttle = 150 # Vertical speed</p>
+                                    <p>k_pitch = 3000 # Forward/backward (60x base gain)</p>
+                                    <p>deadzone_ratio = 0.3 # 30% center zone</p>
+                                </div>
+                                <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
+                                    The system prioritizes centering the marker before adjusting distance, ensuring
+                                    smooth
+                                    and predictable behavior.
+                                </p>
+                            </div>
+                        </section>
+
+                        <!-- Demo Videos -->
+                        <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="demos">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">6. Demo Videos</h2>
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-8">
+                                Watch our autonomous drone control system in action across all three modes. These
+                                demonstrations showcase the real-time performance and capabilities of each control
+                                paradigm.
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+
+                                <!-- Hand Gesture Demo -->
+                                <div
+                                    class="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
+                                    <div
+                                        class="aspect-video bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30 flex items-center justify-center relative">
+                                        <video class="w-full h-full object-cover" controls>
+                                            <source src="assets/hand-demo.mp4" type="video/mp4">
+                                        </video>
+                                        <div
+                                            class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                                            Gesture Demo
+                                        </div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="font-bold text-gray-900 dark:text-white mb-2">Hand Gesture Control
+                                        </h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Intuitive pinch-to-follow
+                                            control with real-time MediaPipe hand tracking</p>
+                                    </div>
+                                </div>
+
+                                <!-- Follow Me Demo -->
+                                <div
+                                    class="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
+                                    <div
+                                        class="aspect-video bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30 flex items-center justify-center relative">
+                                        <!-- <div class="absolute inset-0 flex items-center justify-center">
                                         <span
                                             class="material-symbols-outlined text-6xl text-green-600 opacity-50">assistant_direction</span>
                                     </div> -->
-                                    <video class="w-full h-full object-cover" controls>
-                                        <source src="assets/follow-demo.mp4" type="video/mp4">
-                                    </video>
-                                    <div
-                                        class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                                        Follow Demo
+                                        <video class="w-full h-full object-cover" controls>
+                                            <source src="assets/follow-demo.mp4" type="video/mp4">
+                                        </video>
+                                        <div
+                                            class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                                            Follow Demo
+                                        </div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="font-bold text-gray-900 dark:text-white mb-2">Autonomous Follow Mode
+                                        </h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Intelligent tracking with
+                                            automatic search and spiral waypoint navigation</p>
                                     </div>
                                 </div>
-                                <div class="p-4">
-                                    <h3 class="font-bold text-gray-900 dark:text-white mb-2">Autonomous Follow Mode</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Intelligent tracking with
-                                        automatic search and spiral waypoint navigation</p>
+
+                                <!-- ArUco Mode Demo -->
+                                <div
+                                    class="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
+                                    <div
+                                        class="aspect-video bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 flex items-center justify-center relative">
+                                        <video class="w-full h-full object-cover" controls>
+                                            <source src="assets/arcuo-demo.mp4" type="video/mp4">
+                                        </video>
+                                        <div
+                                            class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                                            ArUco Demo
+                                        </div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="font-bold text-gray-900 dark:text-white mb-2">ArUco Marker Tracking
+                                        </h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Precision 3D pose estimation
+                                            with calibrated distance control and deadzone stability</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                    </section>
+                        </section>
 
-                    <!-- Conclusion -->
-                    <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="conclusion">
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">7. Conclusion &amp; Future
-                            Work</h2>
-                        <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
-                            This project successfully demonstrates a modular, extensible architecture for vision-based
-                            autonomous drone control. The system provides robust performance across multiple control
-                            paradigms, showcasing advanced computer vision integration with real-time flight control.
-                        </p>
-
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Key Achievements</h3>
-                        <ul
-                            class="list-disc list-inside text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6 pl-4 space-y-2">
-                            <li><strong class="text-gray-900 dark:text-white">Modular Architecture:</strong> Clean
-                                separation of concerns enabling easy component swapping</li>
-                            <li><strong class="text-gray-900 dark:text-white">Dual Vision Modes:</strong> ArUco markers
-                                and hand gesture recognition providing flexible control options</li>
-                            <li><strong class="text-gray-900 dark:text-white">Robust Control:</strong> EMA smoothing and
-                                slew rate limiting for stable flight performance</li>
-                            <li><strong class="text-gray-900 dark:text-white">Safety Features:</strong> Battery
-                                monitoring, watchdog timers, and manual override capabilities</li>
-                            <li><strong class="text-gray-900 dark:text-white">Search & Recovery:</strong> Intelligent
-                                waypoint navigation when target is lost</li>
-                        </ul>
-
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Future Enhancements</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div
-                                class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                                <h4 class="font-bold text-gray-900 dark:text-white mb-2">Multi-Marker Fusion</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Combine multiple ArUco markers for
-                                    enhanced localization accuracy and larger operational areas</p>
-                            </div>
-                            <div
-                                class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-                                <h4 class="font-bold text-gray-900 dark:text-white mb-2">Advanced Gestures</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Expand gesture vocabulary with
-                                    dynamic motion patterns and personalized gesture sets</p>
-                            </div>
-                            <div
-                                class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
-                                <h4 class="font-bold text-gray-900 dark:text-white mb-2">Obstacle Avoidance</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Integrate depth sensors for
-                                    intelligent collision avoidance and safe autonomous navigation</p>
-                            </div>
-                            <div
-                                class="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 p-4 rounded-lg border border-amber-200 dark:border-amber-800">
-                                <h4 class="font-bold text-gray-900 dark:text-white mb-2">Path Planning</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Implement autonomous path planning
-                                    algorithms for complex mission scenarios</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Challenges and Difficulties -->
-                    <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="challenges">
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">8. Challenges and Difficulties</h2>
-                        <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">
-                            Throughout the development of this autonomous drone control system, we encountered several
-                            significant technical challenges that required innovative solutions and careful debugging.
-                        </p>
-
-                        <div class="bg-red-50 dark:bg-red-900/20 rounded-xl p-6 mb-6 border border-red-200 dark:border-red-800">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                                <span class="material-symbols-outlined text-red-600 mr-2">warning</span>
-                                GPS and Coordinate Limitations
-                            </h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
-                                Since the drone lacks built-in coordinate functionality or GPS, the drone camera must
-                                continuously track the ArUco marker to determine its current position. Our preference for
-                                the drone to follow the previous trajectory rather than planning a new one upon reacquiring
-                                the marker resulted in complicated code that required a significant amount of time to debug
-                                and organize the various control flags.
-                            </p>
-                        </div>
-
-                        <div class="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-6 mb-6 border border-amber-200 dark:border-amber-800">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                                <span class="material-symbols-outlined text-amber-600 mr-2">sync_problem</span>
-                                Search Logic Inefficiencies
-                            </h3>
+                        <!-- Conclusion -->
+                        <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="conclusion">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">7. Conclusion &amp; Future
+                                Work</h2>
                             <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
-                                In the current searching logic, if the marker shifts slightly to the drone camera's left,
-                                the drone still initiates a yaw to the right, often completing nearly a full search before
-                                locating the marker. Furthermore, the drone's search is limited to rotation; consequently,
-                                if the marker is positioned too high or too low for the camera's field of view, it will not
-                                be sighted even after a full rotational search.
+                                This project successfully demonstrates a modular, extensible architecture for
+                                vision-based
+                                autonomous drone control. The system provides robust performance across multiple control
+                                paradigms, showcasing advanced computer vision integration with real-time flight
+                                control.
                             </p>
-                            <div class="bg-white dark:bg-gray-800 rounded-lg p-4 mt-4">
-                                <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Current Limitations:</h4>
-                                <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm space-y-1">
-                                    <li>Horizontal-only search pattern (yaw rotation)</li>
-                                    <li>Fixed search direction regardless of last known position</li>
-                                    <li>Vertical blind spots outside camera field of view</li>
-                                    <li>Increased search time for markers outside rotation plane</li>
-                                </ul>
-                            </div>
-                        </div>
 
-                        <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                                <span class="material-symbols-outlined text-blue-600 mr-2">psychology</span>
-                                Future Improvements
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Key Achievements</h3>
+                            <ul
+                                class="list-disc list-inside text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6 pl-4 space-y-2">
+                                <li><strong class="text-gray-900 dark:text-white">Modular Architecture:</strong> Clean
+                                    separation of concerns enabling easy component swapping</li>
+                                <li><strong class="text-gray-900 dark:text-white">Dual Vision Modes:</strong> ArUco
+                                    markers
+                                    and hand gesture recognition providing flexible control options</li>
+                                <li><strong class="text-gray-900 dark:text-white">Robust Control:</strong> EMA smoothing
+                                    and
+                                    slew rate limiting for stable flight performance</li>
+                                <li><strong class="text-gray-900 dark:text-white">Safety Features:</strong> Battery
+                                    monitoring, watchdog timers, and manual override capabilities</li>
+                                <li><strong class="text-gray-900 dark:text-white">Search & Recovery:</strong>
+                                    Intelligent
+                                    waypoint navigation when target is lost</li>
+                            </ul>
+
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Future Enhancements
                             </h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
-                                While adding vertical movement commands (up and down) after a full rotation would address
-                                the vertical blind spot issue, it would substantially increase the search time. Therefore,
-                                we aim to investigate more sophisticated search methodologies that balance coverage with
-                                efficiency, potentially incorporating predictive algorithms based on last known marker position
-                                and velocity.
-                            </p>
-                        </div>
-                    </section>
-
-                    <!-- Team -->
-                    <section class="py-16" id="team">
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">9. Team</h2>
-                        <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-8">
-                            This project represents the collaborative effort of a dedicated team passionate about
-                            robotics, computer vision, and autonomous systems.
-                        </p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            <div
-                                class="flex flex-col items-center gap-2 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div
-                                    class="size-24 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-                                    <img src="assets/wai.jpg" alt="Wai Han" class="w-full h-full object-cover">
+                                    class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+                                    <h4 class="font-bold text-gray-900 dark:text-white mb-2">Multi-Marker Fusion</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Combine multiple ArUco markers
+                                        for
+                                        enhanced localization accuracy and larger operational areas</p>
                                 </div>
-                                <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Wai Han</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">EECS</p>
+                                <div
+                                    class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 p-4 rounded-lg border border-purple-200 dark:border-purple-800">
+                                    <h4 class="font-bold text-gray-900 dark:text-white mb-2">Advanced Gestures</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Expand gesture vocabulary with
+                                        dynamic motion patterns and personalized gesture sets</p>
+                                </div>
+                                <div
+                                    class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
+                                    <h4 class="font-bold text-gray-900 dark:text-white mb-2">Obstacle Avoidance</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Integrate depth sensors for
+                                        intelligent collision avoidance and safe autonomous navigation</p>
+                                </div>
+                                <div
+                                    class="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 p-4 rounded-lg border border-amber-200 dark:border-amber-800">
+                                    <h4 class="font-bold text-gray-900 dark:text-white mb-2">Path Planning</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Implement autonomous path
+                                        planning
+                                        algorithms for complex mission scenarios</p>
+                                </div>
                             </div>
+                        </section>
+
+                        <!-- Challenges and Difficulties -->
+                        <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="challenges">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">8. Challenges and
+                                Difficulties</h2>
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">
+                                Throughout the development of this autonomous drone control system, we encountered
+                                several
+                                significant technical challenges that required innovative solutions and careful
+                                debugging.
+                            </p>
+
                             <div
-                                class="flex flex-col items-center gap-2 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
-                                <div
-                                    class="size-24 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-                                    <img src="assets/connie.png" alt="Connie Li" class="w-full h-full object-cover">
-                                </div>
-                                <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Connie Li</h4>
-                                <p class="text-sm text-center text-gray-600 dark:text-gray-400">Aerospace Engineering
+                                class="bg-red-50 dark:bg-red-900/20 rounded-xl p-6 mb-6 border border-red-200 dark:border-red-800">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                                    <span class="material-symbols-outlined text-red-600 mr-2">warning</span>
+                                    GPS and Coordinate Limitations
+                                </h3>
+                                <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
+                                    Since the drone lacks built-in coordinate functionality or GPS, the drone camera
+                                    must
+                                    continuously track the ArUco marker to determine its current position. Our
+                                    preference for
+                                    the drone to follow the previous trajectory rather than planning a new one upon
+                                    reacquiring
+                                    the marker resulted in complicated code that required a significant amount of time
+                                    to debug
+                                    and organize the various control flags.
                                 </p>
                             </div>
+
                             <div
-                                class="flex flex-col items-center gap-2 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
-                                <div
-                                    class="size-24 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-                                    <img src="assets/david.jpeg" alt="Thet Paing" class="w-full h-full object-cover">
+                                class="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-6 mb-6 border border-amber-200 dark:border-amber-800">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                                    <span class="material-symbols-outlined text-amber-600 mr-2">sync_problem</span>
+                                    Search Logic Inefficiencies
+                                </h3>
+                                <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
+                                    In the current searching logic, if the marker shifts slightly to the drone camera's
+                                    left,
+                                    the drone still initiates a yaw to the right, often completing nearly a full search
+                                    before
+                                    locating the marker. Furthermore, the drone's search is limited to rotation;
+                                    consequently,
+                                    if the marker is positioned too high or too low for the camera's field of view, it
+                                    will not
+                                    be sighted even after a full rotational search.
+                                </p>
+                                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 mt-4">
+                                    <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Current Limitations:
+                                    </h4>
+                                    <ul
+                                        class="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm space-y-1">
+                                        <li>Horizontal-only search pattern (yaw rotation)</li>
+                                        <li>Fixed search direction regardless of last known position</li>
+                                        <li>Vertical blind spots outside camera field of view</li>
+                                        <li>Increased search time for markers outside rotation plane</li>
+                                    </ul>
                                 </div>
-                                <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Thet Paing
-                                </h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">EECS</p>
                             </div>
+
                             <div
-                                class="flex flex-col items-center gap-2 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
-                                <div
-                                    class="size-24 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-                                    <img src="assets/hieu.jpeg" alt="Hieu Hoang" class="w-full h-full object-cover">
-                                </div>
-                                <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Hieu Hoang</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">EECS</p>
+                                class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                                    <span class="material-symbols-outlined text-blue-600 mr-2">psychology</span>
+                                    Future Improvements
+                                </h3>
+                                <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
+                                    While adding vertical movement commands (up and down) after a full rotation would
+                                    address
+                                    the vertical blind spot issue, it would substantially increase the search time.
+                                    Therefore,
+                                    we aim to investigate more sophisticated search methodologies that balance coverage
+                                    with
+                                    efficiency, potentially incorporating predictive algorithms based on last known
+                                    marker position
+                                    and velocity.
+                                </p>
                             </div>
-                        </div>
-                    </section>
+                        </section>
+
+                        <!-- Team -->
+                        <section class="py-16" id="team">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">9. Team</h2>
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-8">
+                                This project represents the collaborative effort of a dedicated team passionate about
+                                robotics, computer vision, and autonomous systems.
+                            </p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <div
+                                    class="flex flex-col items-center gap-2 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
+                                    <div
+                                        class="size-24 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                                        <img src="assets/wai.jpg" alt="Wai Han" class="w-full h-full object-cover">
+                                    </div>
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Wai Han</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">EECS</p>
+                                </div>
+                                <div
+                                    class="flex flex-col items-center gap-2 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
+                                    <div
+                                        class="size-24 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                                        <img src="assets/connie.png" alt="Connie Li" class="w-full h-full object-cover">
+                                    </div>
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Connie Li</h4>
+                                    <p class="text-sm text-center text-gray-600 dark:text-gray-400">Aerospace
+                                        Engineering
+                                    </p>
+                                </div>
+                                <div
+                                    class="flex flex-col items-center gap-2 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
+                                    <div
+                                        class="size-24 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                                        <img src="assets/david.jpeg" alt="Thet Paing"
+                                            class="w-full h-full object-cover">
+                                    </div>
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Thet Paing
+                                    </h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">EECS</p>
+                                </div>
+                                <div
+                                    class="flex flex-col items-center gap-2 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
+                                    <div
+                                        class="size-24 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                                        <img src="assets/hieu.jpeg" alt="Hieu Hoang" class="w-full h-full object-cover">
+                                    </div>
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Hieu Hoang</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">EECS</p>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </main>

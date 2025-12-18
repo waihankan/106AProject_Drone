@@ -12,7 +12,7 @@ fi
 
 INPUT="$1"
 OUTPUT_NAME="$2"
-ASSETS_DIR="website/assets"
+ASSETS_DIR="docs/assets"
 
 # Check if input file exists
 if [ ! -f "$INPUT" ]; then
