@@ -25,38 +25,77 @@ website/
 
 ## Adding Demo Videos
 
-To add your demo videos to the website:
+### Quick Method: Use the Optimization Script
 
-1. **Prepare your videos** in MP4 format (recommended for best browser compatibility)
-   - ArUco marker tracking demo
-   - Hand gesture control demo
-   - Follow me mode demo
+The easiest way to add optimized videos is to use the included script:
 
-2. **Place video files** in the `website/assets/` directory:
+```bash
+# Make sure you're in the project root directory
+./website/optimize-video.sh your-raw-video.mp4 output-name
+
+# Examples:
+./website/optimize-video.sh aruco-raw.mp4 aruco-demo
+./website/optimize-video.sh gesture-raw.mp4 gesture-demo
+./website/optimize-video.sh follow-raw.mp4 follow-demo
+```
+
+This script will:
+- ✅ Optimize video for web (reduce file size by ~20-30%)
+- ✅ Generate a thumbnail poster image
+- ✅ Output ready-to-use HTML code
+- ✅ Save files to `website/assets/`
+
+### Manual Method
+
+If you prefer to optimize videos manually:
+
+1. **Optimize your videos** for web using FFmpeg:
    ```bash
-   cp aruco-demo.mp4 website/assets/
-   cp gesture-demo.mp4 website/assets/
-   cp follow-demo.mp4 website/assets/
+   ffmpeg -i your-video.mp4 \
+     -vf scale=1280:720 \
+     -r 30 \
+     -c:v libx264 \
+     -crf 25 \
+     -preset medium \
+     -movflags +faststart \
+     -c:a aac -b:a 96k \
+     website/assets/demo-name.mp4
    ```
 
-3. **Update index.html** by uncommenting the video tags in the "Demo Videos" section:
-
-   Find these lines (around line 450-490):
-   ```html
-   <!-- Replace with actual video -->
-   <!-- <video class="w-full h-full object-cover" controls>
-       <source src="assets/aruco-demo.mp4" type="video/mp4">
-   </video> -->
+2. **Generate thumbnail** (poster image):
+   ```bash
+   ffmpeg -i website/assets/demo-name.mp4 \
+     -ss 00:00:03 \
+     -vframes 1 \
+     -q:v 2 \
+     website/assets/demo-name-poster.jpg
    ```
 
-   Uncomment them to:
+3. **Update index.html** by uncommenting and modifying the video tags:
+
+   Find the commented video sections (around line 438, 463, 487) and replace with:
    ```html
-   <video class="w-full h-full object-cover" controls>
-       <source src="assets/aruco-demo.mp4" type="video/mp4">
+   <video class="w-full h-full object-cover"
+          controls
+          preload="metadata"
+          poster="assets/demo-name-poster.jpg">
+       <source src="assets/demo-name.mp4" type="video/mp4">
+       Your browser does not support the video tag.
    </video>
    ```
 
-4. Do the same for all three video sections (ArUco, Gesture, Follow)
+### Video Optimization Guidelines
+
+**Recommended Settings:**
+- **Resolution:** 1280x720 (720p) - perfect for web demos
+- **Frame Rate:** 30fps
+- **Codec:** H.264 (best browser compatibility)
+- **CRF:** 25 (good quality/size balance)
+- **Audio:** 96kbps AAC
+- **Target Size:** Under 10MB per video
+
+**Current Videos:**
+- ✅ `follow-demo.mp4` - Optimized (11MB, 720p, 30fps)
 
 ## Viewing the Website
 

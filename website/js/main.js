@@ -46,15 +46,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateActiveSidebarLink(activeHref = null) {
         sidebarLinks.forEach(link => {
-            link.classList.remove('active', 'border-primary', 'text-primary');
-            link.classList.add('border-transparent');
+            link.classList.remove('active', 'border-primary', 'text-primary', 'dark:text-primary');
+            link.classList.add('border-transparent', 'text-gray-600', 'dark:text-gray-400');
         });
 
         if (activeHref) {
             const activeLink = document.querySelector(`aside a[href="${activeHref}"]`);
             if (activeLink) {
-                activeLink.classList.add('active', 'border-primary', 'text-primary');
-                activeLink.classList.remove('border-transparent');
+                activeLink.classList.add('active', 'border-primary', 'text-primary', 'dark:text-primary');
+                activeLink.classList.remove('border-transparent', 'text-gray-600', 'dark:text-gray-400');
             }
         }
     }

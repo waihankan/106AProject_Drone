@@ -5,6 +5,16 @@
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
+/* Sticky Sidebar Enhancement */
+aside.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 5rem;
+    max-height: calc(100vh - 5rem);
+    overflow-y: auto;
+    will-change: transform;
+}
+
 /* Scrollbar Styling */
 .scroll-section {
     overflow-y: auto;

@@ -5,11 +5,33 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>EECS 106A Team 5 Tello Drone Control</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+    <link rel="apple-touch-icon" href="favicon.png" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#e2e8f0',
+                primaryTextColor: '#1e293b',
+                primaryBorderColor: '#94a3b8',
+                lineColor: '#64748b',
+                secondaryColor: '#f1f5f9',
+                tertiaryColor: '#e2e8f0',
+                background: '#ffffff',
+                mainBkg: '#f8fafc',
+                secondBkg: '#f7f7f7',
+                terBkg: '#e2e8f0',
+                fontFamily: 'Inter, sans-serif'
+            }
+        });
+    </script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -42,11 +64,8 @@
             <header
                 class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between whitespace-nowrap px-10 py-4 bg-white/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-solid border-gray-200/50 dark:border-gray-800/50">
                 <div class="flex items-center gap-4 text-gray-900 dark:text-white">
-                    <div class="size-5 text-primary">
-                        <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                            <path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z"
-                                fill="currentColor" fill-rule="evenodd"></path>
-                        </svg>
+                    <div class="size-12">
+                        <img src="assets/bear.png" alt="Team Logo" class="w-full h-full object-contain">
                     </div>
                     <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">EECS 106A Project
                     </h2>
@@ -77,11 +96,11 @@
                         <a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors py-1 pl-2 border-l-2 border-transparent hover:border-primary"
                             href="#architecture">2. System Architecture</a>
                         <a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors py-1 pl-2 border-l-2 border-transparent hover:border-primary"
-                            href="#aruco-mode">3. ArUco Marker Mode</a>
+                            href="#hand-gesture">3. Hand Gesture Control</a>
                         <a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors py-1 pl-2 border-l-2 border-transparent hover:border-primary"
-                            href="#hand-gesture">4. Hand Gesture Control</a>
+                            href="#follow-mode">4. Follow Me Mode</a>
                         <a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors py-1 pl-2 border-l-2 border-transparent hover:border-primary"
-                            href="#follow-mode">5. Follow Me Mode</a>
+                            href="#aruco-mode">5. ArUco Marker Mode</a>
                         <a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors py-1 pl-2 border-l-2 border-transparent hover:border-primary"
                             href="#demos">6. Demo Videos</a>
                         <a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors py-1 pl-2 border-l-2 border-transparent hover:border-primary"
@@ -147,6 +166,71 @@
                             Segregation Principle, separating concerns into distinct modules.
                         </p>
 
+                        <!-- Architecture Diagram -->
+                        <div
+                            class="bg-white dark:bg-gray-900 rounded-xl p-6 my-8 border border-gray-200 dark:border-gray-800 overflow-x-auto">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 text-center">System
+                                Architecture Diagram</h3>
+                            <div class="mermaid">
+                                graph TB
+                                subgraph User["User Input"]
+                                Manual["Manual Controls<br />(WASD, I/K, J/U)"]
+                                Vision["Vision Targets<br />(ArUco/Hand)"]
+                                end
+
+                                subgraph Control["Control Layer"]
+                                Controller["FollowController<br />• PID-based tracking<br />• EMA smoothing<br />• Slew
+                                rate limiting"]
+                                Search["Search Mode<br />• Yaw rotation<br />• Spiral waypoints"]
+                                end
+
+                                subgraph Vision_Layer["Vision Layer"]
+                                ArUco["ArucoVision<br />• 3D pose estimation<br />• Camera calibration<br />• Deadzone
+                                logic"]
+                                Hand["HandGestureVision<br />• MediaPipe tracking<br />• Pinch detection<br />• 21
+                                landmarks"]
+                                end
+
+                                subgraph Hardware["Hardware Layer"]
+                                Tello["TelloDrone<br />• WiFi control<br />• Video stream<br />• Battery monitor"]
+                                Mock["MockDrone<br />• Webcam sim<br />• Testing mode"]
+                                end
+
+                                subgraph Physical["DJI Tello Drone"]
+                                Drone["Physical Quadcopter<br />• Camera<br />• Motors<br />• Sensors"]
+                                end
+
+                                Manual --> Controller
+                                Vision --> ArUco
+                                Vision --> Hand
+                                ArUco --> Controller
+                                Hand --> Controller
+                                Controller --> Search
+                                Search --> Controller
+                                Controller --> Tello
+                                Controller --> Mock
+                                Tello --> Drone
+                                Drone -.Video Feed.-> ArUco
+                                Drone -.Video Feed.-> Hand
+
+                                classDef userClass fill:#e2e8f0,stroke:#64748b,stroke-width:2px,color:#1e293b
+                                classDef controlClass fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#1e40af
+                                classDef visionClass fill:#fed7aa,stroke:#f97316,stroke-width:2px,color:#7c2d12
+                                classDef hardwareClass fill:#fef3c7,stroke:#eab308,stroke-width:2px,color:#713f12
+                                classDef physicalClass fill:#f1f5f9,stroke:#94a3b8,stroke-width:2px,color:#334155
+
+                                class Manual,Vision userClass
+                                class Controller,Search controlClass
+                                class ArUco,Hand visionClass
+                                class Tello,Mock hardwareClass
+                                class Drone physicalClass
+                            </div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-4">
+                                Data flows from vision detection through the controller to hardware, with manual
+                                override capabilities
+                            </p>
+                        </div>
+
                         <div
                             class="bg-gray-50 dark:bg-gray-900 rounded-xl p-6 my-8 border border-gray-200 dark:border-gray-800">
                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Core Components</h3>
@@ -189,78 +273,9 @@
                         </p>
                     </section>
 
-                    <!-- ArUco Marker Mode -->
-                    <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="aruco-mode">
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">3. ArUco Marker Mode</h2>
-                        <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
-                            The ArUco Marker Mode provides precise 3D pose estimation using calibrated camera
-                            parameters. This mode is ideal for applications requiring accurate distance measurement and
-                            stable tracking performance.
-                        </p>
-
-                        <div
-                            class="scroll-section w-full h-[500px] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md border border-gray-200 dark:border-gray-800 overflow-y-auto">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">3.1. Detection and
-                                Calibration</h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">
-                                The system uses OpenCV's ArUco detector with camera calibration matrices to estimate the
-                                marker's 3D position. Before flight, the user must perform a calibration by holding the
-                                marker within the deadzone for 2 seconds to establish a reference distance.
-                            </p>
-
-                            <div
-                                class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-6 mb-6 border border-blue-200 dark:border-blue-800">
-                                <h4 class="font-bold text-gray-900 dark:text-white mb-3">Key Features</h4>
-                                <ul class="space-y-2 text-gray-700 dark:text-gray-300">
-                                    <li class="flex items-start">
-                                        <span
-                                            class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
-                                        <span><strong>3D Pose Estimation:</strong> Translation vectors (tvec) provide
-                                            accurate distance and position data</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <span
-                                            class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
-                                        <span><strong>Deadzone Logic:</strong> 30% central region prevents jitter and
-                                            ensures stability</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <span
-                                            class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
-                                        <span><strong>Absolute Reference:</strong> Maintains fixed distance based on
-                                            initial calibration</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <span
-                                            class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
-                                        <span><strong>Marker Size:</strong> 13cm markers optimized for detection
-                                            range</span>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">3.2. Control Algorithm
-                            </h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
-                                The controller uses proportional gains to center the marker and maintain desired
-                                distance:
-                            </p>
-                            <div class="bg-gray-900 rounded-lg p-4 mb-4 font-mono text-sm text-green-400">
-                                <p>k_yaw = 150 # Rotation speed</p>
-                                <p>k_throttle = 150 # Vertical speed</p>
-                                <p>k_pitch = 3000 # Forward/backward (60x base gain)</p>
-                                <p>deadzone_ratio = 0.3 # 30% center zone</p>
-                            </div>
-                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
-                                The system prioritizes centering the marker before adjusting distance, ensuring smooth
-                                and predictable behavior.
-                            </p>
-                        </div>
-                    </section>
-
                     <!-- Hand Gesture Control -->
                     <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="hand-gesture">
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">4. Hand Gesture Control</h2>
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">3. Hand Gesture Control</h2>
                         <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
                             Hand Gesture Control leverages MediaPipe for real-time hand tracking, enabling intuitive
                             drone control through natural gestures. The system detects pinch gestures to activate
@@ -269,7 +284,7 @@
 
                         <div
                             class="scroll-section w-full h-[500px] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md border border-gray-200 dark:border-gray-800 overflow-y-auto">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">4.1. Gesture
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">3.1. Gesture
                                 Recognition</h3>
                             <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">
                                 MediaPipe tracks 21 hand landmarks in real-time, with the system specifically monitoring
@@ -306,7 +321,7 @@
                                 </div>
                             </div>
 
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">4.2. Tracking Behavior
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">3.2. Tracking Behavior
                             </h3>
                             <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
                                 The hand gesture mode operates in "relative mode," meaning the drone continuously
@@ -330,7 +345,7 @@
 
                     <!-- Follow Me Mode -->
                     <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="follow-mode">
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">5. Follow Me Mode</h2>
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">4. Follow Me Mode</h2>
                         <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
                             Follow Me Mode combines vision detection with intelligent control algorithms to autonomously
                             track targets. When the target is lost, the system automatically initiates search behavior
@@ -339,7 +354,7 @@
 
                         <div
                             class="scroll-section w-full h-[500px] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md border border-gray-200 dark:border-gray-800 overflow-y-auto">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">5.1. Following
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">4.1. Following
                                 Controller</h3>
                             <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">
                                 The FollowController implements a sophisticated tracking algorithm with two primary
@@ -383,7 +398,7 @@
                                 </div>
                             </div>
 
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">5.2. Search and
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">4.2. Search and
                                 Recovery</h3>
                             <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
                                 When the target is lost, the system automatically switches to search mode, rotating the
@@ -418,6 +433,75 @@
                                 <p class="text-gray-400 text-sm">5-point spiral descent with radius decay • Waypoint
                                     tolerance: 0.3m • Stop distance: 0.5m</p>
                             </div>
+                        </div>
+                    </section>
+
+                    <!-- ArUco Marker Mode -->
+                    <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="aruco-mode">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">5. ArUco Marker Mode</h2>
+                        <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
+                            The ArUco Marker Mode provides precise 3D pose estimation using calibrated camera
+                            parameters. This mode is ideal for applications requiring accurate distance measurement and
+                            stable tracking performance.
+                        </p>
+
+                        <div
+                            class="scroll-section w-full h-[500px] p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md border border-gray-200 dark:border-gray-800 overflow-y-auto">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">5.1. Detection and
+                                Calibration</h3>
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">
+                                The system uses OpenCV's ArUco detector with camera calibration matrices to estimate the
+                                marker's 3D position. Before flight, the user must perform a calibration by holding the
+                                marker within the deadzone for 2 seconds to establish a reference distance.
+                            </p>
+
+                            <div
+                                class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-6 mb-6 border border-blue-200 dark:border-blue-800">
+                                <h4 class="font-bold text-gray-900 dark:text-white mb-3">Key Features</h4>
+                                <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                                    <li class="flex items-start">
+                                        <span
+                                            class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
+                                        <span><strong>3D Pose Estimation:</strong> Translation vectors (tvec) provide
+                                            accurate distance and position data</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span
+                                            class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
+                                        <span><strong>Deadzone Logic:</strong> 30% central region prevents jitter and
+                                            ensures stability</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span
+                                            class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
+                                        <span><strong>Absolute Reference:</strong> Maintains fixed distance based on
+                                            initial calibration</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span
+                                            class="material-symbols-outlined text-primary mr-2 mt-0.5">check_circle</span>
+                                        <span><strong>Marker Size:</strong> 13cm markers optimized for detection
+                                            range</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">5.2. Control Algorithm
+                            </h3>
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
+                                The controller uses proportional gains to center the marker and maintain desired
+                                distance:
+                            </p>
+                            <div class="bg-gray-900 rounded-lg p-4 mb-4 font-mono text-sm text-green-400">
+                                <p>k_yaw = 150 # Rotation speed</p>
+                                <p>k_throttle = 150 # Vertical speed</p>
+                                <p>k_pitch = 3000 # Forward/backward (60x base gain)</p>
+                                <p>deadzone_ratio = 0.3 # 30% center zone</p>
+                            </div>
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
+                                The system prioritizes centering the marker before adjusting distance, ensuring smooth
+                                and predictable behavior.
+                            </p>
                         </div>
                     </section>
 
@@ -572,8 +656,8 @@
                             <div
                                 class="flex flex-col items-center gap-2 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
                                 <div
-                                    class="size-20 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-lg font-bold">
-                                    WH
+                                    class="size-24 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                                    <img src="assets/wai.jpg" alt="Wai Han" class="w-full h-full object-cover">
                                 </div>
                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Wai Han</h4>
                                 <p class="text-sm text-gray-600 dark:text-gray-400">EECS</p>
@@ -581,17 +665,18 @@
                             <div
                                 class="flex flex-col items-center gap-2 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
                                 <div
-                                    class="size-20 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-lg font-bold">
-                                    CL
+                                    class="size-24 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                                    <img src="assets/connie.png" alt="Connie Li" class="w-full h-full object-cover">
                                 </div>
                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Connie Li</h4>
-                                <p class="text-sm text-center text-gray-600 dark:text-gray-400">Aerospace Engineering</p>
+                                <p class="text-sm text-center text-gray-600 dark:text-gray-400">Aerospace Engineering
+                                </p>
                             </div>
                             <div
                                 class="flex flex-col items-center gap-2 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
                                 <div
-                                    class="size-20 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-lg font-bold">
-                                    DD
+                                    class="size-24 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                                    <img src="assets/david.jpeg" alt="Thet Paing" class="w-full h-full object-cover">
                                 </div>
                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Thet Paing
                                 </h4>
@@ -600,8 +685,8 @@
                             <div
                                 class="flex flex-col items-center gap-2 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
                                 <div
-                                    class="size-20 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-lg font-bold">
-                                    HH
+                                    class="size-24 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                                    <img src="assets/hieu.jpeg" alt="Hieu Hoang" class="w-full h-full object-cover">
                                 </div>
                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Hieu Hoang</h4>
                                 <p class="text-sm text-gray-600 dark:text-gray-400">EECS</p>
