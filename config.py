@@ -39,7 +39,7 @@ DISTORTION_COEFFS = np.array([
     [-9.56033057e-03, 2.86911459e-01, -3.09675371e-04, 1.00210372e-03, -6.18334570e-01]
 ])
 
-#----------------To be changed--------------------
+
 DRONE_CAMERA_MATRIX = np.array([
     [580.0,   0.0, 480.0],
     [  0.0, 580.0, 360.0],
@@ -47,7 +47,7 @@ DRONE_CAMERA_MATRIX = np.array([
 ])
 DRONE_DISTORTION_COEFFS = np.zeros((5, 1))
 DRONE_MARKER_SIZE = 0.13
-#----------------To be changed--------------------
+
 
 # Control Parameters
 DEADZONE_RATIO = 0.3

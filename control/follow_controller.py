@@ -9,12 +9,6 @@ class FollowController(IController):
         self.target_id = target_id
         
         # PID Constants (Simple P for now)
-        # Unit Scaling Explanation:
-        # LR/UD inputs are Normalized Screen Coordinates (-1.0 to 1.0). Typical Action Delta: 0.5.
-        # FB Input is Linear Palm Size (0.0 to 0.5). Typical Action Delta: 0.02.
-        # To get similar Output Velocity (e.g. 50), we need different gains.
-        # LR: 0.5 * 100 = 50. Gain ~100-150.
-        # FB: 0.02 * 2500 = 50. Gain ~2500-3000.
         
         self.k_yaw = 150.0       # Rotation speed gain
         self.k_throttle = 150.0  # Vertical speed gain
@@ -198,12 +192,7 @@ class FollowController(IController):
                  # Hand Mode uses * 20. Let's try * 40 for Aruco (Was 60, too sensitive).
                  desired_fb = int(delta_area * 60 * self.k_pitch)
              else:
-                 # Relative Mode (Hand) - Positive logic (Closer = Positive Delta = Forward?)
-                 # Hand: Big Hand = Closer. Delta Positive.
-                 # If Hand is Close, we want to back away? 
-                 # Legacy code says: delta_area * 20 * k. (Positive).
-                 # If Hand Close -> Go Forward?? That seems wrong too.
-                  # But User only complained about Aruco. Leave Hand alone.
+                 # Relative Mode (Hand) - Positive logic (Closer = Positive Delta)
                    if abs(delta_area) > 0.005: # Increased from 0.002 to reduce jitter sensitivity
                         desired_fb = int(delta_area * 20 * self.k_pitch)
                    
@@ -213,7 +202,6 @@ class FollowController(IController):
              
             
         # CONTROL PRIORITY LOGIC
-        # Problem: FB (Distance) can be noisy and "win" the max_val check, preventing centering.
         # Solution: "Center First, Approach Later".
         
         # Thresholds for "Not Centered"

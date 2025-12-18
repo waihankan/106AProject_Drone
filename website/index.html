@@ -63,13 +63,13 @@
             <!-- Header -->
             <header
                 class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between whitespace-nowrap px-10 py-4 bg-white/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-solid border-gray-200/50 dark:border-gray-800/50">
-                <div class="flex items-center gap-4 text-gray-900 dark:text-white">
+                <a href="#introduction" class="flex items-center gap-4 text-gray-900 dark:text-white hover:opacity-80 transition-opacity cursor-pointer">
                     <div class="size-12">
                         <img src="assets/bear.png" alt="Team Logo" class="w-full h-full object-contain">
                     </div>
                     <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">EECS 106A Project
                     </h2>
-                </div>
+                </a>
                 <nav class="flex flex-1 justify-end">
                     <div class="flex items-center gap-9">
                         <a class="text-sm font-medium leading-normal text-gray-800 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
@@ -106,7 +106,9 @@
                         <a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors py-1 pl-2 border-l-2 border-transparent hover:border-primary"
                             href="#conclusion">7. Conclusion</a>
                         <a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors py-1 pl-2 border-l-2 border-transparent hover:border-primary"
-                            href="#team">8. Team</a>
+                            href="#challenges">8. Challenges</a>
+                        <a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors py-1 pl-2 border-l-2 border-transparent hover:border-primary"
+                            href="#team">9. Team</a>
                     </nav>
                 </aside>
 
@@ -646,9 +648,69 @@
                         </div>
                     </section>
 
+                    <!-- Challenges and Difficulties -->
+                    <section class="py-16 border-b border-gray-200 dark:border-gray-800" id="challenges">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">8. Challenges and Difficulties</h2>
+                        <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">
+                            Throughout the development of this autonomous drone control system, we encountered several
+                            significant technical challenges that required innovative solutions and careful debugging.
+                        </p>
+
+                        <div class="bg-red-50 dark:bg-red-900/20 rounded-xl p-6 mb-6 border border-red-200 dark:border-red-800">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                                <span class="material-symbols-outlined text-red-600 mr-2">warning</span>
+                                GPS and Coordinate Limitations
+                            </h3>
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
+                                Since the drone lacks built-in coordinate functionality or GPS, the drone camera must
+                                continuously track the ArUco marker to determine its current position. Our preference for
+                                the drone to follow the previous trajectory rather than planning a new one upon reacquiring
+                                the marker resulted in complicated code that required a significant amount of time to debug
+                                and organize the various control flags.
+                            </p>
+                        </div>
+
+                        <div class="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-6 mb-6 border border-amber-200 dark:border-amber-800">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                                <span class="material-symbols-outlined text-amber-600 mr-2">sync_problem</span>
+                                Search Logic Inefficiencies
+                            </h3>
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-4">
+                                In the current searching logic, if the marker shifts slightly to the drone camera's left,
+                                the drone still initiates a yaw to the right, often completing nearly a full search before
+                                locating the marker. Furthermore, the drone's search is limited to rotation; consequently,
+                                if the marker is positioned too high or too low for the camera's field of view, it will not
+                                be sighted even after a full rotational search.
+                            </p>
+                            <div class="bg-white dark:bg-gray-800 rounded-lg p-4 mt-4">
+                                <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Current Limitations:</h4>
+                                <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm space-y-1">
+                                    <li>Horizontal-only search pattern (yaw rotation)</li>
+                                    <li>Fixed search direction regardless of last known position</li>
+                                    <li>Vertical blind spots outside camera field of view</li>
+                                    <li>Increased search time for markers outside rotation plane</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                                <span class="material-symbols-outlined text-blue-600 mr-2">psychology</span>
+                                Future Improvements
+                            </h3>
+                            <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
+                                While adding vertical movement commands (up and down) after a full rotation would address
+                                the vertical blind spot issue, it would substantially increase the search time. Therefore,
+                                we aim to investigate more sophisticated search methodologies that balance coverage with
+                                efficiency, potentially incorporating predictive algorithms based on last known marker position
+                                and velocity.
+                            </p>
+                        </div>
+                    </section>
+
                     <!-- Team -->
                     <section class="py-16" id="team">
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">8. Team</h2>
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">9. Team</h2>
                         <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-8">
                             This project represents the collaborative effort of a dedicated team passionate about
                             robotics, computer vision, and autonomous systems.

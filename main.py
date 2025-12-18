@@ -126,34 +126,12 @@ def draw_hud(
         # Calculate box coordinates from center
         cx, cy = w // 2, h // 2
 
-        # Aspect Ratio logic to match Controller
-        # Controller uses: ratio_y = ratio_x * (16/9).
-        # But wait, Normalized Coordinates means:
-        # X=1 is Edge. Y=1 is Edge.
-        # If I draw a box 0.3 * Width and 0.3 * Height.
-        # Width=1280 (0.3->384). Height=720 (0.3->216).
-        # 384 vs 216.
-        # Physical Ratio = 384/216 = 1.77.
-        # So a "Normal" normalized box IS ALREADY physically 16:9 RECTANGLE.
-        # If we want a SQUARE Physical Box using Normalized Coordinates:
-        # We need Physical Width == Physical Height.
-        # W_px = 2 * nx * (W/2) = nx * W
-        # H_px = 2 * ny * (H/2) = ny * H
-        # We want W_px = H_px.
-        # nx * W = ny * H
-        # ny = nx * (W/H).
-        # ny = 0.3 * (16/9) = 0.533.
-        # Normalized Y threshold needs to be LARGER.
-
+        # Aspect Ratio logic:
+        # A 0.3 normalized deadzone usually results in a physically 16:9 rectangle.
+        # To make it physically square, we adjust ratio_y.
         ratio_x = dz
         ratio_y = dz * (w / h)
-
-        # Let's verify Squareness.
-        # If W=1600, H=900. ratio_x=0.2. ratio_y=0.2*1.77=0.355.
-        # dx = 800 * 0.2 = 160.
-        # dy = 450 * 0.355 = 159.75.
-        # dx ~= dy. It IS Square!
-
+        
         # Pixel calculation:
         d_px_x = int((w / 2) * ratio_x)
         d_px_y = int((h / 2) * ratio_y)
@@ -438,8 +416,6 @@ def main():
 
                 if drone_frame is not None:
                     last_frame_time = time.time()
-                    # Optional visual resize
-                    # drone_frame = cv2.resize(drone_frame, (960, 720))
 
             # B. Control Stream (Webcam)
             control_frame = None
@@ -792,13 +768,7 @@ def main():
                     # marker is visible here                  
                     lost_frames = 0
                     if search_status == "ARRIVED":
-                        # waypoints = generate_spiral_waypoints(tx, ty, tz)
-                        # wp_idx = 0
-                        # search_idx += 1
-                        # search_status = "MARKER FOUND"
                         lr, fb, ud, yaw = 0, 0, 0, 0
-
-                    elif mid_execution:
                         # we were executing, marker was lost, now it's back -> resume SAME traj
                         search_status = "APPROACHING"
                         lr, fb, ud, yaw = 0, 0, 0, 0
