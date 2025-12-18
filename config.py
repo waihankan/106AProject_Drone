@@ -8,7 +8,7 @@ HARDWARE_MODE = 'tello'
 VISION_MODE = 'aruco'
 
 # Enable Drone Video Stream (FPV)
-ENABLE_DRONE_STREAM = False
+ENABLE_DRONE_STREAM = True
 
 # Control Source is ALWAYS Webcam now.
 # Vision runs on laptop webcam (ID 0).
@@ -16,7 +16,6 @@ ENABLE_DRONE_STREAM = False
 # Webcam ID (default 0)
 WEBCAM_ID = 0
 TARGET_ID = 2
-
 
 # Tello Settings
 TELLO_IP = '192.168.10.1'
@@ -39,6 +38,16 @@ CAMERA_MATRIX = np.array([
 DISTORTION_COEFFS = np.array([
     [-9.56033057e-03, 2.86911459e-01, -3.09675371e-04, 1.00210372e-03, -6.18334570e-01]
 ])
+
+#----------------To be changed--------------------
+DRONE_CAMERA_MATRIX = np.array([
+    [580.0,   0.0, 480.0],
+    [  0.0, 580.0, 360.0],
+    [  0.0,   0.0,   1.0]
+])
+DRONE_DISTORTION_COEFFS = np.zeros((5, 1))
+DRONE_MARKER_SIZE = 0.13
+#----------------To be changed--------------------
 
 # Control Parameters
 DEADZONE_RATIO = 0.3

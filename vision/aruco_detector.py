@@ -1,6 +1,7 @@
 import cv2
 import cv2.aruco as aruco
 import numpy as np
+import config
 from interfaces.vision import IVision, VisionTarget
 from utils.logger import setup_logger
 
@@ -28,6 +29,16 @@ class ArucoVision(IVision):
         
         # 2. Detect on unflipped frame
         corners, ids, rejected = self.detector.detectMarkers(gray)
+        # --- Pose estimation (FAKE calibration is OK for now) ---
+        rvecs, tvecs = None, None
+        if ids is not None:
+            rvecs, tvecs, _ = aruco.estimatePoseSingleMarkers(
+                corners,
+                config.DRONE_MARKER_SIZE,
+                config.DRONE_CAMERA_MATRIX,
+                config.DRONE_DISTORTION_COEFFS,
+            )
+
         
         # 3. Remap corners back to mirrored space if detected
         if ids is not None and len(corners) > 0:
@@ -67,12 +78,21 @@ class ArucoVision(IVision):
                 # Simply using area of the bounding box
                 area = cv2.contourArea(c)
                 norm_area = area / (w * h)
+                tvec = None
+                rvec = None
+                if tvecs is not None:
+                    tvec = tvecs[i][0]   # shape (3,)
+                    rvec = rvecs[i][0]
 
                 targets.append(VisionTarget(
                     id=marker_id,
                     center=(norm_x, norm_y),
                     area=norm_area,
-                    raw_corners=c
+                    raw_corners=c,
+                    tvec=tvec,
+                    rvec=rvec,
                 ))
+        
+
         
         return targets

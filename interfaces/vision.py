@@ -1,13 +1,20 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional, Tuple
+import numpy as np
+
 
 @dataclass
 class VisionTarget:
     id: int
-    center: Tuple[float, float]  # Normalized coordinates (-1.0 to 1.0), (0,0) is center
-    area: float                 # Normalized area (0.0 to 1.0)
-    raw_corners: Optional[list] = None # Original corner points if needed
+    center: Tuple[float, float]   # Normalized image center (-1 to 1)
+    area: float                  # Normalized area (proxy for distance)
+    raw_corners: Optional[list] = None
+
+    # --- ADD THESE ---
+    tvec: Optional[np.ndarray] = None  # Translation vector (x,y,z) in meters
+    rvec: Optional[np.ndarray] = None  # Rotation vector (Rodrigues)
+
 
 class IVision(ABC):
     @abstractmethod

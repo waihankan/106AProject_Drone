@@ -53,8 +53,8 @@ class MockDrone(IDrone):
     def send_rc_control(self, left_right_velocity, forward_backward_velocity, up_down_velocity, yaw_velocity):
         # Only log if there's actual movement to avoid spamming 0s
         if any([left_right_velocity, forward_backward_velocity, up_down_velocity, yaw_velocity]):
-            logger.info(f"MOCK RC: LR={left_right_velocity} FB={forward_backward_velocity} UD={up_down_velocity} YAW={yaw_velocity}")
-        # pass
+            # logger.info(f"MOCK RC: LR={left_right_velocity} FB={forward_backward_velocity} UD={up_down_velocity} YAW={yaw_velocity}")
+            pass
 
     def get_battery(self) -> int:
         return self.battery
